@@ -1,5 +1,8 @@
 import React from 'react';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
+import { faBooksMedical } from '@fortawesome/pro-light-svg-icons';
+import BookModal from './BookModal.js';
 
 class BookCard extends React.Component {
 
@@ -98,10 +101,13 @@ class BookCard extends React.Component {
                     <div className="cover-image-area">
                          <img src={coverImageURL} className="cover-image" />
                     </div>
-                    <h2 className="book-title">{title}</h2>
+                    <BookModal book={book} />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
-                         <div className="book-meta category"><a href={this.props.book.selfLink} target="_blank">JSON</a></div>
+                         <div className="book-meta button-area">
+                              <button className="read-action already-read" title="Add to your Already Read shelf"><FontAwesomeIcon icon={faBooksMedical} /></button>
+                              <button className="read-action to-read" title="Add to your To Read shelf"><FontAwesomeIcon icon={faBooksMedical} /></button>
+                         </div>
                     </div>
                </div>
 

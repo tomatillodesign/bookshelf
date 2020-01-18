@@ -62,7 +62,7 @@ render() {
 
        return (
          <div className="search-page-area single-page">
-           <h1>Search page here</h1>
+           <h1>Search for Books</h1>
            <form id="book-title-search">
                  <Input
                    value={this.state.title}

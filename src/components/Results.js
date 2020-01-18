@@ -34,7 +34,7 @@ class Results extends React.Component {
 
        return (
          <div className="results-page-area single-page">
-           <h1>Results page here</h1>
+           <h1>Search Results</h1>
 
            <div className="results-grid">
            {this.state.books.map((book, index) => (
