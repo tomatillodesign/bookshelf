@@ -1,5 +1,10 @@
 .App {
      text-align: center;
+     font-family: 'Roboto Condensed', sans-serif;
+}
+
+.logo-area, h1, h2 {
+     font-family: 'Vollkorn', serif;
 }
 
 .App-logo {
@@ -60,11 +65,15 @@
      color: #e85555;
 }
 
+.main-menu {
+     margin-right: 30px;
+}
+
 .menu-main-menu {
      clear: both;
      line-height: 1;
      width: 100%;
-     padding-right: 30px;
+     // padding-right: 30px;
 }
 
 .menu-item {
@@ -140,4 +149,58 @@ button:hover, .button:hover, .btn:hover {
      display: flex;
      justify-content: space-between;
      align-items: baseline;
+}
+
+.results-grid {
+     display: grid;
+     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+     grid-column-gap: 30px;
+     grid-row-gap: 30px;
+}
+
+.book-card {
+     background: #f5f5f5;
+     border-radius: 5px;
+     width: 180px;
+}
+
+img.cover-image {
+     width: 100%;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+h2.book-title {
+     font-family: 'Vollkorn', serif;
+     font-size: 16px;
+     line-height: 1.3;
+     padding: 0 8px;
+}
+
+.book-meta-area {
+     text-align: left;
+     padding: 0 8px 8px;
+     color: #333;
+     font-size: 12px;
+}
+
+
+
+@media only screen and (min-width: 960px) {
+
+     .single-page {
+          margin: 60px 10%;
+          max-width: 1200px;
+     }
+
+}
+
+@media only screen and (min-width: 1200px) {
+
+     .single-page {
+          margin-left: auto;
+          margin-right: auto;
+          max-width: 1200px;
+     }
+
 }

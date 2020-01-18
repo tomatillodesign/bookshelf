@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Input from './Input.js';
+import API from "../utils/API";
 
 class Search extends React.Component {
 
@@ -8,7 +9,9 @@ class Search extends React.Component {
           super(props);
 
      this.state = {
-         toResults: false,
+          title: "",
+          toResults: false,
+          results: []
        };
 
      }
@@ -17,7 +20,38 @@ class Search extends React.Component {
           console.log("Search mounted");
      }
 
+     handleInputChange = event => {
+          const { name, value } = event.target;
+               this.setState({
+                    [name]: value
+               });
+     };
+
+     handleFormSubmit = event => {
+          event.preventDefault();
+          if (this.state.title) {
+
+               const title = this.state.title.trim();
+               console.log(title);
+
+               API.getNewBooks(title)
+                  .then(res => {
+
+                    console.log(res.data.items);
+
+                    this.setState({
+                      toResults: true,
+                      results: res.data.items
+                    });
+                  })
+                  .catch(err => console.log(err));
+              }
+     }
+
+
 render() {
+
+          console.log(this.state.title);
 
           if (this.state.toResults) {
            return <Redirect to={{
@@ -35,7 +69,7 @@ render() {
                    onChange={this.handleInputChange}
                    name="title"
                    label="Book Title"
-                   placeholder="Search Book Title (required)"
+                   placeholder="Search for a book title or author..."
                  />
                  <button
                    onClick={this.handleFormSubmit}
