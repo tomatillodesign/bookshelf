@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from "react-router-dom";
 import Input from './Input.js';
 import API from "../utils/API";
+import Results from './Results.js';
 
 class Search extends React.Component {
 

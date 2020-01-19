@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import { faCog, faSearch } from '@fortawesome/pro-duotone-svg-icons';
 import { faCog, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBookAlt } from '@fortawesome/pro-duotone-svg-icons';
 
 
 function Header() {
@@ -12,7 +13,7 @@ function Header() {
            <ul id="menu-main-menu" className="menu-main-menu">
                 <li id="menu-item-search" className="menu-item search"><a href="/search"><FontAwesomeIcon icon={faSearch} /></a></li>
                 <li id="menu-item-saved" className="menu-item saved"><a href="/saved">To Read</a></li>
-                <li id="menu-item-read" className="menu-item read"><a href="/read">Already Read</a></li>
+                <li id="menu-item-read" className="menu-item read"><a href="/read"><FontAwesomeIcon icon={faBookAlt} /> Already Read</a></li>
                 <li id="menu-item-settings" className="menu-item settings"><a href="/settings"><FontAwesomeIcon icon={faCog} /></a></li>
            </ul>
       </nav>

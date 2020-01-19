@@ -232,10 +232,11 @@ h2.book-title {
      margin-bottom: 6px;
      display: flex;
      justify-content: space-evenly;
+     justify-content: center;
 }
 
 .single-book-modal .book-meta.button-area {
-     
+
 }
 
 button.read-action {
@@ -244,17 +245,20 @@ button.read-action {
      padding: 4px 8px;
      color: #e85555;
      color: #fff;
+     color: #e85555;
      font-size: 24px;
+     background: transparent;
 }
 
 button.read-action.already-read {
      background: #fff;
      color: #e85555;
      font-size: 28px;
+     background: transparent;
 }
 
 button.read-action:hover {
-     background: #000;
+     background: #fff;
 }
 
 

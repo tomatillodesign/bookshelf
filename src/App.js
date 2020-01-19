@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import Header from './components/Header.js';
-import Router from './components/Router.js';
+import BookManager from './components/BookManager.js';
 import LandingPage from './components/LandingPage.js';
 
 import base from './base';
@@ -176,24 +176,33 @@ class App extends React.Component {
 
        return (
          <div className="App">
-           <Header
-               logOutUser={this.logOutUser}
-               permanentlyDeleteUserAndInfo={this.permanentlyDeleteUserAndInfo}
-            />
+
            { loggedInID !== '' ?
-               <Router
-                    logOutUser={this.logOutUser}
-               />
+               <>
+                     <Header />
+                     <BookManager
+                          logOutUser={this.logOutUser}
+                          loggedInID={loggedInID}
+                          loggedInEmail={loggedInEmail}
+                     />
+               </>
                :
-               <div className="logged-out-area">
-                  <LandingPage
-                         registerNewUser={this.registerNewUser}
-                         authenticateUser={this.authenticateUser}
-                         loginError={loginError}
-                         logOutUser={this.logOutUser}
+               <>
+                    <Header
+                       logOutUser={this.logOutUser}
+                       permanentlyDeleteUserAndInfo={this.permanentlyDeleteUserAndInfo}
                     />
-                  </div>
+                    <div className="logged-out-area">
+                       <LandingPage
+                              registerNewUser={this.registerNewUser}
+                              authenticateUser={this.authenticateUser}
+                              loginError={loginError}
+                              logOutUser={this.logOutUser}
+                         />
+                       </div>
+             </>
              }
+
          </div>
        );
      }

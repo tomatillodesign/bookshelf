@@ -8,20 +8,50 @@ import SavedForLater from './SavedForLater.js';
 import PreviouslyRead from './PreviouslyRead.js';
 import Results from './Results.js';
 
-const Router = (props) => (
+class Router extends React.Component {
+
+     constructor(props) {
+          super(props);
+
+     this.state = {
+       };
+
+     }
+
+     render() {
+
+          return(
 
      <BrowserRouter>
           <Switch>
                <Route exact path="/" component={Landing} />
                <Route exact path="/search" component={Search} />
-               <Route exact path="/results" component={Results} />
+               <Route exact path="/results"
+                    render={(props) => <Results {...props} test={true} addBookAlreadyRead={this.props.addBookAlreadyRead} />}
+               />
+
                <Route exact path="/saved" component={SavedForLater} />
-               <Route exact path="/read" component={PreviouslyRead} />
-               <Route exact path="/settings" component={() => <Settings logOutUser={props.logOutUser} />} />
+               <Route exact path="/read"
+                    component={() =>
+                         <PreviouslyRead
+                              booksAlreadyRead={this.props.booksAlreadyRead}
+                              loggedInID={this.props.loggedInID}
+                              loggedInEmail={this.props.loggedInEmail}
+                              removeBook={this.props.removeBook}
+                         />}
+               />
+               <Route exact path="/settings"
+                    component={() =>
+                         <Settings
+                              logOutUser={this.props.logOutUser}
+                         />}
+               />
                <Route component={NotFound} />
           </Switch>
-     </BrowserRouter>
+     </BrowserRouter>);
 
-);
+     }
+
+}
 
 export default Router;

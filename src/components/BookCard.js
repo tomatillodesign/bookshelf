@@ -5,6 +5,7 @@ import { faBooksMedical } from '@fortawesome/pro-light-svg-icons';
 import BookModal from './BookModal.js';
 import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
+import BookButtonRemove from './BookButtonRemove.js';
 
 class BookCard extends React.Component {
 
@@ -55,8 +56,8 @@ class BookCard extends React.Component {
 
      render() {
 
-          console.log(this.state.originalBookJSON);
-          console.log(this.state.connected);
+          // console.log(this.state.originalBookJSON);
+          // console.log(this.state.connected);
           let book = this.state.originalBookJSON;
           let bookJSON = JSON.stringify(book);
 
@@ -104,6 +105,8 @@ class BookCard extends React.Component {
                }
           }
 
+          //console.log(this.props.addBookAlreadyRead);
+
           return(
 
                <div className="book-card">
@@ -114,8 +117,21 @@ class BookCard extends React.Component {
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
                          <div className="book-meta button-area">
+                         { this.props.alreadyRead === true &&
+                              <BookButtonRemove
+                                   book={this.props.book}
+                                   removeBook={this.props.removeBook}
+                              />
+                         }
+                         { this.props.searchResult === true &&
+                              <>
                               <BookButtonToRead />
-                              <BookButtonAlreadyRead />
+                              <BookButtonAlreadyRead
+                                   book={this.props.book}
+                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
+                              />
+                              </>
+                         }
                          </div>
                     </div>
                </div>

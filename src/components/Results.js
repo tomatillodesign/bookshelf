@@ -14,6 +14,7 @@ class Results extends React.Component {
      }
 
      componentDidMount() {
+          console.log(this.props.location);
           const data = this.props.location.data;
           console.log(data);
           if (data && data.results.length > 0) {
@@ -31,6 +32,8 @@ class Results extends React.Component {
      render() {
 
           console.log(this.state.books);
+          console.log(this.props.addBookAlreadyRead);
+          console.log(this.props.test);
 
        return (
          <div className="results-page-area single-page">
@@ -41,6 +44,8 @@ class Results extends React.Component {
                 <BookCard
                          key={book.id}
                          book={book}
+                         searchResult={true}
+                         addBookAlreadyRead={this.props.addBookAlreadyRead}
                     />
           ))}
           </div>

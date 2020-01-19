@@ -1,11 +1,46 @@
 import React from 'react';
+import BookCard from './BookCard.js';
 
-function PreviouslyRead() {
-  return (
-    <div className="previously-read-page-area">
-      <h1>To Read</h1>
+
+var shortid = require('shortid');
+
+class PreviouslyRead extends React.Component {
+
+     constructor(props){
+        super(props);
+        this.state = {
+             booksAlreadyRead: [],
+             booksAlreadyReadView: '',
+      };
+    }
+
+
+
+
+    render() {
+
+         const booksAlreadyRead = this.props.booksAlreadyRead;
+
+    return(
+    <div className="previously-read-area single-page">
+      <h1>Already Read</h1>
+           <div className="results-grid">
+           {booksAlreadyRead.map((book, index) => (
+                <BookCard
+                         key={book.id}
+                         book={book}
+                         removeBook={this.props.removeBook}
+                         alreadyRead={true}
+                    />
+         ))}
+         </div>
+      <div>{this.props.loggedInEmail}</div>
     </div>
-  );
+    );
+
+    }
+
 }
+
 
 export default PreviouslyRead;
