@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
 import { faBooksMedical } from '@fortawesome/pro-light-svg-icons';
 import BookModal from './BookModal.js';
+import BookButtonToRead from './BookButtonToRead.js';
+import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 
 class BookCard extends React.Component {
 
@@ -81,13 +83,20 @@ class BookCard extends React.Component {
                          coverImageURL = book.volumeInfo.imageLinks.thumbnail;
                     }
                }
+
+
                title = book.volumeInfo.title;
-               subtitle = book.volumeInfo.subtitle;
-               authors = book.volumeInfo.authors;
+               if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }
+               if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
+
                categories = book.volumeInfo.categories;
                date = book.volumeInfo.publishedDate;
 
-               if( authors ) { authorsToPublish = 'By ' + authors.join(', '); }
+               if( book.volumeInfo.authors !== undefined ) {
+                    if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
+                    if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
+                    if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+               }
 
                if( date ) {
                     let yearOnly = date.toString()
@@ -105,8 +114,8 @@ class BookCard extends React.Component {
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
                          <div className="book-meta button-area">
-                              <button className="read-action already-read" title="Add to your Already Read shelf"><FontAwesomeIcon icon={faBooksMedical} /></button>
-                              <button className="read-action to-read" title="Add to your To Read shelf"><FontAwesomeIcon icon={faBooksMedical} /></button>
+                              <BookButtonToRead />
+                              <BookButtonAlreadyRead />
                          </div>
                     </div>
                </div>

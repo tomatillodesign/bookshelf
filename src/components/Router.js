@@ -8,7 +8,7 @@ import SavedForLater from './SavedForLater.js';
 import PreviouslyRead from './PreviouslyRead.js';
 import Results from './Results.js';
 
-const Router = () => (
+const Router = (props) => (
 
      <BrowserRouter>
           <Switch>
@@ -17,7 +17,7 @@ const Router = () => (
                <Route exact path="/results" component={Results} />
                <Route exact path="/saved" component={SavedForLater} />
                <Route exact path="/read" component={PreviouslyRead} />
-               <Route exact path="/settings" component={Settings} />
+               <Route exact path="/settings" component={() => <Settings logOutUser={props.logOutUser} />} />
                <Route component={NotFound} />
           </Switch>
      </BrowserRouter>

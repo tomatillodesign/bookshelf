@@ -3,7 +3,7 @@ import React from 'react';
 function PreviouslyRead() {
   return (
     <div className="previously-read-page-area">
-      <h1>Previously Read page here</h1>
+      <h1>To Read</h1>
     </div>
   );
 }

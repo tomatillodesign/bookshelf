@@ -1,6 +1,8 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import BookButtonToRead from './BookButtonToRead.js';
+import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 
 export default function BookModal(props) {
 
@@ -29,14 +31,21 @@ export default function BookModal(props) {
                     coverImageURL = book.volumeInfo.imageLinks.thumbnail;
                }
           }
+
           title = book.volumeInfo.title;
-          subtitle = book.volumeInfo.subtitle;
+          if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }
+          if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
+
           description = book.volumeInfo.description;
-          authors = book.volumeInfo.authors;
+
           categories = book.volumeInfo.categories;
           date = book.volumeInfo.publishedDate;
 
-          if( authors ) { authorsToPublish = 'By ' + authors.join(', '); }
+          if( book.volumeInfo.authors !== undefined ) {
+               if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
+               if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
+               if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+          }
 
           if( date ) {
                let yearOnly = date.toString()
@@ -46,24 +55,24 @@ export default function BookModal(props) {
 
      return (
        <>
-         <a href="#" onClick={handleShow}>
+         <button onClick={handleShow} className="card-book-title">
            <h2 className="book-title">{title}</h2>
-         </a>
+         </button>
 
-         <Modal show={show} onHide={handleClose}>
+         <Modal show={show} onHide={handleClose} className="single-book-modal">
            <Modal.Header closeButton>
-             <Modal.Title>{title}</Modal.Title>
+             <Modal.Title className="single-book-title">{title}</Modal.Title>
            </Modal.Header>
            <Modal.Body>
-               <h3>Subtitle: {subtitle}</h3>
-               <p>Author: {authors}</p>
-               <p>Description: {description}</p>
-               <p>Date: {dateToPublish}</p>
+               <h3 className="book-subtitle">{subtitle}</h3>
+               <div className="authors">{authorsToPublish}</div>
+               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
            </Modal.Body>
            <Modal.Footer>
-             <button onClick={handleClose}>
-               Close
-             </button>
+           <div className="book-meta button-area">
+                <BookButtonToRead />
+                <BookButtonAlreadyRead />
+           </div>
            </Modal.Footer>
          </Modal>
        </>
