@@ -29,7 +29,8 @@ class PreviouslyRead extends React.Component {
                 <BookCard
                          key={book.id}
                          book={book}
-                         removeBook={this.props.removeBook}
+                         editBook={this.props.editBook}
+                         removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                          alreadyRead={true}
                     />
          ))}

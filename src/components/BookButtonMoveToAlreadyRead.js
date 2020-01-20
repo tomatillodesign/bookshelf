@@ -1,8 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook } from '@fortawesome/pro-light-svg-icons';
+import { faBook } from '@fortawesome/pro-duotone-svg-icons';
 
-class BookButtonToRead extends React.Component {
+class BookButtonMoveToAlreadyRead extends React.Component {
 
      constructor(props) {
           super(props);
@@ -18,7 +18,7 @@ class BookButtonToRead extends React.Component {
           event.preventDefault();
           console.log(this.props.book);
           const newBook = this.props.book;
-          this.props.addBookToRead(newBook);
+          this.props.moveBooktoAlreadyRead(newBook);
 
      }
 
@@ -27,8 +27,8 @@ class BookButtonToRead extends React.Component {
           return(
 
                <button
-                    className="read-action to-read"
-                    title="Add to your To Read shelf"
+                    className="read-action already-read"
+                    title="Move this book to your Already Read shelf"
                     onClick={this.createNewBook}
                     >
                     <FontAwesomeIcon icon={faBook} />
@@ -39,4 +39,4 @@ class BookButtonToRead extends React.Component {
 
 }
 
-export default BookButtonToRead;
+export default BookButtonMoveToAlreadyRead;

@@ -1,11 +1,13 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/pro-light-svg-icons';
-import { faBooksMedical } from '@fortawesome/pro-light-svg-icons';
+import { faFileEdit } from '@fortawesome/pro-light-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import BookModal from './BookModal.js';
 import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import BookButtonRemove from './BookButtonRemove.js';
+import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 
 class BookCard extends React.Component {
 
@@ -113,19 +115,40 @@ class BookCard extends React.Component {
                     <div className="cover-image-area">
                          <img src={coverImageURL} className="cover-image" />
                     </div>
-                    <BookModal book={book} />
+                    <BookModal
+                         book={book}
+                         alreadyRead={true}
+                         editBook={this.props.editBook}
+                    />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
                          <div className="book-meta button-area">
                          { this.props.alreadyRead === true &&
+                              <>
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              <FontAwesomeIcon icon={faStar} />
+                              </>
+                         }
+                         { this.props.toRead === true &&
+                              <>
                               <BookButtonRemove
                                    book={this.props.book}
-                                   removeBook={this.props.removeBook}
+                                   removeBook={this.props.removeBookFromToRead}
                               />
+                              <BookButtonMoveToAlreadyRead
+                                   book={this.props.book}
+                                   moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                              />
+                              </>
                          }
                          { this.props.searchResult === true &&
                               <>
-                              <BookButtonToRead />
+                              <BookButtonToRead
+                                   book={this.props.book}
+                                   addBookToRead={this.props.addBookToRead}
+                              />
                               <BookButtonAlreadyRead
                                    book={this.props.book}
                                    addBookAlreadyRead={this.props.addBookAlreadyRead}

@@ -1,29 +1,16 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBooksMedical } from '@fortawesome/pro-light-svg-icons';
-import { faBookAlt } from '@fortawesome/pro-duotone-svg-icons';
+import { faBook } from '@fortawesome/pro-duotone-svg-icons';
 
 class BookButtonAlreadyRead extends React.Component {
 
      constructor(props) {
           super(props);
           this.state = {
-               currentlyEditing: true,
-               typeOfBeer: this.props.typeOfBeer,
-               breweryName: this.props.breweryName,
-               myRating: this.props.defaultRating
           }
      }
 
      componentDidMount() {
-          if( this.props.typeOfBeer === undefined ) {
-               this.setState({
-                    typeOfBeer: null,
-                    breweryName: null,
-                    myRating: null
-               });
-          }
-
      }
 
      createNewBook = (event) => {
@@ -44,7 +31,7 @@ class BookButtonAlreadyRead extends React.Component {
                     title="Add to your Already Read shelf"
                     onClick={this.createNewBook}
                     >
-                    <FontAwesomeIcon icon={faBookAlt} />
+                    <FontAwesomeIcon icon={faBook} />
                </button>
           );
 

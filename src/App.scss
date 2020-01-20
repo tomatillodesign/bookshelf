@@ -92,7 +92,7 @@ li.menu-item {
     font-size: 1.2rem;
     font-weight: 700;
     letter-spacing: 0.5px;
-    padding: 10px;
+    padding: 16px;
     transition: all ease-in-out .33s;
 }
 
@@ -117,6 +117,37 @@ button, .button, .btn {
 button:hover, .button:hover, .btn:hover {
      background-color: #000;
 }
+
+button.already-read-description-toggle {
+     font-family: 'Vollkorn', serif;
+     background-color: transparent;
+     border-radius: 0;
+     border: none;
+     color: #000;
+     cursor: pointer;
+     font-size: inherit;
+     font-size: inherit;
+     font-weight: inherit;
+     letter-spacing: inherit;
+     padding: 0;
+     margin: 0;
+     text-transform: none;
+     white-space: normal;
+     width: auto;
+     transition: all ease-in-out .33s;
+}
+
+button.already-read-description-toggle h3 {
+     padding: 0;
+     margin: 0;
+     margin-bottom: 12px;
+}
+
+button.already-read-description-toggle:hover {
+     color: #e85555;
+     background: transparent;
+}
+
 
 .form-group {
      width: 75%;
@@ -222,6 +253,14 @@ h2.book-title {
 }
 
 .single-book-modal .authors {
+     margin-top: 8px;
+     margin-bottom: 24px;
+     padding-bottom: 24px;
+     border-bottom: 1px solid #eee;
+}
+
+.single-book-modal .authors.has-subtitle {
+     margin-top: 0;
      margin-bottom: 24px;
      padding-bottom: 24px;
      border-bottom: 1px solid #eee;
@@ -246,8 +285,9 @@ button.read-action {
      color: #e85555;
      color: #fff;
      color: #e85555;
-     font-size: 24px;
+     font-size: 28px;
      background: transparent;
+     padding: 0;
 }
 
 button.read-action.already-read {
@@ -255,12 +295,17 @@ button.read-action.already-read {
      color: #e85555;
      font-size: 28px;
      background: transparent;
+     margin-left: 8px;
 }
 
 button.read-action:hover {
-     background: #fff;
+     // background: #fff;
+     color: #000;
 }
 
+.modal-footer button.read-action.already-read {
+     margin-left: 16px;
+}
 
 
 @media only screen and (min-width: 960px) {
@@ -490,7 +535,7 @@ button.close {
 }
 
 .modal-backdrop.show {
-  opacity: 0.85;
+  opacity: 0.85 !important;
 }
 
 @media (min-width: 800px) {
@@ -499,3 +544,76 @@ button.close {
       margin: 30px auto;
   }
 }
+
+
+
+
+/* ------- Original Bootstrap CSS ----------- */
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity 0.15s linear;
+  -o-transition: opacity 0.15s linear;
+  transition: opacity 0.15s linear;
+}
+
+.fade.show {
+  opacity: 1;
+}
+
+.collapse {
+  display: none;
+}
+
+.collapse.show {
+  display: block;
+}
+
+tr.collapse.show {
+  display: table-row;
+}
+
+tbody.collapse.show {
+  display: table-row-group;
+}
+
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition: height 0.35s ease;
+  -o-transition: height 0.35s ease;
+  transition: height 0.35s ease;
+}
+
+/* ------- CLB Customizations ----------- */
+
+// .collapse-button-area {
+//      text-align: center;
+//      width: 100%;
+//      padding: 20px;
+//      background: #333;
+//      color: #fff;
+//      border: 1px solid #333;
+// // }
+//
+// a.collapse-section {
+//      color: #fff;
+//      font-weight: 700;
+//      text-decoration: none;
+// }
+//
+// .collapse, .collapsing {
+//      text-align: left;
+//      background: #fafafa;
+//      padding: 0px;
+//      color: #333;
+// }
+//
+// .clb-collapse-area {
+//      margin-bottom: 20px;
+// }
+//
+// .collapse-text {
+// 	padding: 20px;
+// }

@@ -27,17 +27,31 @@ class Router extends React.Component {
                <Route exact path="/" component={Landing} />
                <Route exact path="/search" component={Search} />
                <Route exact path="/results"
-                    render={(props) => <Results {...props} test={true} addBookAlreadyRead={this.props.addBookAlreadyRead} />}
+                    render={(props) => <Results {...props} test={true}
+                                                  addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                                  addBookToRead={this.props.addBookToRead}
+                                             />}
                />
 
-               <Route exact path="/saved" component={SavedForLater} />
+               <Route exact path="/saved"
+                    component={() =>
+                         <SavedForLater
+                              booksToRead={this.props.booksToRead}
+                              loggedInID={this.props.loggedInID}
+                              loggedInEmail={this.props.loggedInEmail}
+                              moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                              removeBookFromToRead={this.props.removeBookFromToRead}
+                         />}
+               />
+
                <Route exact path="/read"
                     component={() =>
                          <PreviouslyRead
                               booksAlreadyRead={this.props.booksAlreadyRead}
                               loggedInID={this.props.loggedInID}
                               loggedInEmail={this.props.loggedInEmail}
-                              removeBook={this.props.removeBook}
+                              editBook={this.props.editBook}
+                              removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                          />}
                />
                <Route exact path="/settings"

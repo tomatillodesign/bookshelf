@@ -1,8 +1,12 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import Accordion from 'react-bootstrap/Accordion';
 import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
+import EditBookForm from './EditBookForm.js';
+
+import SelectRating from './SelectRating';
 
 export default function BookModal(props) {
 
@@ -16,8 +20,11 @@ export default function BookModal(props) {
      let coverImageURL = null;
      let title = null;
      let subtitle = null;
+     let hasSubtitle = false;
      let description = null;
      let authors = null;
+     let hasAuthor = false;
+     let authorClass = null;
      let categories = null;
      let authorsToPublish = null;
      let dateToPublish = null;
@@ -33,7 +40,11 @@ export default function BookModal(props) {
           }
 
           title = book.volumeInfo.title;
-          if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }
+          if( book.volumeInfo.subtitle !== undefined ) {
+               hasSubtitle = true;
+               authorClass = " has-subtitle";
+               subtitle = <h3 className="book-subtitle">{book.volumeInfo.subtitle}</h3>;
+          }
           if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
 
           description = book.volumeInfo.description;
@@ -45,6 +56,12 @@ export default function BookModal(props) {
                if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
                if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
                if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+
+               if( hasSubtitle ) {
+                    authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}</div>;
+               } else {
+                    authorsToPublish = <div className="authors">{authorsToPublish}</div>;
+               }
           }
 
           if( date ) {
@@ -64,14 +81,39 @@ export default function BookModal(props) {
              <Modal.Title className="single-book-title">{title}</Modal.Title>
            </Modal.Header>
            <Modal.Body>
-               <h3 className="book-subtitle">{subtitle}</h3>
-               <div className="authors">{authorsToPublish}</div>
-               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+               {subtitle}
+               {authorsToPublish}
+               { props.alreadyRead &&
+                    <>
+                    <EditBookForm
+                         book={book}
+                         editBook={props.editBook}
+                    />
+                    <Accordion>
+                         <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
+                           <h3>Description</h3>
+                         </Accordion.Toggle>
+                       <Accordion.Collapse eventKey="0">
+                         <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                       </Accordion.Collapse>
+                   </Accordion>
+                   </>
+              }
            </Modal.Body>
            <Modal.Footer>
            <div className="book-meta button-area">
+           { props.alreadyRead &&
+                <BookButtonAlreadyRead />
+           }
+           { props.savedForLater &&
+                <BookButtonAlreadyRead />
+           }
+           { props.searchResult &&
+                <>
                 <BookButtonToRead />
                 <BookButtonAlreadyRead />
+                </>
+           }
            </div>
            </Modal.Footer>
          </Modal>

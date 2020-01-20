@@ -57,29 +57,101 @@ class BookManager extends React.Component {
 
 
      // Functions to maniuplate state / books
-     addBookAlreadyRead = (newBook) => {
-         console.log(newBook);
+     addBookAlreadyRead = (bookObj) => {
+         console.log(bookObj);
+         bookObj.bookshelfTimestamp = Date.now();
+         bookObj.bookshelfRating = 0;
+         bookObj.bookshelfNote = '';
+         bookObj.bookshelfCover = null;
          this.setState(prevState => ({
-            booksAlreadyRead: [...prevState.booksAlreadyRead, newBook]
+            booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
            }));
 
        }
 
 
-       removeBook = (bookObj) => {
-          console.log("Removed: " + JSON.stringify(bookObj));
-          let beerID = bookObj.id;
-          let clbCopyBeerState = [...this.state.booksAlreadyRead];
-          let getBeerObjInState = clbCopyBeerState.filter(obj => {
-           return obj.id === beerID
-          });
-
-          let index = clbCopyBeerState.map(function(e) { return e.id; }).indexOf(beerID);
-          clbCopyBeerState.splice(index, 1);
-
-          this.setState({ booksAlreadyRead: clbCopyBeerState });
+       addBookToRead = (bookObj) => {
+          console.log(bookObj);
+          this.setState(prevState => ({
+             booksToRead: [...prevState.booksToRead, bookObj]
+            }));
 
         }
+
+
+        moveBooktoAlreadyRead = (bookObj) => {
+           console.log(bookObj);
+           bookObj.bookshelfTimestamp = Date.now();
+           bookObj.bookshelfRating = 0;
+           bookObj.bookshelfNote = '';
+           bookObj.bookshelfCover = null;
+           this.setState(prevState => ({
+              booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
+             }));
+
+            console.log("MOVED: " + JSON.stringify(bookObj));
+            let bookID = bookObj.id;
+            let clbCopyBookState = [...this.state.booksToRead];
+            let getBookObjInState = clbCopyBookState.filter(obj => {
+             return obj.id === bookID
+            });
+
+            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+            clbCopyBookState.splice(index, 1);
+
+            this.setState({ booksToRead: clbCopyBookState });
+
+         }
+
+
+       removeBookFromAlreadyRead = (bookObj) => {
+          console.log("Removed: " + JSON.stringify(bookObj));
+          let bookID = bookObj.id;
+          let clbCopyBookState = [...this.state.booksAlreadyRead];
+          let getBookObjInState = clbCopyBookState.filter(obj => {
+           return obj.id === bookID
+          });
+
+          let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+          clbCopyBookState.splice(index, 1);
+
+          this.setState({ booksAlreadyRead: clbCopyBookState });
+
+        }
+
+
+        removeBookFromToRead = (bookObj) => {
+           console.log("Removed: " + JSON.stringify(bookObj));
+           let bookID = bookObj.id;
+           let clbCopyBookState = [...this.state.booksToRead];
+           let getBookObjInState = clbCopyBookState.filter(obj => {
+            return obj.id === bookID
+           });
+
+           let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+           clbCopyBookState.splice(index, 1);
+
+           this.setState({ booksToRead: clbCopyBookState });
+
+         }
+
+
+         editBook = (bookObj) => {
+            console.log("Editing this book: " + JSON.stringify(bookObj));
+               let bookID = bookObj.id;
+               let clbCopyBookState = [...this.state.booksAlreadyRead];
+               let getBookObjInState = clbCopyBookState.filter(obj => {
+                 return obj.id === bookID
+               });
+               let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+               let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+               ids[index] = bookObj;                  //new value
+               console.log(ids[index]);
+               this.setState({ booksAlreadyRead: ids });            //update the value
+
+          }
+
+
 
 
 
@@ -99,8 +171,13 @@ class BookManager extends React.Component {
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
                  booksAlreadyRead={this.state.booksAlreadyRead}
+                 booksToRead={this.state.booksToRead}
+                 editBook={this.editBook}
                  addBookAlreadyRead={this.addBookAlreadyRead}
-                 removeBook={this.removeBook}
+                 addBookToRead={this.addBookToRead}
+                 moveBooktoAlreadyRead={this.moveBooktoAlreadyRead}
+                 removeBookFromAlreadyRead={this.removeBookFromAlreadyRead}
+                 removeBookFromToRead={this.removeBookFromToRead}
             />
        );
 
