@@ -125,6 +125,8 @@ class BookCard extends React.Component {
                     <div className="cover-image-area">
                          <img src={coverImageURL} className="cover-image" />
                     </div>
+                    <p>{this.props.index}</p>
+                    <p>{this.props.bookID}</p>
                     <BookModal
                          book={book}
                          alreadyRead={this.props.alreadyRead}

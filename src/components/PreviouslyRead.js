@@ -51,6 +51,26 @@ class PreviouslyRead extends React.Component {
 
                }
 
+               if( this.props.booksAlreadyReadView === 'rating') {
+
+                         // New sorting
+                         orderedBooks = [...booksAlreadyRead].sort(function (a, b) {
+
+                         	// If the first item has a higher number, move it down
+                         	// If the first item has a lower number, move it up
+                         	if (a.bookshelfRating > b.bookshelfRating) return -1;
+                         	if (a.bookshelfRating < b.bookshelfRating) return 1;
+
+                         	// If the count number is the same between both items, sort alphabetically
+                         	// If the first item comes first in the alphabet, move it up
+                         	// Otherwise move it down
+                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
+               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+
+                         });
+
+               }
+
 
 
 
