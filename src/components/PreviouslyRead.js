@@ -1,6 +1,6 @@
 import React from 'react';
 import BookCard from './BookCard.js';
-
+import SelectAlreadyReadView from './SelectAlreadyReadView';
 
 var shortid = require('shortid');
 
@@ -9,8 +9,8 @@ class PreviouslyRead extends React.Component {
      constructor(props){
         super(props);
         this.state = {
-             booksAlreadyRead: [],
-             booksAlreadyReadView: '',
+             // booksAlreadyRead: [],
+             // booksAlreadyReadView: '',
       };
     }
 
@@ -20,6 +20,40 @@ class PreviouslyRead extends React.Component {
     render() {
 
          const booksAlreadyRead = this.props.booksAlreadyRead;
+         //console.log(this.props.changeAlreadyReadView);
+
+         console.log(this.props.booksAlreadyReadView);
+         let orderedBooks = null;
+
+               // order these books!
+               if( this.props.booksAlreadyReadView === 'alphabetical') {
+                    orderedBooks = [...booksAlreadyRead].sort((a, b) => (a.volumeInfo.title > b.volumeInfo.title) ? 1 : -1);
+
+               }
+
+               if( this.props.booksAlreadyReadView === 'date') {
+
+                         // New sorting
+                         orderedBooks = [...booksAlreadyRead].sort(function (a, b) {
+
+                         	// If the first item has a higher number, move it down
+                         	// If the first item has a lower number, move it up
+                         	if (a.bookshelfTimestamp > b.bookshelfTimestamp) return -1;
+                         	if (a.bookshelfTimestamp < b.bookshelfTimestamp) return 1;
+
+                         	// If the count number is the same between both items, sort alphabetically
+                         	// If the first item comes first in the alphabet, move it up
+                         	// Otherwise move it down
+                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
+               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+
+                         });
+
+               }
+
+
+
+
 
          if( booksAlreadyRead.length === 0 || booksAlreadyRead === undefined ) {
 
@@ -36,8 +70,15 @@ class PreviouslyRead extends React.Component {
          return(
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
+               <div className="view-type">
+                    Current View: {this.props.booksAlreadyReadView}
+                    <SelectAlreadyReadView
+                         defaultView={this.props.booksAlreadyReadView}
+                         changeAlreadyReadView={this.props.changeAlreadyReadView}
+                    />
+               </div>
                 <div className="results-grid">
-                {booksAlreadyRead.map((book, index) => (
+                {orderedBooks.map((book, index) => (
                      <BookCard
                               key={book.id}
                               book={book}

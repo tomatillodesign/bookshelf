@@ -14,8 +14,8 @@ class BookManager extends React.Component {
         this.state = {
              booksToRead: [],
              booksAlreadyRead: [],
-             booksToReadView: 'Alphabetical',
-             booksAlreadyReadView: 'Alphabetical',
+             booksToReadView: 'alphabetical',
+             booksAlreadyReadView: 'alphabetical',
              settings: [],
       };
     }
@@ -172,6 +172,20 @@ class BookManager extends React.Component {
           }
 
 
+          changeAlreadyReadView = (selectedOption) => {
+              // console.log('CHANGE BEER CARD VIEW');
+              // console.log(newViewString);
+
+              let newBookCardView = 'alphabetical';
+              if(selectedOption) {
+                  if( selectedOption.value === 'rating' ) { newBookCardView = 'rating'; }
+                  if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
+              }
+
+              this.setState({ booksAlreadyReadView: newBookCardView });
+
+         }
+
 
 
 
@@ -189,6 +203,8 @@ class BookManager extends React.Component {
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
                  booksAlreadyRead={this.state.booksAlreadyRead}
+                 booksAlreadyReadView={this.state.booksAlreadyReadView}
+                 changeAlreadyReadView={this.changeAlreadyReadView}
                  booksToRead={this.state.booksToRead}
                  editBook={this.editBook}
                  editBookToRead={this.editBookToRead}

@@ -49,6 +49,8 @@ class Router extends React.Component {
                     component={() =>
                          <PreviouslyRead
                               booksAlreadyRead={this.props.booksAlreadyRead}
+                              booksAlreadyReadView={this.props.booksAlreadyReadView}
+                              changeAlreadyReadView={this.props.changeAlreadyReadView}
                               loggedInID={this.props.loggedInID}
                               loggedInEmail={this.props.loggedInEmail}
                               editBook={this.props.editBook}

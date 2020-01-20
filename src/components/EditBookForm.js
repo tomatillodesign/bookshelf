@@ -42,7 +42,11 @@ class EditBookForm extends React.Component {
                //      this.brewery_slug = '';
                // }
 
-               console.log(this.state.book.bookshelfRating);
+               console.log(this.state.book.bookshelfTimestamp);
+
+               //timestamp fix
+               //let updatedDate =
+
 
                if( this.bookshelfTimestamp === undefined ) { this.bookshelfTimestamp = this.state.book.bookshelfTimestamp; }
                if( this.bookshelfRating === undefined ) { this.bookshelfRating = this.state.book.bookshelfRating; }
@@ -76,8 +80,11 @@ class EditBookForm extends React.Component {
      }
 
      getCompletedDate = (date) => {
-          this.bookshelfTimestamp = date;
+          //this.bookshelfTimestamp = date;
           console.log("Completed DATE: " + this.bookshelfTimestamp);
+          let updatedTimestamp = parseInt((new Date(date).getTime()).toFixed(0));
+          console.log(updatedTimestamp);
+          this.bookshelfTimestamp = updatedTimestamp;
      }
 
 
