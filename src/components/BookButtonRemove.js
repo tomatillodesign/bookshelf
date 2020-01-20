@@ -16,9 +16,20 @@ class BookButtonRemove extends React.Component {
      removeThisBook = (event) => {
           // 1. Stop the form from submitting
           event.preventDefault();
-          console.log(this.props.book);
+          // console.log(this.props.book);
+          // console.log(this.props.context);
+          // console.log(this.props.removeBookFromAlreadyRead);
           const bookObj = this.props.book;
-          this.props.removeBook(bookObj);
+
+          if(this.props.context === 'removeBookFromAlreadyRead') {
+               this.props.removeBookFromAlreadyRead(bookObj);
+          }
+
+          if(this.props.context === 'removeBookFromToRead') {
+               this.props.removeBookFromToRead(bookObj);
+          }
+
+
 
      }
 
@@ -29,10 +40,13 @@ class BookButtonRemove extends React.Component {
                <button
                     className="read-action remove-book"
                     title="Permanently remove this book from your collection"
-                    onClick={this.removeThisBook}
-                    >
-                    <FontAwesomeIcon icon={faTrashAlt} />
-               </button>
+                    onClick={event =>
+                 window.confirm(
+                   "Are you sure you want to delete this book? All of your ratings and notes for this book will also be removed. You cannot undo this action."
+              ) && this.removeThisBook(event)
+               }>
+          <FontAwesomeIcon icon={faTrashAlt} />
+          </button>
           );
 
      }

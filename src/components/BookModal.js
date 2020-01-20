@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import EditBookForm from './EditBookForm.js';
+import BookButtonRemove from './BookButtonRemove';
 
 import SelectRating from './SelectRating';
 
@@ -103,7 +104,11 @@ export default function BookModal(props) {
            <Modal.Footer>
            <div className="book-meta button-area">
            { props.alreadyRead &&
-                <BookButtonAlreadyRead />
+                <BookButtonRemove
+                    book={book}
+                    context={'removeBookFromAlreadyRead'}
+                    removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                 />
            }
            { props.savedForLater &&
                 <BookButtonAlreadyRead />

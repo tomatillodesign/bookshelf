@@ -8,6 +8,7 @@ import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import BookButtonRemove from './BookButtonRemove.js';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
+import Stars from './Stars';
 
 class BookCard extends React.Component {
 
@@ -107,7 +108,12 @@ class BookCard extends React.Component {
                }
           }
 
-          //console.log(this.props.addBookAlreadyRead);
+          // show star ratings
+          //console.log(this.props.book.bookshelfRating);
+          let bookshelfRating = this.props.book.bookshelfRating;
+
+          //console.log(this.props.removeBookFromAlreadyRead);
+
 
           return(
 
@@ -119,16 +125,14 @@ class BookCard extends React.Component {
                          book={book}
                          alreadyRead={true}
                          editBook={this.props.editBook}
+                         removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
                          <div className="book-meta button-area">
                          { this.props.alreadyRead === true &&
                               <>
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
-                              <FontAwesomeIcon icon={faStar} />
+                              <Stars bookshelfRating={bookshelfRating} />
                               </>
                          }
                          { this.props.toRead === true &&
@@ -136,6 +140,8 @@ class BookCard extends React.Component {
                               <BookButtonRemove
                                    book={this.props.book}
                                    removeBook={this.props.removeBookFromToRead}
+                                   context={'removeBookFromToRead'}
+                                   removeBookFromToRead={this.props.removeBookFromToRead}
                               />
                               <BookButtonMoveToAlreadyRead
                                    book={this.props.book}
