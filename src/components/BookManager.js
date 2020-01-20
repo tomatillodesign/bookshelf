@@ -72,6 +72,10 @@ class BookManager extends React.Component {
 
        addBookToRead = (bookObj) => {
           console.log(bookObj);
+          bookObj.bookshelfTimestamp = Date.now();
+          bookObj.bookshelfRating = 0;
+          bookObj.bookshelfNote = '';
+          bookObj.bookshelfCover = null;
           this.setState(prevState => ({
              booksToRead: [...prevState.booksToRead, bookObj]
             }));
@@ -83,7 +87,6 @@ class BookManager extends React.Component {
            console.log(bookObj);
            bookObj.bookshelfTimestamp = Date.now();
            bookObj.bookshelfRating = 0;
-           bookObj.bookshelfNote = '';
            bookObj.bookshelfCover = null;
            this.setState(prevState => ({
               booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
@@ -153,6 +156,21 @@ class BookManager extends React.Component {
 
 
 
+          editBookToRead = (bookObj) => {
+            console.log("Editing this book: " + JSON.stringify(bookObj));
+               let bookID = bookObj.id;
+               let clbCopyBookState = [...this.state.booksToRead];
+               let getBookObjInState = clbCopyBookState.filter(obj => {
+                 return obj.id === bookID
+               });
+               let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+               let ids = [...this.state.booksToRead];     // create the copy of state array
+               ids[index] = bookObj;                  //new value
+               console.log(ids[index]);
+               this.setState({ booksToRead: ids });            //update the value
+
+          }
+
 
 
 
@@ -173,6 +191,7 @@ class BookManager extends React.Component {
                  booksAlreadyRead={this.state.booksAlreadyRead}
                  booksToRead={this.state.booksToRead}
                  editBook={this.editBook}
+                 editBookToRead={this.editBookToRead}
                  addBookAlreadyRead={this.addBookAlreadyRead}
                  addBookToRead={this.addBookToRead}
                  moveBooktoAlreadyRead={this.moveBooktoAlreadyRead}

@@ -111,6 +111,10 @@ class BookCard extends React.Component {
           // show star ratings
           //console.log(this.props.book.bookshelfRating);
           let bookshelfRating = this.props.book.bookshelfRating;
+          let bookshelfNote = this.props.book.bookshelfNote;
+
+          let bookshelfTimestamp = this.props.book.bookshelfTimestamp;
+          console.log(bookshelfTimestamp);
 
           //console.log(this.props.removeBookFromAlreadyRead);
 
@@ -123,9 +127,14 @@ class BookCard extends React.Component {
                     </div>
                     <BookModal
                          book={book}
-                         alreadyRead={true}
+                         alreadyRead={this.props.alreadyRead}
+                         savedForLater={this.props.savedForLater}
                          editBook={this.props.editBook}
+                         bookshelfRating={bookshelfRating}
+                         bookshelfNote={bookshelfNote}
+                         bookshelfTimestamp={bookshelfTimestamp}
                          removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
+                         removeBookFromToRead={this.props.removeBookFromToRead}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

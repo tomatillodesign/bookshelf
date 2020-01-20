@@ -71,6 +71,8 @@ export default function BookModal(props) {
           }
      }
 
+     //console.log(props.bookshelfRating);
+
      return (
        <>
          <button onClick={handleShow} className="card-book-title">
@@ -84,10 +86,27 @@ export default function BookModal(props) {
            <Modal.Body>
                {subtitle}
                {authorsToPublish}
+               { props.alreadyRead !== true &&
+                    <>
+                    <EditBookForm
+                         book={book}
+                         hideRating={true}
+                         hideDate={true}
+                         bookshelfRating={props.bookshelfRating}
+                         bookshelfNote={props.bookshelfNote}
+                         bookshelfTimestamp={props.bookshelfTimestamp}
+                         editBook={props.editBook}
+                    />
+                    <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                   </>
+              }
                { props.alreadyRead &&
                     <>
                     <EditBookForm
                          book={book}
+                         bookshelfRating={props.bookshelfRating}
+                         bookshelfNote={props.bookshelfNote}
+                         bookshelfTimestamp={props.bookshelfTimestamp}
                          editBook={props.editBook}
                     />
                     <Accordion>
@@ -111,7 +130,15 @@ export default function BookModal(props) {
                  />
            }
            { props.savedForLater &&
+                <>
+                <BookButtonRemove
+                     book={book}
+                     removeBook={props.removeBookFromToRead}
+                     context={'removeBookFromToRead'}
+                     removeBookFromToRead={props.removeBookFromToRead}
+                />
                 <BookButtonAlreadyRead />
+                </>
            }
            { props.searchResult &&
                 <>

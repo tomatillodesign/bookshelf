@@ -43,8 +43,10 @@ class SavedForLater extends React.Component {
                      <BookCard
                               key={book.id}
                               book={book}
+                              editBook={this.props.editBook}
                               moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                               removeBookFromToRead={this.props.removeBookFromToRead}
+                              savedForLater={true}
                               toRead={true}
                          />
               ))}
