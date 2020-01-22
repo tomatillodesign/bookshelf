@@ -48,6 +48,7 @@ class SavedForLater extends React.Component {
                               removeBookFromToRead={this.props.removeBookFromToRead}
                               savedForLater={true}
                               toRead={true}
+                              addNewImagesToRead={this.props.addNewImagesToRead}
                          />
               ))}
          </div>

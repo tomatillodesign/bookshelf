@@ -18,6 +18,9 @@ export default function BookModal(props) {
 
      const book = props.book;
 
+     const bookCoverModal = props.bookCoverModal;
+     const bookTitleModal = props.bookTitleModal;
+
      let coverImageURL = null;
      let title = null;
      let subtitle = null;
@@ -73,83 +76,168 @@ export default function BookModal(props) {
 
      //console.log(props.bookshelfRating);
 
-     return (
-       <>
-         <button onClick={handleShow} className="card-book-title">
-           <h2 className="book-title">{title}</h2>
-         </button>
+     if( bookTitleModal ) {
 
-         <Modal show={show} onHide={handleClose} className="single-book-modal">
-           <Modal.Header closeButton>
-             <Modal.Title className="single-book-title">{title}</Modal.Title>
-           </Modal.Header>
-           <Modal.Body>
-               {subtitle}
-               {authorsToPublish}
-               { props.alreadyRead !== true &&
-                    <>
-                    <EditBookForm
-                         book={book}
-                         hideRating={true}
-                         hideDate={true}
-                         bookshelfRating={props.bookshelfRating}
-                         bookshelfNote={props.bookshelfNote}
-                         bookshelfTimestamp={props.bookshelfTimestamp}
-                         editBook={props.editBook}
-                    />
-                    <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                   </>
-              }
-               { props.alreadyRead &&
-                    <>
-                    <EditBookForm
-                         book={book}
-                         bookshelfRating={props.bookshelfRating}
-                         bookshelfNote={props.bookshelfNote}
-                         bookshelfTimestamp={props.bookshelfTimestamp}
-                         editBook={props.editBook}
-                    />
-                    <Accordion>
-                         <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                           <h3>Description</h3>
-                         </Accordion.Toggle>
-                       <Accordion.Collapse eventKey="0">
+          return (
+            <>
+              <button onClick={handleShow} className="card-book-title">
+                <h2 className="book-title">{title}</h2>
+              </button>
+
+              <Modal show={show} onHide={handleClose} className="single-book-modal">
+                <Modal.Header closeButton>
+                  <Modal.Title className="single-book-title">{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {subtitle}
+                    {authorsToPublish}
+                    { props.alreadyRead !== true &&
+                         <>
+                         <EditBookForm
+                              book={book}
+                              hideRating={true}
+                              hideDate={true}
+                              bookshelfRating={props.bookshelfRating}
+                              bookshelfNote={props.bookshelfNote}
+                              bookshelfTimestamp={props.bookshelfTimestamp}
+                              editBook={props.editBook}
+                         />
                          <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                       </Accordion.Collapse>
-                   </Accordion>
-                   </>
-              }
-           </Modal.Body>
-           <Modal.Footer>
-           <div className="book-meta button-area">
-           { props.alreadyRead &&
-                <BookButtonRemove
-                    book={book}
-                    context={'removeBookFromAlreadyRead'}
-                    removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
-                 />
-           }
-           { props.savedForLater &&
-                <>
-                <BookButtonRemove
-                     book={book}
-                     removeBook={props.removeBookFromToRead}
-                     context={'removeBookFromToRead'}
-                     removeBookFromToRead={props.removeBookFromToRead}
-                />
-                <BookButtonAlreadyRead />
-                </>
-           }
-           { props.searchResult &&
-                <>
-                <BookButtonToRead />
-                <BookButtonAlreadyRead />
-                </>
-           }
-           </div>
-           </Modal.Footer>
-         </Modal>
-       </>
-     );
+                        </>
+                   }
+                    { props.alreadyRead &&
+                         <>
+                         <EditBookForm
+                              book={book}
+                              bookshelfRating={props.bookshelfRating}
+                              bookshelfNote={props.bookshelfNote}
+                              bookshelfTimestamp={props.bookshelfTimestamp}
+                              editBook={props.editBook}
+                         />
+                         <Accordion>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
+                                <h3>Description</h3>
+                              </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="0">
+                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                            </Accordion.Collapse>
+                        </Accordion>
+                        </>
+                   }
+                </Modal.Body>
+                <Modal.Footer>
+                <div className="book-meta button-area">
+                { props.alreadyRead &&
+                     <BookButtonRemove
+                         book={book}
+                         context={'removeBookFromAlreadyRead'}
+                         removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                      />
+                }
+                { props.savedForLater &&
+                     <>
+                     <BookButtonRemove
+                          book={book}
+                          removeBook={props.removeBookFromToRead}
+                          context={'removeBookFromToRead'}
+                          removeBookFromToRead={props.removeBookFromToRead}
+                     />
+                     <BookButtonAlreadyRead />
+                     </>
+                }
+                { props.searchResult &&
+                     <>
+                     <BookButtonToRead />
+                     <BookButtonAlreadyRead />
+                     </>
+                }
+                </div>
+                </Modal.Footer>
+              </Modal>
+            </>
+          );
+
+     } else if ( bookCoverModal ) {
+
+          return (
+            <>
+              <div className="cover-image-area">
+                   <button onClick={handleShow} className="card-book-cover"><img src={coverImageURL} className="cover-image" /></button>
+              </div>
+
+              <Modal show={show} onHide={handleClose} className="single-book-modal">
+                <Modal.Header closeButton>
+                  <Modal.Title className="single-book-title">{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    {subtitle}
+                    {authorsToPublish}
+                    { props.alreadyRead !== true &&
+                         <>
+                         <EditBookForm
+                              book={book}
+                              hideRating={true}
+                              hideDate={true}
+                              bookshelfRating={props.bookshelfRating}
+                              bookshelfNote={props.bookshelfNote}
+                              bookshelfTimestamp={props.bookshelfTimestamp}
+                              editBook={props.editBook}
+                         />
+                         <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                        </>
+                   }
+                    { props.alreadyRead &&
+                         <>
+                         <EditBookForm
+                              book={book}
+                              bookshelfRating={props.bookshelfRating}
+                              bookshelfNote={props.bookshelfNote}
+                              bookshelfTimestamp={props.bookshelfTimestamp}
+                              editBook={props.editBook}
+                         />
+                         <Accordion>
+                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
+                                <h3>Description</h3>
+                              </Accordion.Toggle>
+                            <Accordion.Collapse eventKey="0">
+                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                            </Accordion.Collapse>
+                        </Accordion>
+                        </>
+                   }
+                </Modal.Body>
+                <Modal.Footer>
+                <div className="book-meta button-area">
+                { props.alreadyRead &&
+                     <BookButtonRemove
+                         book={book}
+                         context={'removeBookFromAlreadyRead'}
+                         removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                      />
+                }
+                { props.savedForLater &&
+                     <>
+                     <BookButtonRemove
+                          book={book}
+                          removeBook={props.removeBookFromToRead}
+                          context={'removeBookFromToRead'}
+                          removeBookFromToRead={props.removeBookFromToRead}
+                     />
+                     <BookButtonAlreadyRead />
+                     </>
+                }
+                { props.searchResult &&
+                     <>
+                     <BookButtonToRead />
+                     <BookButtonAlreadyRead />
+                     </>
+                }
+                </div>
+                </Modal.Footer>
+              </Modal>
+            </>
+          );
+
+     }
 
 }

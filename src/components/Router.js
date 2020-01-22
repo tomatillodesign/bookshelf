@@ -42,6 +42,7 @@ class Router extends React.Component {
                               editBook={this.props.editBookToRead}
                               moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                               removeBookFromToRead={this.props.removeBookFromToRead}
+                              addNewImagesToRead={this.props.addNewImagesToRead}
                          />}
                />
 
@@ -55,6 +56,7 @@ class Router extends React.Component {
                               loggedInEmail={this.props.loggedInEmail}
                               editBook={this.props.editBook}
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
+                              addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
                <Route exact path="/settings"

@@ -30,30 +30,44 @@ class BookCard extends React.Component {
      let selfLink = this.props.book.selfLink;
      console.log(selfLink);
 
-     // Get the details straight from Google, including larger image sizes
-     fetch(selfLink)
-     .then(res => res.json())
-     .then((originalBookJSON) => {
-       console.log('Checkout this JSON! ', originalBookJSON);
-       //coverImageURL = originalBookJSON.volumeInfo.imageLinks.large;
-       if(originalBookJSON.hasOwnProperty('error')) {
-            this.setState({
-                connected: false
-           });
-       } else {
-            this.setState({
-                 originalBookJSON: originalBookJSON,
-                 connected: true
-            });
-       }
+     if( this.props.alreadyRead === true || this.props.toRead === true ) {
+          if( this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '' ) {
 
-     })
-     .catch(err => {
-          this.setState({
-               connected: false
-          });
-          throw err;
-     });
+               // Get the details straight from Google, including larger image sizes
+               fetch(selfLink)
+               .then(res => res.json())
+               .then((originalBookJSON) => {
+                 console.log('Checkout this JSON! ', originalBookJSON);
+                 //coverImageURL = originalBookJSON.volumeInfo.imageLinks.large;
+                 if(originalBookJSON.hasOwnProperty('error')) {
+                      this.setState({
+                          connected: false
+                     });
+                 } else {
+
+                      // update thumbnail URL to larger size if possible
+
+                      if( this.props.alreadyRead === true  ) { this.props.addNewImagesAlreadyRead(originalBookJSON); }
+                      if( this.props.toRead === true  ) { this.props.addNewImagesToRead(originalBookJSON); }
+                      console.log("UPDATED: " + originalBookJSON.volumeInfo.title);
+
+                      this.setState({
+                           originalBookJSON: originalBookJSON,
+                           connected: true
+                      });
+                 }
+
+                    })
+                    .catch(err => {
+                         this.setState({
+                              connected: false
+                         });
+                         throw err;
+                    });
+
+               }
+
+          }
 
      }
 
@@ -84,6 +98,15 @@ class BookCard extends React.Component {
                     //coverImageURL = props.book.volumeInfo.imageLinks.thumbnail;
                     coverImageURL = book.volumeInfo.imageLinks.large + "&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU";
                     if( book.volumeInfo.imageLinks.large === undefined ) {
+                         coverImageURL = book.volumeInfo.imageLinks.medium;
+                    }
+                    if( book.volumeInfo.imageLinks.medium === undefined ) {
+                         coverImageURL = book.volumeInfo.imageLinks.small;
+                    }
+                    if( book.volumeInfo.imageLinks.small === undefined ) {
+                         coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
+                    }
+                    if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
                          coverImageURL = book.volumeInfo.imageLinks.thumbnail;
                     }
                }
@@ -122,12 +145,20 @@ class BookCard extends React.Component {
           return(
 
                <div className="book-card">
-                    <div className="cover-image-area">
-                         <img src={coverImageURL} className="cover-image" />
-                    </div>
-                    <p>{this.props.index}</p>
-                    <p>{this.props.bookID}</p>
                     <BookModal
+                         bookCoverModal={true}
+                         book={book}
+                         alreadyRead={this.props.alreadyRead}
+                         savedForLater={this.props.savedForLater}
+                         editBook={this.props.editBook}
+                         bookshelfRating={bookshelfRating}
+                         bookshelfNote={bookshelfNote}
+                         bookshelfTimestamp={bookshelfTimestamp}
+                         removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
+                         removeBookFromToRead={this.props.removeBookFromToRead}
+                    />
+                    <BookModal
+                         bookTitleModal={true}
                          book={book}
                          alreadyRead={this.props.alreadyRead}
                          savedForLater={this.props.savedForLater}

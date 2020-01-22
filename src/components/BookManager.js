@@ -88,6 +88,9 @@ class BookManager extends React.Component {
            bookObj.bookshelfTimestamp = Date.now();
            bookObj.bookshelfRating = 0;
            bookObj.bookshelfCover = null;
+           // bookObj.volumeInfo.imageLinks.large = '';                  //new value, image only
+           // bookObj.volumeInfo.imageLinks.medium = '';
+           // bookObj.volumeInfo.imageLinks.small = '';
            this.setState(prevState => ({
               booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
              }));
@@ -172,6 +175,45 @@ class BookManager extends React.Component {
           }
 
 
+
+          addNewImagesAlreadyRead = (bookObj) => {
+               console.log("Editing this book: " + JSON.stringify(bookObj));
+                  let bookID = bookObj.id;
+                  let clbCopyBookState = [...this.state.booksAlreadyRead];
+                  let getBookObjInState = clbCopyBookState.filter(obj => {
+                    return obj.id === bookID
+                  });
+                  let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                  let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+                  if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = '' }                 //new value, image only
+                  if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = '' }
+                  if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = '' }
+                  if( bookObj.volumeInfo.imageLinks.smallThumbnail ) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = '' }
+                  if( bookObj.volumeInfo.imageLinks.thumbnail ) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = '' }
+                  console.log(ids[index]);
+                  this.setState({ booksAlreadyRead: ids });            //update the value
+          }
+
+
+          addNewImagesToRead = (bookObj) => {
+               console.log("Editing this book: " + JSON.stringify(bookObj));
+                  let bookID = bookObj.id;
+                  let clbCopyBookState = [...this.state.booksToRead];
+                  let getBookObjInState = clbCopyBookState.filter(obj => {
+                    return obj.id === bookID
+                  });
+                  let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                  let ids = [...this.state.booksToRead];     // create the copy of state array
+                  if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = ''; }               //new value, image only
+                  if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = ''; }
+                  if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = ''; }
+                  if( bookObj.volumeInfo.imageLinks.smallThumbnail) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = ''; }
+                  if( bookObj.volumeInfo.imageLinks.thumbnail) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = ''; }
+                  console.log(ids[index]);
+                  this.setState({ booksToRead: ids });            //update the value
+          }
+
+
           changeAlreadyReadView = (selectedOption) => {
               // console.log('CHANGE BEER CARD VIEW');
               // console.log(newViewString);
@@ -213,6 +255,8 @@ class BookManager extends React.Component {
                  moveBooktoAlreadyRead={this.moveBooktoAlreadyRead}
                  removeBookFromAlreadyRead={this.removeBookFromAlreadyRead}
                  removeBookFromToRead={this.removeBookFromToRead}
+                 addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
+                 addNewImagesToRead={this.addNewImagesToRead}
             />
        );
 

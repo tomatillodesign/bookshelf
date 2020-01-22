@@ -20,7 +20,7 @@ class PreviouslyRead extends React.Component {
     render() {
 
          const booksAlreadyRead = this.props.booksAlreadyRead;
-         //console.log(this.props.changeAlreadyReadView);
+         console.log(booksAlreadyRead);
 
          console.log(this.props.booksAlreadyReadView);
          let orderedBooks = null;
@@ -105,6 +105,7 @@ class PreviouslyRead extends React.Component {
                               editBook={this.props.editBook}
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                               alreadyRead={true}
+                              addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />
               ))}
               </div>

@@ -189,12 +189,19 @@ button.already-read-description-toggle:hover {
      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
      grid-column-gap: 30px;
      grid-row-gap: 30px;
+     margin-top: 30px;
 }
 
 .book-card {
      background: #f5f5f5;
      border-radius: 5px;
      width: 180px;
+     transition: all ease-in-out .5s;
+}
+
+.book-card:hover {
+     background: #f0f0f0;
+     transform: translate3d(0,-4px,0);
 }
 
 img.cover-image {
@@ -228,6 +235,7 @@ h2.book-title {
      line-height: 1.2;
      padding: 0 8px;
      margin-bottom: 4px;
+     margin-top: 20px;
 }
 
 .single-book-title.modal-title.h4 {
@@ -235,6 +243,23 @@ h2.book-title {
      font-weight: 700;
      font-size: 30px;
 }
+
+.cover-image-area {
+     padding-bottom: 0;
+     margin-bottom: -12px;
+}
+
+button.card-book-cover {
+     background: transparent;
+     padding: 0;
+     border-top-right-radius: 5px;
+     border-top-left-radius: 5px;
+}
+
+button.card-book-cover img {
+     height: 100%;
+}
+
 
 .book-subtitle {
      font-family: 'Vollkorn', serif;
@@ -306,6 +331,13 @@ button.read-action:hover {
 .modal-footer button.read-action.already-read {
      margin-left: 16px;
 }
+
+.star-icon {
+     font-size: 20px;
+}
+
+
+
 
 
 @media only screen and (min-width: 960px) {
