@@ -15,8 +15,8 @@ function Header() {
            <ul id="menu-main-menu" className="menu-main-menu">
                 <li id="menu-item-search" className="menu-item search"><a href="#search"><FontAwesomeIcon icon={faSearch} /> New Books</a></li>
                 <li id="menu-item-saved" className="menu-item saved"><a href="#saved"><LightBook /> To Read</a></li>
-                <li id="menu-item-read" className="menu-item read"><a href="/#read"><SolidBook /> Already Read</a></li>
-                <li id="menu-item-settings" className="menu-item settings"><a href="/#settings"><FontAwesomeIcon icon={faCog} /> Settings</a></li>
+                <li id="menu-item-read" className="menu-item read"><a href="#read"><SolidBook /> Already Read</a></li>
+                <li id="menu-item-settings" className="menu-item settings"><a href="#settings"><FontAwesomeIcon icon={faCog} /> Settings</a></li>
            </ul>
       </nav>
     </header>
