@@ -99,6 +99,9 @@ export default function BookModal(props) {
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <div className="small-thumbnail-area">
+                         <img src={coverImageURL} />
+                    </div>
                     {subtitle}
                     {authorsToPublish}
                     { props.alreadyRead !== true &&
@@ -180,6 +183,9 @@ export default function BookModal(props) {
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                     <div className="small-thumbnail-area">
+                          <img src={coverImageURL} />
+                     </div>
                     {subtitle}
                     {authorsToPublish}
                     { props.alreadyRead !== true &&
@@ -207,7 +213,7 @@ export default function BookModal(props) {
                          />
                          <Accordion>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>Description</h3>
+                                <h3>View Description +</h3>
                               </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>

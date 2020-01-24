@@ -76,7 +76,7 @@ render() {
                    onClick={this.handleFormSubmit}
                    className="btn btn-info"
                  >
-                   Search
+                   Find It
                  </button>
           </form>
          </div>

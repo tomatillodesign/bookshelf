@@ -101,24 +101,30 @@ render() {
             <>
 
             <form className="edit-book" onSubmit={this.editThisBook} >
-            { this.props.hideRating !== true &&
-               <SelectRating
-                    setRating={this.setRating}
-                    defaultRating={defaultRating}
-               />
-          }
-          { this.props.hideDate !== true &&
-               <ReadDate
-                    bookshelfTimestamp={bookshelfTimestamp}
-                    getCompletedDate={this.getCompletedDate}
-               />
-          }
+               <div className="top-info-line">
+                      { this.props.hideRating !== true &&
+                         <div className="book-rating-area">
+                         <SelectRating
+                              setRating={this.setRating}
+                              defaultRating={defaultRating}
+                         />
+                         </div>
+                    }
+                    { this.props.hideDate !== true &&
+                         <div className="book-date-area">
+                         <ReadDate
+                              bookshelfTimestamp={bookshelfTimestamp}
+                              getCompletedDate={this.getCompletedDate}
+                         />
+                         </div>
+                    }
+               </div>
                <Notes
                     placeholder={'Add a note...'}
                     defaultValue={bookshelfNote}
                     setNotes={this.setNotes}
                />
-               <button type="submit">Update this Book</button>
+               <button type="submit" className="update-this-book">Save Changes</button>
             </form>
          </>
        );

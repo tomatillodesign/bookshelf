@@ -15,11 +15,13 @@ function Landing(props) {
           editBook={props.editBook}
           moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
           removeBookFromToRead={props.removeBookFromToRead}
+          addNewImagesToRead={props.addNewImagesToRead}
       />
       <RecentlyAddedAlreadyRead
           booksAlreadyRead={props.booksAlreadyRead}
           editBook={props.editBook}
           removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+          addNewImagesAlreadyRead={props.addNewImagesAlreadyRead}
       />
     </div>
   );
