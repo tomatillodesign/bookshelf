@@ -40,14 +40,14 @@ class Router extends React.Component {
                          />}
                />
                <Route exact path="/search" component={Search} />
-               <Route exact path="/bookshelf/results"
+               <Route exact path="/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
                                                   addBookToRead={this.props.addBookToRead}
                                              />}
                />
 
-               <Route exact path="/bookshelf/saved"
+               <Route exact path="/saved"
                     component={() =>
                          <SavedForLater
                               booksToRead={this.props.booksToRead}
@@ -60,7 +60,7 @@ class Router extends React.Component {
                          />}
                />
 
-               <Route exact path="/bookshelf/read"
+               <Route exact path="/read"
                     component={() =>
                          <PreviouslyRead
                               booksAlreadyRead={this.props.booksAlreadyRead}
@@ -73,7 +73,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="/bookshelf/settings"
+               <Route exact path="/settings"
                     component={() =>
                          <Settings
                               logOutUser={this.props.logOutUser}
@@ -81,7 +81,7 @@ class Router extends React.Component {
                               loggedInEmail={this.props.loggedInEmail}
                          />}
                />
-               <Route exact path="/bookshelf/register"
+               <Route exact path="/register"
                     component={() =>
                          <Register
                               logOutUser={this.props.logOutUser}
