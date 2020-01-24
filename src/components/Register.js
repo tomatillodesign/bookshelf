@@ -48,7 +48,7 @@ firebaseApp
 
           return (
                <div className="login-form-area">
-               <h2><div>Enter your information below</div><div>to register for your free Beer Journal:</div></h2>
+               <p>Enter your information below to register for your free Bookshelf:</p>
                {error ? (
                      <div>{error.message}</div>
                ) : null}

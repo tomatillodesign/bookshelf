@@ -119,7 +119,7 @@ render() {
 
              <Modal show={this.state.showModal} onHide={this.handleCloseRegister} className="clb-single-beer-notes">
                <Modal.Header closeButton>
-                 <Modal.Title>Register for a New Account</Modal.Title>
+                 <Modal.Title><h3>Register for a New Account</h3></Modal.Title>
                </Modal.Header>
                <Modal.Body>
                     <Register

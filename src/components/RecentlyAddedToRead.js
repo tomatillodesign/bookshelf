@@ -8,7 +8,7 @@ function RecentlyAddedToRead(props) {
      // console.log(booksToRead);
      // console.log(booksToRead.length);
 
-      if( booksToRead.length !== 0 || booksToRead !== undefined ) {
+      if( booksToRead.length !== 0 && booksToRead !== undefined ) {
 
            // New sorting
            orderedBooks = [...booksToRead].sort(function (a, b) {
@@ -52,6 +52,7 @@ function RecentlyAddedToRead(props) {
 
           return (
               <div className="recently-added-to-read-area nothing-yet">
+                    <p>Time to <a href="/bookshelf/#search">add more books</a> to your shelf!</p>
               </div>
         );
 
