@@ -26,7 +26,7 @@ class Router extends React.Component {
                <div className="clb-grail-body">
      <BrowserRouter>
           <Switch>
-               <Route exact path="/"
+               <Route exact path="/bookshelf/"
                     component={() =>
                          <Landing
                               booksToRead={this.props.booksToRead}
