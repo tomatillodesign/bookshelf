@@ -40,14 +40,14 @@ class Router extends React.Component {
                          />}
                />
                <Route exact path="/bookshelf/search" component={Search} />
-               <Route exact path="/results"
+               <Route exact path="/bookshelf/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
                                                   addBookToRead={this.props.addBookToRead}
                                              />}
                />
 
-               <Route exact path={`${process.env.PUBLIC_URL}/saved`}
+               <Route exact path="/bookshelf/saved"
                     component={() =>
                          <SavedForLater
                               booksToRead={this.props.booksToRead}
@@ -60,7 +60,7 @@ class Router extends React.Component {
                          />}
                />
 
-               <Route exact path="/read"
+               <Route exact path="/bookshelf/read"
                     component={() =>
                          <PreviouslyRead
                               booksAlreadyRead={this.props.booksAlreadyRead}
