@@ -39,7 +39,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="/search" component={Search} />
+               <Route exact path="/bookshelf/search" component={Search} />
                <Route exact path="/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
@@ -47,7 +47,7 @@ class Router extends React.Component {
                                              />}
                />
 
-               <Route exact path="/saved"
+               <Route exact path={`${process.env.PUBLIC_URL}/saved`}
                     component={() =>
                          <SavedForLater
                               booksToRead={this.props.booksToRead}

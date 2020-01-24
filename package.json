@@ -1,7 +1,7 @@
 {
   "name": "bookshelf",
   "version": "0.1.0",
-  "homepage": "http://tomatillodesign.github.io/bookshelf",
+  "homepage": "https://tomatillodesign.github.io/bookshelf/",
   "private": true,
   "dependencies": {
     "@date-io/core": "^2.0.0",
