@@ -203,6 +203,10 @@ class App extends React.Component {
              </>
              }
 
+             <footer className="clb-bookshelf-footer">
+               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
+             </footer>
+
          </div>
        );
      }

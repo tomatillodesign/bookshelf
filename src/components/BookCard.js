@@ -46,7 +46,6 @@ class BookCard extends React.Component {
                  } else {
 
                       // update thumbnail URL to larger size if possible
-
                       if( this.props.alreadyRead === true  ) { this.props.addNewImagesAlreadyRead(originalBookJSON); }
                       if( this.props.toRead === true  ) { this.props.addNewImagesToRead(originalBookJSON); }
                       console.log("UPDATED: " + originalBookJSON.volumeInfo.title);
@@ -94,16 +93,18 @@ class BookCard extends React.Component {
           let date = null;
 
           if( book.volumeInfo !== undefined ) {
+
                if( book.volumeInfo.imageLinks !== undefined ) {
-                    //coverImageURL = props.book.volumeInfo.imageLinks.thumbnail;
-                    coverImageURL = book.volumeInfo.imageLinks.large + "&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU";
-                    if( book.volumeInfo.imageLinks.large === undefined ) {
+                    console.log(book.volumeInfo.imageLinks.thumbnail);
+                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
+                    coverImageURL = book.volumeInfo.imageLinks.large;
+                    if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
                          coverImageURL = book.volumeInfo.imageLinks.medium;
                     }
-                    if( book.volumeInfo.imageLinks.medium === undefined ) {
+                    if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
                          coverImageURL = book.volumeInfo.imageLinks.small;
                     }
-                    if( book.volumeInfo.imageLinks.small === undefined ) {
+                    if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
                          coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
                     }
                     if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {

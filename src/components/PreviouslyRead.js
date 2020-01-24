@@ -91,11 +91,13 @@ class PreviouslyRead extends React.Component {
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
                <div className="view-type">
-                    Current View: {this.props.booksAlreadyReadView}
-                    <SelectAlreadyReadView
-                         defaultView={this.props.booksAlreadyReadView}
-                         changeAlreadyReadView={this.props.changeAlreadyReadView}
-                    />
+                         <div className="viewer-label">View Your Books by: </div>
+                         <div className="viewer-selector-area">
+                              <SelectAlreadyReadView
+                                   defaultView={this.props.booksAlreadyReadView}
+                                   changeAlreadyReadView={this.props.changeAlreadyReadView}
+                              />
+                    </div>
                </div>
                 <div className="results-grid">
                 {orderedBooks.map((book, index) => (

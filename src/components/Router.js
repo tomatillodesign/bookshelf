@@ -22,9 +22,20 @@ class Router extends React.Component {
 
           return(
 
+               <div className="clb-grail-body">
      <BrowserRouter>
           <Switch>
-               <Route exact path="/" component={Landing} />
+               <Route exact path="/"
+                    component={() =>
+                         <Landing
+                              booksToRead={this.props.booksToRead}
+                              booksAlreadyRead={this.props.booksAlreadyRead}
+                              editBook={this.props.editBook}
+                              moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                              removeBookFromToRead={this.props.removeBookFromToRead}
+                              removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
+                         />}
+               />
                <Route exact path="/search" component={Search} />
                <Route exact path="/results"
                     render={(props) => <Results {...props} test={true}
@@ -63,11 +74,14 @@ class Router extends React.Component {
                     component={() =>
                          <Settings
                               logOutUser={this.props.logOutUser}
+                              loggedInID={this.props.loggedInID}
+                              loggedInEmail={this.props.loggedInEmail}
                          />}
                />
                <Route component={NotFound} />
           </Switch>
-     </BrowserRouter>);
+     </BrowserRouter>
+          </div>);
 
      }
 
