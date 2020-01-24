@@ -73,7 +73,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="/settings"
+               <Route exact path="/bookshelf/settings"
                     component={() =>
                          <Settings
                               logOutUser={this.props.logOutUser}
@@ -81,7 +81,7 @@ class Router extends React.Component {
                               loggedInEmail={this.props.loggedInEmail}
                          />}
                />
-               <Route exact path="/register"
+               <Route exact path="/bookshelf/register"
                     component={() =>
                          <Register
                               logOutUser={this.props.logOutUser}
