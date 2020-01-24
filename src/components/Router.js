@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import Landing from './Landing.js';
 import Search from './Search.js';
 import Settings from './Settings.js';
@@ -24,9 +24,9 @@ class Router extends React.Component {
           return(
 
                <div className="clb-grail-body">
-     <BrowserRouter>
+     <HashRouter basename="/">
           <Switch>
-               <Route exact path="/bookshelf/"
+               <Route exact path="/"
                     component={() =>
                          <Landing
                               booksToRead={this.props.booksToRead}
@@ -39,7 +39,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="https://tomatillodesign.github.io/bookshelf/search" component={Search} />
+               <Route exact path="/search" component={Search} />
                <Route exact path="/bookshelf/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
@@ -91,7 +91,7 @@ class Router extends React.Component {
                />
                <Route component={NotFound} />
           </Switch>
-     </BrowserRouter>
+     </HashRouter>
           </div>);
 
      }
