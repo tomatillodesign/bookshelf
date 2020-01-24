@@ -36,7 +36,7 @@ class Router extends React.Component {
                               removeBookFromToRead={this.props.removeBookFromToRead}
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                               addNewImagesToRead={this.props.addNewImagesToRead}
-                              addNewImagesAlreadyRead={this.props.addNewImagesToRead}
+                              addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
                <Route exact path="/bookshelf/search" component={Search} />

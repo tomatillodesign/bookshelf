@@ -39,6 +39,7 @@ function RecentlyAddedAlreadyRead(props) {
                                       editBook={props.editBook}
                                       moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
                                       removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                                      addNewImagesAlreadyRead={props.addNewImagesAlreadyRead}
                                       alreadyRead={true}
                               />
                       ))}
