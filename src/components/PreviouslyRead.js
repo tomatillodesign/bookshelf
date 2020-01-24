@@ -111,7 +111,6 @@ class PreviouslyRead extends React.Component {
                          />
               ))}
               </div>
-           <div>{this.props.loggedInEmail}</div>
          </div>
          );
 
