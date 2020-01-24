@@ -39,7 +39,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="/bookshelf/search" component={Search} />
+               <Route exact path="https://tomatillodesign.github.io/bookshelf/search" component={Search} />
                <Route exact path="/bookshelf/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
