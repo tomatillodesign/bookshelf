@@ -13,9 +13,10 @@ export default function LandingPage(props) {
             <div className="landing-page-area single-page">
              <h1>Login & New User Registration</h1>
                  <div className="login-register-area">
-                 <Login authenticateUser={props.authenticateUser} loginError={props.loginError} />
-                 <Register registerNewUser={props.registerNewUser} />
-                 <Logout logOutUser={props.logOutUser} />
+                 <Login
+                         authenticateUser={props.authenticateUser}
+                         loginError={props.loginError}
+                         registerNewUser={props.registerNewUser} />
                  </div>
             </div>
 

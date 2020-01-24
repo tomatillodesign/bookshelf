@@ -7,6 +7,7 @@ import NotFound from './NotFound.js';
 import SavedForLater from './SavedForLater.js';
 import PreviouslyRead from './PreviouslyRead.js';
 import Results from './Results.js';
+import Register from './Register.js';
 
 class Router extends React.Component {
 
@@ -38,15 +39,15 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesToRead}
                          />}
                />
-               <Route exact path="/search" component={Search} />
-               <Route exact path="/results"
+               <Route exact path="/bookshelf/search" component={Search} />
+               <Route exact path="/bookshelf/results"
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
                                                   addBookToRead={this.props.addBookToRead}
                                              />}
                />
 
-               <Route exact path="/saved"
+               <Route exact path="/bookshelf/saved"
                     component={() =>
                          <SavedForLater
                               booksToRead={this.props.booksToRead}
@@ -59,7 +60,7 @@ class Router extends React.Component {
                          />}
                />
 
-               <Route exact path="/read"
+               <Route exact path="/bookshelf/read"
                     component={() =>
                          <PreviouslyRead
                               booksAlreadyRead={this.props.booksAlreadyRead}
@@ -72,9 +73,17 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                          />}
                />
-               <Route exact path="/settings"
+               <Route exact path="/bookshelf/settings"
                     component={() =>
                          <Settings
+                              logOutUser={this.props.logOutUser}
+                              loggedInID={this.props.loggedInID}
+                              loggedInEmail={this.props.loggedInEmail}
+                         />}
+               />
+               <Route exact path="/bookshelf/register"
+                    component={() =>
+                         <Register
                               logOutUser={this.props.logOutUser}
                               loggedInID={this.props.loggedInID}
                               loggedInEmail={this.props.loggedInEmail}

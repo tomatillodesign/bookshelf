@@ -56,7 +56,7 @@ render() {
 
           if (this.state.toResults) {
            return <Redirect to={{
-             pathname: "/results",
+             pathname: "/bookshelf/results",
              data: { results: this.state.results }
            }} />
          }
