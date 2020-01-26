@@ -112,6 +112,11 @@ class BookCard extends React.Component {
                     }
                }
 
+               //console.log("COVER IMG URL: " + coverImageURL);
+               if( coverImageURL.startsWith("http://") ) {
+                    coverImageURL = coverImageURL.replace("http://", "https://");
+                    console.log("Updated COVER IMG URL: " + coverImageURL);
+               }
 
                title = book.volumeInfo.title;
                if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }
