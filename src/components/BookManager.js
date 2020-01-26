@@ -1,5 +1,6 @@
 import React from 'react';
 import Router from './Router.js';
+import Header from './Header.js';
 import base from '../base';
 import { firebaseApp } from '../base';
 
@@ -11,12 +12,15 @@ class BookManager extends React.Component {
 
      constructor(props){
         super(props);
+        console.log(this.props.settingsColor);
         this.state = {
              booksToRead: [],
              booksAlreadyRead: [],
              booksToReadView: 'alphabetical',
              booksAlreadyReadView: 'alphabetical',
-             settings: [],
+             settingsColor: 'default',
+             settingsFont: 'default',
+             settingsTightness: 'default',
       };
     }
 
@@ -50,6 +54,27 @@ class BookManager extends React.Component {
          context: this,
          state: 'booksAlreadyReadView',
          defaultValue: 'Alphabetical',
+         asArray: false
+       });
+
+       base.syncState(`${loggedInID}/settingsColor`, {
+         context: this,
+         state: 'settingsColor',
+         defaultValue: 'default',
+         asArray: false
+       });
+
+       base.syncState(`${loggedInID}/settingsFont`, {
+         context: this,
+         state: 'settingsFont',
+         defaultValue: 'default',
+         asArray: false
+       });
+
+       base.syncState(`${loggedInID}/settingsTightness`, {
+         context: this,
+         state: 'settingsTightness',
+         defaultValue: 'default',
          asArray: false
        });
 
@@ -243,8 +268,35 @@ class BookManager extends React.Component {
 
 
 
+        changeSettingsColor = (selectedOption) => {
+
+           let newSettingsColor = 'default';
+           if(selectedOption) {
+                newSettingsColor = selectedOption.value;
+           }
+
+           this.setState({ settingsColor: newSettingsColor });
+
+       }
+
+
+       changeSettingsFont = (selectedOption) => {
+
+          let newSettingsFont = 'default';
+          if(selectedOption) {
+               newSettingsFont = selectedOption.value;
+          }
+
+          this.setState({ settingsFont: newSettingsFont });
+
+     }
+
+
+
 
   render() {
+
+       console.log(this.props.settingsColor);
 
        const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
        // console.log(this.props.loggedInID);
@@ -253,6 +305,11 @@ class BookManager extends React.Component {
        console.log(this.state.booksAlreadyRead);
 
        return(
+            <>
+            <Header
+               settingsColor={this.state.settingsColor}
+               settingsFont={this.state.settingsFont}
+            />
             <Router
                  logOutUser={this.props.logOutUser}
                  loggedInID={this.props.loggedInID}
@@ -263,6 +320,10 @@ class BookManager extends React.Component {
                  booksToReadView={this.state.booksToReadView}
                  changeAlreadyReadView={this.changeAlreadyReadView}
                  changeToReadView={this.changeToReadView}
+                 settingsColor={this.state.settingsColor}
+                 changeSettingsColor={this.changeSettingsColor}
+                 settingsFont={this.state.settingsFont}
+                 changeSettingsFont={this.changeSettingsFont}
                  booksToRead={this.state.booksToRead}
                  editBook={this.editBook}
                  editBookToRead={this.editBookToRead}
@@ -274,6 +335,10 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
             />
+            <footer className={"clb-bookshelf-footer color-" + this.state.settingsColor + " font-" + this.state.settingsFont}>
+              Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
+            </footer>
+            </>
        );
 
        }

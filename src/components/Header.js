@@ -7,9 +7,9 @@ import LightBook from './LightBook';
 import SolidBook from './SolidBook';
 
 
-function Header() {
+function Header(props) {
   return (
-    <header className="header">
+    <header className={"header color-" + props.settingsColor + " font-" + props.settingsFont}>
       <h1 className="logo-area"><a href="/bookshelf/">Bookshelf</a></h1>
       <nav className="nav-primary" aria-label="Main" id="bookshelf-nav-primary" className="main-menu">
            <ul id="menu-main-menu" className="menu-main-menu">

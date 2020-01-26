@@ -23,7 +23,7 @@ class SavedForLater extends React.Component {
          console.log(booksToRead);
          console.log(booksToRead.length);
 
-         let orderedBooks = null;
+         let orderedBooks = booksToRead;
 
                // order these books!
                if( this.props.booksToReadView === 'alphabetical') {

@@ -23,7 +23,7 @@ class Router extends React.Component {
 
           return(
 
-               <div className="clb-grail-body">
+               <div className={"clb-grail-body color-" + this.props.settingsColor + " font-" + this.props.settingsFont}>
      <HashRouter basename="/">
           <Switch>
                <Route exact path="/"
@@ -83,6 +83,10 @@ class Router extends React.Component {
                               loggedInEmail={this.props.loggedInEmail}
                               resetPassword={this.props.resetPassword}
                               permanentlyDeleteUserAndInfo={this.props.permanentlyDeleteUserAndInfo}
+                              settingsColor={this.props.settingsColor}
+                              changeSettingsColor={this.props.changeSettingsColor}
+                              settingsFont={this.props.settingsFont}
+                              changeSettingsFont={this.props.changeSettingsFont}
                          />}
                />
                <Route exact path="/register"

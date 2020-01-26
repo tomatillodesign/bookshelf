@@ -2,6 +2,8 @@ import React from 'react';
 import Logout from './Logout.js';
 import ChangePassword from './ChangePassword.js';
 import DeleteAccount from './DeleteAccount.js';
+import SelectThemeColor from './SelectThemeColor.js';
+import SelectThemeFont from './SelectThemeFont.js';
 import base from '../base';
 import { firebaseApp } from '../base';
 
@@ -57,10 +59,20 @@ class Settings extends React.Component {
 
      render() {
 
+          console.log(this.props.settingsFont);
+
 
        return (
          <div className="settings-page-area single-page">
            <h1>Settings</h1>
+           <SelectThemeColor
+               settingsColor={this.props.settingsColor}
+               changeSettingsColor={this.props.changeSettingsColor}
+           />
+           <SelectThemeFont
+               settingsFont={this.props.settingsFont}
+               changeSettingsFont={this.props.changeSettingsFont}
+           />
            <p>Currently logged in as: {this.props.loggedInEmail}</p>
            <Logout logOutUser={this.props.logOutUser} />
            <ChangePassword resetPassword={this.resetPassword} />

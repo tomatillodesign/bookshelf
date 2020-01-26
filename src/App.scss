@@ -744,3 +744,96 @@ tbody.collapse.show {
 // .collapse-text {
 // 	padding: 20px;
 // }
+
+
+
+
+
+/* ------- CLB Theme Color Customizations ----------- */
+
+// .header, header, .clb-bookshelf-footer {
+//      transition: all ease-in-out 5s !important;
+// }
+
+
+/* PURPLE --------
+Light:
+Dark:
+Accent (Button):
+---------------*/
+
+.header.color-purple {
+     background: #4d1d49;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #834b7c, #4d1d49);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #834b7c, #4d1d49); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.clb-bookshelf-footer.color-purple {
+     background: #4d1d49;  /* fallback for old browsers */
+}
+
+/* --- END PURPLE ------ */
+
+
+
+
+/* GRAY --------
+Light:
+Dark:
+Accent (Button):
+---------------*/
+
+.header.color-gray {
+     background: #333;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #777, #333);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #777, #333); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.clb-bookshelf-footer.gray {
+     background: #333;  /* fallback for old browsers */
+}
+
+/* --- END GRAY ------ */
+
+
+
+/* GREEN --------
+Light:
+Dark:
+Accent (Button):
+---------------*/
+
+.header.color-green {
+     background: #014422;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #006727, #014422);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #006727, #014422); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.clb-bookshelf-footer.color-green {
+     background: #014422;  /* fallback for old browsers */
+}
+
+/* --- END GREEN ------ */
+
+
+
+/* ORANGE --------
+Light:
+Dark:
+Accent (Button):
+---------------*/
+
+.header.color-orange {
+     background: #e67600;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #ff901a, #e67600);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #ff901a, #e67600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.clb-bookshelf-footer.color-orange {
+     background: #e67600;  /* fallback for old browsers */
+}
+
+/* --- END ORANGE ------ */
+
+
+/* ------- END CLB Theme Color Customizations ----------- */

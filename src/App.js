@@ -42,7 +42,9 @@ class App extends React.Component {
                       booksAlreadyRead: [],
                       booksToReadView: 'Alphabetical',
                       booksAlreadyReadView: 'Alphabetical',
-                      settings: [],
+                      settingsColor: 'default',
+                      settingsFont: 'default',
+                      settingsTightness: 'default',
                  },
               });
 
@@ -179,12 +181,13 @@ class App extends React.Component {
 
            { loggedInID !== '' ?
                <>
-                     <Header />
                      <BookManager
                           logOutUser={this.logOutUser}
                           loggedInID={loggedInID}
                           loggedInEmail={loggedInEmail}
                           permanentlyDeleteUserAndInfo={this.permanentlyDeleteUserAndInfo}
+                          settingsColor={this.state.settingsColor}
+                          changeSettingsColor={this.changeSettingsColor}
                      />
                </>
                :
@@ -203,10 +206,6 @@ class App extends React.Component {
                        </div>
              </>
              }
-
-             <footer className="clb-bookshelf-footer">
-               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
-             </footer>
 
          </div>
        );
