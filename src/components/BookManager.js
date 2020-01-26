@@ -230,6 +230,19 @@ class BookManager extends React.Component {
 
 
 
+         changeToReadView = (selectedOption) => {
+
+            let newBookCardView = 'alphabetical';
+            if(selectedOption) {
+                 if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
+            }
+
+            this.setState({ booksToReadView: newBookCardView });
+
+        }
+
+
+
 
   render() {
 
@@ -246,7 +259,9 @@ class BookManager extends React.Component {
                  loggedInEmail={this.props.loggedInEmail}
                  booksAlreadyRead={this.state.booksAlreadyRead}
                  booksAlreadyReadView={this.state.booksAlreadyReadView}
+                 booksToReadView={this.state.booksToReadView}
                  changeAlreadyReadView={this.changeAlreadyReadView}
+                 changeToReadView={this.changeToReadView}
                  booksToRead={this.state.booksToRead}
                  editBook={this.editBook}
                  editBookToRead={this.editBookToRead}

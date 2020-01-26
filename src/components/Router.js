@@ -54,6 +54,8 @@ class Router extends React.Component {
                               loggedInID={this.props.loggedInID}
                               loggedInEmail={this.props.loggedInEmail}
                               editBook={this.props.editBookToRead}
+                              booksToReadView={this.props.booksToReadView}
+                              changeToReadView={this.props.changeToReadView}
                               moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                               removeBookFromToRead={this.props.removeBookFromToRead}
                               addNewImagesToRead={this.props.addNewImagesToRead}

@@ -31,7 +31,9 @@ class BookCard extends React.Component {
      console.log(selfLink);
 
      if( this.props.alreadyRead === true || this.props.toRead === true ) {
-          if( this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '' ) {
+          if( (this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '')
+               && (this.props.book.volumeInfo.imageLinks.medium === undefined || this.props.book.volumeInfo.imageLinks.medium === '')
+               && (this.props.book.volumeInfo.imageLinks.small === undefined || this.props.book.volumeInfo.imageLinks.small === '') ) {
 
                // Get the details straight from Google, including larger image sizes
                fetch(selfLink)
@@ -112,7 +114,7 @@ class BookCard extends React.Component {
                     }
                }
 
-               
+
 
                title = book.volumeInfo.title;
                if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }

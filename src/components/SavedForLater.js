@@ -1,6 +1,6 @@
 import React from 'react';
 import BookCard from './BookCard.js';
-
+import SelectToReadView from './SelectToReadView.js';
 
 var shortid = require('shortid');
 
@@ -23,6 +23,56 @@ class SavedForLater extends React.Component {
          console.log(booksToRead);
          console.log(booksToRead.length);
 
+         let orderedBooks = null;
+
+               // order these books!
+               if( this.props.booksToReadView === 'alphabetical') {
+                    orderedBooks = [...booksToRead].sort((a, b) => (a.volumeInfo.title > b.volumeInfo.title) ? 1 : -1);
+
+               }
+
+               if( this.props.booksToReadView === 'date') {
+
+                         // New sorting
+                         orderedBooks = [...booksToRead].sort(function (a, b) {
+
+                         	// If the first item has a higher number, move it down
+                         	// If the first item has a lower number, move it up
+                         	if (a.bookshelfTimestamp > b.bookshelfTimestamp) return -1;
+                         	if (a.bookshelfTimestamp < b.bookshelfTimestamp) return 1;
+
+                         	// If the count number is the same between both items, sort alphabetically
+                         	// If the first item comes first in the alphabet, move it up
+                         	// Otherwise move it down
+                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
+               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+
+                         });
+
+               }
+
+               if( this.props.booksToReadView === 'rating') {
+
+                         // New sorting
+                         orderedBooks = [...booksToRead].sort(function (a, b) {
+
+                         	// If the first item has a higher number, move it down
+                         	// If the first item has a lower number, move it up
+                         	if (a.bookshelfRating > b.bookshelfRating) return -1;
+                         	if (a.bookshelfRating < b.bookshelfRating) return 1;
+
+                         	// If the count number is the same between both items, sort alphabetically
+                         	// If the first item comes first in the alphabet, move it up
+                         	// Otherwise move it down
+                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
+               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+
+                         });
+
+               }
+
+
+
        if( booksToRead.length === 0 || booksToRead === undefined ) {
 
                 return(
@@ -38,8 +88,17 @@ class SavedForLater extends React.Component {
     return(
     <div className="saved-for-later-area single-page">
       <h1>To Read</h1>
+           <div className="view-type">
+                     <div className="viewer-label">View Your Books by: </div>
+                     <div className="viewer-selector-area">
+                          <SelectToReadView
+                               defaultView={this.props.booksToReadView}
+                               changeToReadView={this.props.changeToReadView}
+                          />
+                </div>
+           </div>
            <div className="results-grid">
-                {booksToRead.map((book, index) => (
+                {orderedBooks.map((book, index) => (
                      <BookCard
                               key={book.id}
                               book={book}
