@@ -88,12 +88,6 @@ export default function BookModal(props) {
 
      if( bookTitleModal ) {
 
-          console.log("126 Update 1021am - COVER IMG URL: " + coverImageURL);
-          if( coverImageURL.startsWith("http://") ) {
-               coverImageURL = coverImageURL.replace("http://", "https://");
-               console.log("Updated COVER IMG URL: " + coverImageURL);
-          }
-
           return (
             <>
               <button onClick={handleShow} className="card-book-title">
@@ -177,6 +171,14 @@ export default function BookModal(props) {
           );
 
      } else if ( bookCoverModal ) {
+
+          if( coverImageURL !== null ) {
+               console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
+               if( coverImageURL.startsWith("http://") ) {
+                    coverImageURL = coverImageURL.replace("http://", "https://");
+                    console.log("Updated COVER IMG URL: " + coverImageURL);
+               }
+          }
 
           return (
             <>
