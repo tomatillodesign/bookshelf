@@ -276,6 +276,7 @@ class BookManager extends React.Component {
            }
 
            this.setState({ settingsColor: newSettingsColor });
+           localStorage.setItem('bookshelf.settingsColor', newSettingsColor);
 
        }
 
@@ -288,6 +289,7 @@ class BookManager extends React.Component {
           }
 
           this.setState({ settingsFont: newSettingsFont });
+          localStorage.setItem('bookshelf.settingsFont', newSettingsFont);
 
      }
 
@@ -296,19 +298,27 @@ class BookManager extends React.Component {
 
   render() {
 
-       console.log(this.props.settingsColor);
+       //console.log(this.props.settingsColor);
 
        const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
        // console.log(this.props.loggedInID);
        // console.log(this.props.loggedInEmail);
        // console.log(this.addBookAlreadyRead);
-       console.log(this.state.booksAlreadyRead);
+       //console.log(this.state.booksAlreadyRead);
+
+       const settingsColorLocal = localStorage.getItem('bookshelf.settingsColor');
+       let settingsColor = this.state.settingsColor;
+       if( settingsColorLocal !== null ) { settingsColor = settingsColorLocal; }
+
+       const settingsFontLocal = localStorage.getItem('bookshelf.settingsFont');
+       let settingsFont = this.state.settingsFont;
+       if( settingsFontLocal !== null ) { settingsFont = settingsFontLocal; }
 
        return(
             <>
             <Header
-               settingsColor={this.state.settingsColor}
-               settingsFont={this.state.settingsFont}
+               settingsColor={settingsColor}
+               settingsFont={settingsFont}
             />
             <Router
                  logOutUser={this.props.logOutUser}
@@ -320,9 +330,9 @@ class BookManager extends React.Component {
                  booksToReadView={this.state.booksToReadView}
                  changeAlreadyReadView={this.changeAlreadyReadView}
                  changeToReadView={this.changeToReadView}
-                 settingsColor={this.state.settingsColor}
+                 settingsColor={settingsColor}
                  changeSettingsColor={this.changeSettingsColor}
-                 settingsFont={this.state.settingsFont}
+                 settingsFont={settingsFont}
                  changeSettingsFont={this.changeSettingsFont}
                  booksToRead={this.state.booksToRead}
                  editBook={this.editBook}
@@ -335,7 +345,7 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
             />
-            <footer className={"clb-bookshelf-footer color-" + this.state.settingsColor + " font-" + this.state.settingsFont}>
+            <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
             </footer>
             </>
