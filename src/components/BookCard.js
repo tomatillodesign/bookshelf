@@ -112,7 +112,7 @@ class BookCard extends React.Component {
                     }
                }
 
-               //console.log("COVER IMG URL: " + coverImageURL);
+               console.log("126 Update 1014am - COVER IMG URL: " + coverImageURL);
                if( coverImageURL.startsWith("http://") ) {
                     coverImageURL = coverImageURL.replace("http://", "https://");
                     console.log("Updated COVER IMG URL: " + coverImageURL);
