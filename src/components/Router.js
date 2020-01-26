@@ -81,6 +81,8 @@ class Router extends React.Component {
                               logOutUser={this.props.logOutUser}
                               loggedInID={this.props.loggedInID}
                               loggedInEmail={this.props.loggedInEmail}
+                              resetPassword={this.props.resetPassword}
+                              permanentlyDeleteUserAndInfo={this.props.permanentlyDeleteUserAndInfo}
                          />}
                />
                <Route exact path="/register"

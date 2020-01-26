@@ -184,6 +184,7 @@ class App extends React.Component {
                           logOutUser={this.logOutUser}
                           loggedInID={loggedInID}
                           loggedInEmail={loggedInEmail}
+                          permanentlyDeleteUserAndInfo={this.permanentlyDeleteUserAndInfo}
                      />
                </>
                :

@@ -257,6 +257,7 @@ class BookManager extends React.Component {
                  logOutUser={this.props.logOutUser}
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
+                 permanentlyDeleteUserAndInfo={this.props.permanentlyDeleteUserAndInfo}
                  booksAlreadyRead={this.state.booksAlreadyRead}
                  booksAlreadyReadView={this.state.booksAlreadyReadView}
                  booksToReadView={this.state.booksToReadView}
