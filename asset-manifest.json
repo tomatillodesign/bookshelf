@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/bookshelf/static/css/main.0b29b694.chunk.css",
-    "main.js": "/bookshelf/static/js/main.4eb96d3f.chunk.js",
-    "main.js.map": "/bookshelf/static/js/main.4eb96d3f.chunk.js.map",
+    "main.js": "/bookshelf/static/js/main.d0c513e4.chunk.js",
+    "main.js.map": "/bookshelf/static/js/main.d0c513e4.chunk.js.map",
     "runtime-main.js": "/bookshelf/static/js/runtime-main.c1168acc.js",
     "runtime-main.js.map": "/bookshelf/static/js/runtime-main.c1168acc.js.map",
     "static/js/2.f5006649.chunk.js": "/bookshelf/static/js/2.f5006649.chunk.js",
     "static/js/2.f5006649.chunk.js.map": "/bookshelf/static/js/2.f5006649.chunk.js.map",
     "index.html": "/bookshelf/index.html",
-    "precache-manifest.3b7d25c1aeeb13c5a60ead6a4ff6b3a3.js": "/bookshelf/precache-manifest.3b7d25c1aeeb13c5a60ead6a4ff6b3a3.js",
+    "precache-manifest.c8c51a8f9304ebe938d0d5408d914e3d.js": "/bookshelf/precache-manifest.c8c51a8f9304ebe938d0d5408d914e3d.js",
     "service-worker.js": "/bookshelf/service-worker.js",
     "static/css/main.0b29b694.chunk.css.map": "/bookshelf/static/css/main.0b29b694.chunk.css.map",
     "static/js/2.f5006649.chunk.js.LICENSE": "/bookshelf/static/js/2.f5006649.chunk.js.LICENSE",
@@ -18,6 +18,6 @@
     "static/js/runtime-main.c1168acc.js",
     "static/js/2.f5006649.chunk.js",
     "static/css/main.0b29b694.chunk.css",
-    "static/js/main.4eb96d3f.chunk.js"
+    "static/js/main.d0c513e4.chunk.js"
   ]
 }
