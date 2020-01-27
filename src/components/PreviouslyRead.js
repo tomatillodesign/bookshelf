@@ -108,6 +108,8 @@ class PreviouslyRead extends React.Component {
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                               alreadyRead={true}
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
+                              settingsFont={this.props.settingsFont}
+                              settingsColor={this.props.settingsColor}
                          />
               ))}
               </div>

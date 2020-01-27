@@ -94,7 +94,7 @@ export default function BookModal(props) {
                 <h2 className="book-title">{title}</h2>
               </button>
 
-              <Modal show={show} onHide={handleClose} className="single-book-modal">
+              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
                 <Modal.Header closeButton>
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
@@ -186,7 +186,7 @@ export default function BookModal(props) {
                    <button onClick={handleShow} className="card-book-cover"><img src={coverImageURL} className="cover-image" /></button>
               </div>
 
-              <Modal show={show} onHide={handleClose} className="single-book-modal">
+              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
                 <Modal.Header closeButton>
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>

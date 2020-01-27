@@ -8,6 +8,7 @@ const DeleteAccount = (props) => {
 
      return (
           <button
+               className="settings-button delete-account"
                type="submit"
                onClick={e =>
             window.confirm(

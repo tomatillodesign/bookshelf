@@ -47,6 +47,8 @@ class Results extends React.Component {
                          searchResult={true}
                          addBookAlreadyRead={this.props.addBookAlreadyRead}
                          addBookToRead={this.props.addBookToRead}
+                         settingsFont={this.props.settingsFont}
+                         settingsColor={this.props.settingsColor}
                     />
           ))}
           </div>

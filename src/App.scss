@@ -397,8 +397,9 @@ footer a {
 }
 
 .top-info-line {
-     display: flex;
-     justify-content: space-between;
+     // display: flex;
+     // justify-content: space-between;
+     display: block;
 }
 
 .book-rating-area {
@@ -406,7 +407,8 @@ footer a {
 }
 
 .book-date-area {
-     width: 30%;
+     // width: 30%;
+     margin-top: 18px;
 }
 
 .App {
@@ -431,9 +433,49 @@ h1.logo-area {
 
 .logo-area a:hover {
      color: #000;
-
 }
 
+
+
+.color-font-area {
+     display: flex;
+     justify-content: center;
+     margin-bottom: 60px;
+}
+
+.select-color-area, .select-font-area {
+     flex-grow: 1;
+     max-width: 300px;
+}
+
+.select-color-area {
+     margin-right: 20px;
+}
+
+.select-font-area {
+     margin-left: 20px;
+}
+
+.settings-action-buttons-area {
+     margin-top: 60px;
+     text-align: center;
+}
+
+.settings-button {
+     display: block;
+     margin-bottom: 12px;
+     text-align: center;
+     margin-left: auto;
+     margin-right: auto;
+}
+
+.settings-button.delete-account {
+     background: #555;
+}
+
+.settings-button.delete-account:hover {
+     background: #000;
+}
 
 @media only screen and (min-width: 960px) {
 
@@ -772,6 +814,32 @@ Accent (Button):
      background: #4d1d49;  /* fallback for old browsers */
 }
 
+.color-purple button.already-read-description-toggle:hover,
+.color-purple .book-card button.card-book-title:hover,
+.color-purple button.read-action,
+.color-purple button.read-action.already-read
+{
+     color: #834b7c;
+}
+
+.color-purple.header a:hover {
+     color: #e3cee1;
+}
+
+.color-purple button,
+.color-purple .button,
+.color-purple .btn
+{
+     background: #834b7c;
+}
+
+.color-purple button.read-action,
+.color-purple button.card-book-cover,
+.color-purple .modal-header button
+{
+     background: transparent;
+}
+
 /* --- END PURPLE ------ */
 
 
@@ -805,12 +873,38 @@ Accent (Button):
 
 .header.color-green {
      background: #014422;  /* fallback for old browsers */
-     background: -webkit-linear-gradient(to right, #006727, #014422);  /* Chrome 10-25, Safari 5.1-6 */
-     background: linear-gradient(to right, #006727, #014422); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+     background: -webkit-linear-gradient(to right, #00b344, #014422);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #00b344, #014422); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .clb-bookshelf-footer.color-green {
      background: #014422;  /* fallback for old browsers */
+}
+
+.color-green button.already-read-description-toggle:hover,
+.color-green .book-card button.card-book-title:hover,
+.color-green button.read-action,
+.color-green button.read-action.already-read
+{
+     color: #008030;
+}
+
+.color-green.header a:hover {
+     color: #b3ffcf;
+}
+
+.color-green button,
+.color-green .button,
+.color-green .btn
+{
+     background: #008030;
+}
+
+.color-green button.read-action,
+.color-green button.card-book-cover,
+.color-green .modal-header button
+{
+     background: transparent;
 }
 
 /* --- END GREEN ------ */
@@ -824,16 +918,103 @@ Accent (Button):
 ---------------*/
 
 .header.color-orange {
-     background: #e67600;  /* fallback for old browsers */
-     background: -webkit-linear-gradient(to right, #ff901a, #e67600);  /* Chrome 10-25, Safari 5.1-6 */
-     background: linear-gradient(to right, #ff901a, #e67600); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+     background: #c6441f;  /* fallback for old browsers */
+     background: -webkit-linear-gradient(to right, #e47353, #c6441f);  /* Chrome 10-25, Safari 5.1-6 */
+     background: linear-gradient(to right, #e47353, #c6441f); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 .clb-bookshelf-footer.color-orange {
-     background: #e67600;  /* fallback for old browsers */
+     background: #c6441f;  /* fallback for old browsers */
+}
+
+.color-orange button.already-read-description-toggle:hover,
+.color-orange .book-card button.card-book-title:hover,
+.color-orange button.read-action,
+.color-orange button.read-action.already-read
+{
+     color: #e47353;
+}
+
+.color-orange.header a:hover {
+     color: #f5c9bd;
+}
+
+.color-orange button,
+.color-orange .button,
+.color-orange .btn
+{
+     background: #e47353;
+}
+
+.color-orange button.read-action,
+.color-orange button.card-book-cover,
+.color-orange .modal-header button
+{
+     background: transparent;
 }
 
 /* --- END ORANGE ------ */
 
 
 /* ------- END CLB Theme Color Customizations ----------- */
+
+
+
+/* ------- CLB Typography Customizations ----------- */
+
+.App .font-handwritten,
+.font-handwritten .logo-area,
+.font-handwritten h1,
+.font-handwritten h2,
+.single-book-modal.font-handwritten,
+.font-handwritten .single-book-title.modal-title.h4,
+.font-handwritten .book-subtitle
+{
+    font-family: 'Kalam', cursive;
+}
+
+
+
+.App .font-typewriter,
+.font-typewriter .logo-area,
+.font-typewriter h1,
+.font-typewriter h2,
+.single-book-modal.font-typewriter,
+.font-typewriter .single-book-title.modal-title.h4,
+.font-typewriter .book-subtitle {
+     font-family: 'Courier Prime', monospace;
+}
+
+
+
+
+.App .font-sans,
+.font-sans .logo-area,
+.font-sans h1,
+.font-sans h2,
+.single-book-modal.font-sans,
+.font-sans .single-book-title.modal-title.h4,
+.font-sans .book-subtitle {
+     font-family: 'Open Sans', sans-serif;
+}
+
+
+
+.App .font-serif,
+.font-serif .logo-area,
+.font-serif h1,
+.font-serif h2,
+.single-book-modal.font-serif,
+.font-serif .single-book-title.modal-title.h4,
+.font-serif .book-subtitle  {
+     font-family: 'Playfair Display', serif;
+}
+
+.font-serif .logo-area,
+.font-serif h2.section-title,
+.clb-bookshelf-footer.font-serif  {
+     font-style: italic;
+}
+
+
+/* ------- END CLB Typography Customizations ----------- */

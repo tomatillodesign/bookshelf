@@ -150,6 +150,8 @@ class BookCard extends React.Component {
 
                <div className="book-card">
                     <BookModal
+                         settingsFont={this.props.settingsFont}
+                         settingsColor={this.props.settingsColor}
                          bookCoverModal={true}
                          book={book}
                          alreadyRead={this.props.alreadyRead}
@@ -162,6 +164,8 @@ class BookCard extends React.Component {
                          removeBookFromToRead={this.props.removeBookFromToRead}
                     />
                     <BookModal
+                         settingsFont={this.props.settingsFont}
+                         settingsColor={this.props.settingsColor}
                          bookTitleModal={true}
                          book={book}
                          alreadyRead={this.props.alreadyRead}

@@ -37,6 +37,8 @@ class Router extends React.Component {
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                               addNewImagesToRead={this.props.addNewImagesToRead}
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
+                              settingsFont={this.props.settingsFont}
+                              settingsColor={this.props.settingsColor}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -44,6 +46,8 @@ class Router extends React.Component {
                     render={(props) => <Results {...props} test={true}
                                                   addBookAlreadyRead={this.props.addBookAlreadyRead}
                                                   addBookToRead={this.props.addBookToRead}
+                                                  settingsFont={this.props.settingsFont}
+                                                  settingsColor={this.props.settingsColor}
                                              />}
                />
 
@@ -59,6 +63,8 @@ class Router extends React.Component {
                               moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                               removeBookFromToRead={this.props.removeBookFromToRead}
                               addNewImagesToRead={this.props.addNewImagesToRead}
+                              settingsFont={this.props.settingsFont}
+                              settingsColor={this.props.settingsColor}
                          />}
                />
 
@@ -73,6 +79,8 @@ class Router extends React.Component {
                               editBook={this.props.editBook}
                               removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
+                              settingsFont={this.props.settingsFont}
+                              settingsColor={this.props.settingsColor}
                          />}
                />
                <Route exact path="/settings"

@@ -65,18 +65,28 @@ class Settings extends React.Component {
        return (
          <div className="settings-page-area single-page">
            <h1>Settings</h1>
-           <SelectThemeColor
-               settingsColor={this.props.settingsColor}
-               changeSettingsColor={this.props.changeSettingsColor}
-           />
-           <SelectThemeFont
-               settingsFont={this.props.settingsFont}
-               changeSettingsFont={this.props.changeSettingsFont}
-           />
+           <div className="color-font-area">
+                <div className="select-color-area">
+                    <h4>Select Color</h4>
+                     <SelectThemeColor
+                         settingsColor={this.props.settingsColor}
+                         changeSettingsColor={this.props.changeSettingsColor}
+                     />
+                </div>
+                <div className="select-font-area">
+                    <h4>Select Font</h4>
+                     <SelectThemeFont
+                         settingsFont={this.props.settingsFont}
+                         changeSettingsFont={this.props.changeSettingsFont}
+                     />
+                </div>
+           </div>
            <p>Currently logged in as: {this.props.loggedInEmail}</p>
-           <Logout logOutUser={this.props.logOutUser} />
-           <ChangePassword resetPassword={this.resetPassword} />
-           <DeleteAccount deleteAccount={this.deleteAccount} />
+           <div className="settings-action-buttons-area">
+                <Logout logOutUser={this.props.logOutUser} />
+                <ChangePassword resetPassword={this.resetPassword} />
+                <DeleteAccount deleteAccount={this.deleteAccount} />
+           </div>
          </div>
        );
      }

@@ -41,6 +41,8 @@ function RecentlyAddedAlreadyRead(props) {
                                       removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
                                       addNewImagesAlreadyRead={props.addNewImagesAlreadyRead}
                                       alreadyRead={true}
+                                      settingsFont={props.settingsFont}
+                                      settingsColor={props.settingsColor}
                               />
                       ))}
                       </div>

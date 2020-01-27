@@ -42,6 +42,8 @@ function RecentlyAddedToRead(props) {
                                       addNewImagesToRead={props.addNewImagesToRead}
                                       savedForLater={true}
                                       toRead={true}
+                                      settingsFont={props.settingsFont}
+                                      settingsColor={props.settingsColor}
                               />
                       ))}
                       </div>

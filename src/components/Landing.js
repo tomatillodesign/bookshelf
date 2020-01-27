@@ -16,12 +16,16 @@ function Landing(props) {
           moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
           removeBookFromToRead={props.removeBookFromToRead}
           addNewImagesToRead={props.addNewImagesToRead}
+          settingsFont={props.settingsFont}
+          settingsColor={props.settingsColor}
       />
       <RecentlyAddedAlreadyRead
           booksAlreadyRead={props.booksAlreadyRead}
           editBook={props.editBook}
           removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
           addNewImagesAlreadyRead={props.addNewImagesAlreadyRead}
+          settingsFont={props.settingsFont}
+          settingsColor={props.settingsColor}
       />
     </div>
   );
