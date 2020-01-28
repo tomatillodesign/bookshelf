@@ -14,6 +14,8 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - Basic suite of account tools (registration, lost password, etc.)
 - Clean, clear navigation using React Router
 - Filter and sort shelves view by different criteria
+- User can select different themes (color + font choices)
+- Mobile-friendly options
 
 
 ## Technical Credits
@@ -22,19 +24,19 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - [React Router](https://www.npmjs.com/package/react-router)
 - [MaterialUI](https://material-ui.com/)
 - [React Bootstrap](https://react-bootstrap.github.io/)
-- [React Flip Toolkit](https://github.com/aholachek/react-flip-toolkit)
 - [GitHub Pages](https://github.com/gitname/react-gh-pages)
 
 
 ## To Do's
 
-- Clean up the registration language and make the process as simple as possible
-- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
-- Setup 3-4 different themes (fonts + colors), available on the Settings page
+- ~~Clean up the registration language and make the process as simple as possible~~
+- ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
 - Fix flashing book image (too many hits to Google's servers for the featured image)
-- Mobile-friendly
+- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
+- ~~Mobile-friendly~~
+- Re-format JSON --> smaller, more organized book objects
 - Clean up code, remove console logs, etc.
-- Speed up navigation (possibly remove React Router - try it on a new branch)
+- ~~Speed up navigation (possibly remove React Router - try it on a new branch)~~
 
 
 ## Next Level
