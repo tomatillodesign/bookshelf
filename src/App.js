@@ -186,8 +186,6 @@ class App extends React.Component {
                           loggedInID={loggedInID}
                           loggedInEmail={loggedInEmail}
                           permanentlyDeleteUserAndInfo={this.permanentlyDeleteUserAndInfo}
-                          settingsColor={this.state.settingsColor}
-                          changeSettingsColor={this.changeSettingsColor}
                      />
                </>
                :

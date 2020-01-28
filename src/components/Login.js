@@ -103,7 +103,6 @@ render() {
                    </div>
                    <div className="login-item">
               <input
-                  type="text"
                   id="login-form-password"
                   name="password"
                   label="Password"

@@ -12,7 +12,6 @@ class BookManager extends React.Component {
 
      constructor(props){
         super(props);
-        console.log(this.props.settingsColor);
         this.state = {
              booksToRead: [],
              booksAlreadyRead: [],
@@ -30,6 +29,9 @@ class BookManager extends React.Component {
        console.log("componentDidMount");
        const loggedInID = this.props.loggedInID;
        console.log("loggedInID:" + loggedInID);
+
+
+       // Firebase Connections
 
        base.syncState(`${loggedInID}/booksToRead`, {
          context: this,
@@ -77,6 +79,40 @@ class BookManager extends React.Component {
          defaultValue: 'default',
          asArray: false
        });
+
+
+       // Updating theme data & saving to localStorage
+       // Color
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
+
+            base.fetch(`${loggedInID}/settingsColor`, {
+              context: this,
+              asArray: false,
+              then(data){
+                if( settingsColorLocal !== data ) {
+                     console.log("Setting updated color into localStorage: " + data);
+                     localStorage.setItem(localStorageKeyColor, data);
+                }
+              }
+            });
+
+
+       // Updating theme data & saving to localStorage
+       // Font
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
+
+            base.fetch(`${loggedInID}/settingsFont`, {
+              context: this,
+              asArray: false,
+              then(data){
+                   if( settingsFontLocal !== data ) {
+                       console.log("Setting updated font into localStorage: " + data);
+                       localStorage.setItem(localStorageKeyFont, data);
+                  }
+              }
+            });
 
   }
 
@@ -270,13 +306,17 @@ class BookManager extends React.Component {
 
         changeSettingsColor = (selectedOption) => {
 
+
+
            let newSettingsColor = 'default';
            if(selectedOption) {
                 newSettingsColor = selectedOption.value;
            }
 
            this.setState({ settingsColor: newSettingsColor });
-           localStorage.setItem('bookshelf.settingsColor', newSettingsColor);
+
+           const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+           localStorage.setItem(localStorageKey, newSettingsColor);
 
        }
 
@@ -289,7 +329,9 @@ class BookManager extends React.Component {
           }
 
           this.setState({ settingsFont: newSettingsFont });
-          localStorage.setItem('bookshelf.settingsFont', newSettingsFont);
+
+          const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+          localStorage.setItem(localStorageKey, newSettingsFont);
 
      }
 
@@ -298,21 +340,15 @@ class BookManager extends React.Component {
 
   render() {
 
-       //console.log(this.props.settingsColor);
-
        const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
-       // console.log(this.props.loggedInID);
-       // console.log(this.props.loggedInEmail);
-       // console.log(this.addBookAlreadyRead);
-       //console.log(this.state.booksAlreadyRead);
 
-       const settingsColorLocal = localStorage.getItem('bookshelf.settingsColor');
-       let settingsColor = this.state.settingsColor;
-       if( settingsColorLocal !== null ) { settingsColor = settingsColorLocal; }
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
+       const settingsColor = settingsColorLocal;
 
-       const settingsFontLocal = localStorage.getItem('bookshelf.settingsFont');
-       let settingsFont = this.state.settingsFont;
-       if( settingsFontLocal !== null ) { settingsFont = settingsFontLocal; }
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
+       const settingsFont = settingsFontLocal;
 
        return(
             <>

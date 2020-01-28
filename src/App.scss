@@ -1018,3 +1018,134 @@ Accent (Button):
 
 
 /* ------- END CLB Typography Customizations ----------- */
+
+
+
+
+/* ------- CLB Mobile Customizations ----------- */
+
+@media (max-width: 1400px) {
+
+     .single-page .results-grid {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+     }
+
+
+}
+
+@media (max-width: 1280px) {
+
+     .landing-page-area .results-grid.four-col {
+         grid-template-columns: 1fr 1fr 1fr;
+         grid-column-gap: 20px;
+         grid-row-gap: 20px;
+         margin-top: 20px;
+         justify-items: center;
+     }
+
+}
+
+@media (max-width: 1060px) {
+
+     .landing-page-area .results-grid.four-col {
+         grid-template-columns: 1fr 1fr;
+         grid-column-gap: 20px;
+         grid-row-gap: 30px;
+         margin-top: 20px;
+         justify-items: center;
+     }
+
+     .header {
+          display: grid;
+          grid-template-columns: 1fr;
+     }
+
+     .menu-item {
+         display: block;
+     }
+
+     #menu-main-menu {
+          display: flex;
+          // grid-template-columns: 1fr 1fr 1fr 1fr;
+          justify-content: space-around;
+     }
+
+     .menu-main-menu {
+         padding-left: 0;
+     }
+
+     .menu-item a {
+          padding: 4px;
+     }
+
+     .single-page .results-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+          margin: 30px;
+     }
+
+     .single-page .book-card {
+          width: 100%;
+     }
+
+     .search-page-area {
+          margin-top: 20px;
+     }
+
+     #book-title-search {
+          display: block;
+     }
+
+     #book-title-search .btn-info {
+          margin-top: 12px;
+     }
+
+     .form-group {
+         width: 100%;
+     }
+
+}
+
+@media (max-width: 600px) {
+
+     .landing-page-area .results-grid.four-col {
+         grid-template-columns: 1fr;
+         grid-column-gap: 20px;
+         grid-row-gap: 40px;
+         margin-top: 20px;
+         justify-items: center;
+     }
+
+     #menu-main-menu {
+          display: grid;
+          grid-template-columns: 1fr;
+     }
+
+     .single-page .results-grid {
+          grid-template-columns: 1fr;
+     }
+
+     .view-type {
+         display: block;
+         text-align: center;
+         margin-left: auto;
+         margin-right: auto;
+     }
+
+     .viewer-selector-area {
+         margin-left: auto;
+         margin-right: auto;
+     }
+
+     .color-font-area {
+         display: block;
+         margin-left: auto;
+         margin-right: auto;
+     }
+
+     .select-color-area, .select-font-area {
+          // margin: 0 !important;
+          margin-left: auto;
+         margin-right: auto;
+     }
+
+}
