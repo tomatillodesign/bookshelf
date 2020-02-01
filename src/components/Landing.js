@@ -9,7 +9,9 @@ function Landing(props) {
 
   return (
     <div className="landing-page-area single-page">
-
+      { props.notification &&
+           <div className="notification-area">{props.notification}</div>
+      }
       <RecentlyAddedToRead
           booksToRead={props.booksToRead}
           editBook={props.editBook}

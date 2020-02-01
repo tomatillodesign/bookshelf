@@ -477,6 +477,22 @@ h1.logo-area {
      background: #000;
 }
 
+
+
+.notification-area {
+     background: rgba(255,255,0,.95);
+     padding: 14px 20px;
+     display: inline-block;
+     border-radius: 5px;
+     position: fixed;
+     top: 10vh;
+     left: 50%;
+     transform: translateX(-50%);
+}
+
+
+
+
 @media only screen and (min-width: 960px) {
 
      .single-page {

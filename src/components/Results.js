@@ -37,6 +37,9 @@ class Results extends React.Component {
 
        return (
          <div className="results-page-area single-page">
+         { this.props.notification &&
+              <div className="notification-area">{this.props.notification}</div>
+         }
            <h1>Search Results</h1>
 
            <div className="results-grid">

@@ -39,6 +39,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              notification={this.props.notification}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -48,6 +49,7 @@ class Router extends React.Component {
                                                   addBookToRead={this.props.addBookToRead}
                                                   settingsFont={this.props.settingsFont}
                                                   settingsColor={this.props.settingsColor}
+                                                  notification={this.props.notification}
                                              />}
                />
 
@@ -65,6 +67,7 @@ class Router extends React.Component {
                               addNewImagesToRead={this.props.addNewImagesToRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              notification={this.props.notification}
                          />}
                />
 

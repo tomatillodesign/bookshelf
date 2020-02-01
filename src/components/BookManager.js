@@ -20,6 +20,7 @@ class BookManager extends React.Component {
              settingsColor: 'default',
              settingsFont: 'default',
              settingsTightness: 'default',
+             notification: null
       };
     }
 
@@ -124,9 +125,13 @@ class BookManager extends React.Component {
          bookObj.bookshelfRating = 0;
          bookObj.bookshelfNote = '';
          bookObj.bookshelfCover = null;
+         let bookTitle = bookObj.volumeInfo.title;
          this.setState(prevState => ({
-            booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
+            booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
+            notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf'
            }));
+
+           this.startNotificationTimer();
 
        }
 
@@ -137,9 +142,13 @@ class BookManager extends React.Component {
           bookObj.bookshelfRating = 0;
           bookObj.bookshelfNote = '';
           bookObj.bookshelfCover = null;
+          let bookTitle = bookObj.volumeInfo.title;
           this.setState(prevState => ({
-             booksToRead: [...prevState.booksToRead, bookObj]
+             booksToRead: [...prevState.booksToRead, bookObj],
+             notification: 'You added ' + bookTitle + ' to your TO READ shelf'
             }));
+
+            this.startNotificationTimer();
 
         }
 
@@ -152,9 +161,13 @@ class BookManager extends React.Component {
            // bookObj.volumeInfo.imageLinks.large = '';                  //new value, image only
            // bookObj.volumeInfo.imageLinks.medium = '';
            // bookObj.volumeInfo.imageLinks.small = '';
+           let bookTitle = bookObj.volumeInfo.title;
            this.setState(prevState => ({
-              booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj]
+              booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
+              notification: 'You moved ' + bookTitle + ' to your ALREADY READ shelf'
              }));
+
+             this.startNotificationTimer();
 
             console.log("MOVED: " + JSON.stringify(bookObj));
             let bookID = bookObj.id;
@@ -336,6 +349,17 @@ class BookManager extends React.Component {
      }
 
 
+     resetNotification = () => {
+          this.setState({ notification: null });
+     }
+
+     startNotificationTimer = () => {
+       if(!this.timerId){
+         this.timerId = setInterval(()=>{
+           this.resetNotification();
+      }, 8000);
+       }
+     }
 
 
   render() {
@@ -380,6 +404,7 @@ class BookManager extends React.Component {
                  removeBookFromToRead={this.removeBookFromToRead}
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
+                 notification={this.state.notification}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

@@ -1,6 +1,6 @@
 # Bookshelf 📘
 
-Interactive shelves for tracking books you've read and what you're going to read next.
+Interactive shelves for tracking books you've already read and what you're going to read next.
 
 
 ## Objective
@@ -15,7 +15,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - Clean, clear navigation using React Router
 - Filter and sort shelves view by different criteria
 - User can select different themes (color + font choices)
-- Mobile-friendly options
+- Mobile-friendly
 
 
 ## Technical Credits
@@ -29,13 +29,12 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 
 ## To Do's
 
-- ~~Clean up the registration language and make the process as simple as possible~~
-- ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
 - Fix flashing book image (too many hits to Google's servers for the featured image)
-- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
-- ~~Mobile-friendly~~
 - Re-format JSON --> smaller, more organized book objects
 - Clean up code, remove console logs, etc.
+- ~~Clean up the registration language and make the process as simple as possible~~
+- ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
+- ~~Mobile-friendly~~
 - ~~Speed up navigation (possibly remove React Router - try it on a new branch)~~
 
 
@@ -43,3 +42,4 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 
 - Add your own book (not using Google Books search)
 - Upload your own cover image for any book
+- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.

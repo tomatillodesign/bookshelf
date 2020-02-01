@@ -88,6 +88,9 @@ class SavedForLater extends React.Component {
     return(
     <div className="saved-for-later-area single-page">
       <h1>To Read</h1>
+      { this.props.notification &&
+           <div className="notification-area">{this.props.notification}</div>
+      }
            <div className="view-type">
                      <div className="viewer-label">View Your Books by: </div>
                      <div className="viewer-selector-area">
