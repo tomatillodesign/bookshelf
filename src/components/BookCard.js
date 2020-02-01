@@ -162,6 +162,7 @@ class BookCard extends React.Component {
                          bookshelfTimestamp={bookshelfTimestamp}
                          removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                          removeBookFromToRead={this.props.removeBookFromToRead}
+                         searchResult={this.props.searchResult}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -176,6 +177,7 @@ class BookCard extends React.Component {
                          bookshelfTimestamp={bookshelfTimestamp}
                          removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
                          removeBookFromToRead={this.props.removeBookFromToRead}
+                         searchResult={this.props.searchResult}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

@@ -33,6 +33,7 @@ export default function BookModal(props) {
      let authorsToPublish = null;
      let dateToPublish = null;
      let date = null;
+     let pageCount = null;
 
      if( book.volumeInfo !== undefined ) {
           if( book.volumeInfo.imageLinks !== undefined ) {
@@ -65,6 +66,7 @@ export default function BookModal(props) {
 
           categories = book.volumeInfo.categories;
           date = book.volumeInfo.publishedDate;
+          pageCount = book.volumeInfo.pageCount;
 
           if( book.volumeInfo.authors !== undefined ) {
                if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
@@ -72,9 +74,9 @@ export default function BookModal(props) {
                if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
 
                if( hasSubtitle ) {
-                    authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}</div>;
+                    authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages</div>;
                } else {
-                    authorsToPublish = <div className="authors">{authorsToPublish}</div>;
+                    authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages</div>;
                }
           }
 
@@ -85,6 +87,28 @@ export default function BookModal(props) {
      }
 
      //console.log(props.bookshelfRating);
+     let editForm = null;
+     if( props.searchResult !== true ) {
+          if( props.alreadyRead !== true ) {
+               editForm = <EditBookForm
+                    book={book}
+                    hideRating={true}
+                    hideDate={true}
+                    bookshelfRating={props.bookshelfRating}
+                    bookshelfNote={props.bookshelfNote}
+                    bookshelfTimestamp={props.bookshelfTimestamp}
+                    editBook={props.editBook}
+               />;
+          } else if( props.alreadyRead ) {
+               editForm = <EditBookForm
+                    book={book}
+                    bookshelfRating={props.bookshelfRating}
+                    bookshelfNote={props.bookshelfNote}
+                    bookshelfTimestamp={props.bookshelfTimestamp}
+                    editBook={props.editBook}
+               />;
+          }
+     }
 
      if( bookTitleModal ) {
 
@@ -104,39 +128,17 @@ export default function BookModal(props) {
                     </div>
                     {subtitle}
                     {authorsToPublish}
-                    { props.alreadyRead !== true &&
                          <>
-                         <EditBookForm
-                              book={book}
-                              hideRating={true}
-                              hideDate={true}
-                              bookshelfRating={props.bookshelfRating}
-                              bookshelfNote={props.bookshelfNote}
-                              bookshelfTimestamp={props.bookshelfTimestamp}
-                              editBook={props.editBook}
-                         />
-                         <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                        </>
-                   }
-                    { props.alreadyRead &&
-                         <>
-                         <EditBookForm
-                              book={book}
-                              bookshelfRating={props.bookshelfRating}
-                              bookshelfNote={props.bookshelfNote}
-                              bookshelfTimestamp={props.bookshelfTimestamp}
-                              editBook={props.editBook}
-                         />
+                         {editForm}
                          <Accordion>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>Description</h3>
+                                <h3>Description +</h3>
                               </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
                             </Accordion.Collapse>
                         </Accordion>
                         </>
-                   }
                 </Modal.Body>
                 <Modal.Footer>
                 <div className="book-meta button-area">
@@ -173,10 +175,10 @@ export default function BookModal(props) {
      } else if ( bookCoverModal ) {
 
           if( coverImageURL !== null ) {
-               console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
+               //console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
                if( coverImageURL.startsWith("http://") ) {
                     coverImageURL = coverImageURL.replace("http://", "https://");
-                    console.log("Updated COVER IMG URL: " + coverImageURL);
+                    //console.log("Updated COVER IMG URL: " + coverImageURL);
                }
           }
 
@@ -196,29 +198,7 @@ export default function BookModal(props) {
                      </div>
                     {subtitle}
                     {authorsToPublish}
-                    { props.alreadyRead !== true &&
-                         <>
-                         <EditBookForm
-                              book={book}
-                              hideRating={true}
-                              hideDate={true}
-                              bookshelfRating={props.bookshelfRating}
-                              bookshelfNote={props.bookshelfNote}
-                              bookshelfTimestamp={props.bookshelfTimestamp}
-                              editBook={props.editBook}
-                         />
-                         <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                        </>
-                   }
-                    { props.alreadyRead &&
-                         <>
-                         <EditBookForm
-                              book={book}
-                              bookshelfRating={props.bookshelfRating}
-                              bookshelfNote={props.bookshelfNote}
-                              bookshelfTimestamp={props.bookshelfTimestamp}
-                              editBook={props.editBook}
-                         />
+                         {editForm}
                          <Accordion>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
                                 <h3>View Description +</h3>
@@ -227,8 +207,7 @@ export default function BookModal(props) {
                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
                             </Accordion.Collapse>
                         </Accordion>
-                        </>
-                   }
+
                 </Modal.Body>
                 <Modal.Footer>
                 <div className="book-meta button-area">
