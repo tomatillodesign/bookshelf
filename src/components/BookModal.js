@@ -6,6 +6,7 @@ import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import EditBookForm from './EditBookForm.js';
 import BookButtonRemove from './BookButtonRemove';
+import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 
 import SelectRating from './SelectRating';
 
@@ -157,13 +158,18 @@ export default function BookModal(props) {
                           context={'removeBookFromToRead'}
                           removeBookFromToRead={props.removeBookFromToRead}
                      />
-                     <BookButtonAlreadyRead />
+                     <BookButtonMoveToAlreadyRead
+                          book={props.book}
+                          moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
+                     />
                      </>
                 }
                 { props.searchResult &&
                      <>
                      <BookButtonToRead />
-                     <BookButtonAlreadyRead />
+                     <BookButtonAlreadyRead
+                         addBookAlreadyRead={props.addBookAlreadyRead}
+                     />
                      </>
                 }
                 </div>
@@ -226,7 +232,10 @@ export default function BookModal(props) {
                           context={'removeBookFromToRead'}
                           removeBookFromToRead={props.removeBookFromToRead}
                      />
-                     <BookButtonAlreadyRead />
+                     <BookButtonMoveToAlreadyRead
+                          book={props.book}
+                          moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
+                     />
                      </>
                 }
                 { props.searchResult &&

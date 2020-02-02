@@ -351,12 +351,15 @@ class BookManager extends React.Component {
 
      resetNotification = () => {
           this.setState({ notification: null });
+          //clearTimeout(this.timerId); 
      }
 
      startNotificationTimer = () => {
        if(!this.timerId){
-         this.timerId = setInterval(()=>{
+         this.timerId = setTimeout(()=>{
            this.resetNotification();
+           console.log("startNotificationTimer - tick");
+           console.log(this.timerId);
       }, 8000);
        }
      }
