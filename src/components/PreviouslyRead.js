@@ -75,7 +75,7 @@ class PreviouslyRead extends React.Component {
 
 
 
-         if( booksAlreadyRead.length === 0 || booksAlreadyRead === undefined ) {
+         if( booksAlreadyRead === undefined || booksAlreadyRead.length === 0 ) {
 
                   return(
                   <div className="previously-read-area single-page">

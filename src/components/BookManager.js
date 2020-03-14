@@ -13,16 +13,30 @@ class BookManager extends React.Component {
      constructor(props){
         super(props);
         this.state = {
-             booksToRead: [],
-             booksAlreadyRead: [],
-             booksToReadView: 'alphabetical',
-             booksAlreadyReadView: 'alphabetical',
-             settingsColor: 'default',
-             settingsFont: 'default',
-             settingsTightness: 'default',
+             books: [],
+             settings: {
+                         color: 'default',
+                         font: 'default',
+                         sortViewToRead: 'alphabetical',
+                         sortViewAlreadyRead: 'alphabetical',
+                         bookSize: 'default',
+                         genres: [
+                              'Fiction',
+                              'Nonfiction',
+                              'Memoir',
+                              'Children',
+                              'Cooking',
+                              'Historical Fiction',
+                              'Mystery',
+                              'Science Fiction',
+                              'Young Adult',
+                         ],
+                         customFields: [],
+                    },
              notification: null
-      };
     }
+
+}
 
 
     componentDidMount(){
@@ -34,60 +48,25 @@ class BookManager extends React.Component {
 
        // Firebase Connections
 
-       base.syncState(`${loggedInID}/booksToRead`, {
+       base.syncState(`${loggedInID}/books`, {
          context: this,
-         state: 'booksToRead',
+         state: 'books',
          asArray: true
        });
 
-       base.syncState(`${loggedInID}/booksAlreadyRead`, {
+       base.syncState(`${loggedInID}/settings`, {
          context: this,
-         state: 'booksAlreadyRead',
-         asArray: true
-       });
-
-       base.syncState(`${loggedInID}/booksToReadView`, {
-         context: this,
-         state: 'booksToReadView',
-         defaultValue: 'Alphabetical',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/booksAlreadyReadView`, {
-         context: this,
-         state: 'booksAlreadyReadView',
-         defaultValue: 'Alphabetical',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsColor`, {
-         context: this,
-         state: 'settingsColor',
-         defaultValue: 'default',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsFont`, {
-         context: this,
-         state: 'settingsFont',
-         defaultValue: 'default',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsTightness`, {
-         context: this,
-         state: 'settingsTightness',
-         defaultValue: 'default',
+         state: 'settings',
          asArray: false
        });
 
 
        // Updating theme data & saving to localStorage
        // Color
-       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settings.color';
        const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
 
-            base.fetch(`${loggedInID}/settingsColor`, {
+            base.fetch(`${loggedInID}/settings/color`, {
               context: this,
               asArray: false,
               then(data){
@@ -101,10 +80,10 @@ class BookManager extends React.Component {
 
        // Updating theme data & saving to localStorage
        // Font
-       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settings.font';
        const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
 
-            base.fetch(`${loggedInID}/settingsFont`, {
+            base.fetch(`${loggedInID}/settings/font`, {
               context: this,
               asArray: false,
               then(data){
@@ -121,13 +100,39 @@ class BookManager extends React.Component {
      // Functions to maniuplate state / books
      addBookAlreadyRead = (bookObj) => {
          console.log(bookObj);
-         bookObj.bookshelfTimestamp = Date.now();
-         bookObj.bookshelfRating = 0;
-         bookObj.bookshelfNote = '';
-         bookObj.bookshelfCover = null;
+
+         // bookObj.bookshelfTimestamp = Date.now();
+         // bookObj.bookshelfRating = 0;
+         // bookObj.bookshelfNote = '';
+         // bookObj.bookshelfCover = null;
+
+         // set my fields for books in DB
+         const newBook = {};
+
+         let subtitle = bookObj.volumeInfo.subtitle;
+         if( subtitle === undefined ) { subtitle = null; }
+
+         newBook.id = bookObj.id;
+         newBook.title = bookObj.volumeInfo.title;
+         newBook.subtitle = subtitle;
+         newBook.authors = bookObj.volumeInfo.authors;
+         newBook.bookshelfTimestamp = Date.now();
+         newBook.bookshelfRating = 0;
+         newBook.notes = [];
+         newBook.coverImg = null;
+         newBook.alreadyRead = true;
+         newBook.googleLink = bookObj.selfLink;
+         newBook.description = bookObj.volumeInfo.description;
+         newBook.publisher = bookObj.volumeInfo.publisher;
+         newBook.publishedDate = bookObj.volumeInfo.publishedDate
+         newBook.pageCount = bookObj.volumeInfo.pageCount;
+         newBook.genre = null;
+
+         console.log(newBook);
+
          let bookTitle = bookObj.volumeInfo.title;
          this.setState(prevState => ({
-            booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
+            books: [...prevState.books, newBook],
             notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf'
            }));
 
@@ -289,16 +294,19 @@ class BookManager extends React.Component {
 
 
           changeAlreadyReadView = (selectedOption) => {
-              // console.log('CHANGE BEER CARD VIEW');
-              // console.log(newViewString);
+              console.log('CHANGE sortViewAlreadyRead');
+              console.log(selectedOption);
 
-              let newBookCardView = 'alphabetical';
+              let sortViewAlreadyRead = 'alphabetical';
               if(selectedOption) {
-                  if( selectedOption.value === 'rating' ) { newBookCardView = 'rating'; }
-                  if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
+                  if( selectedOption.value === 'rating' ) { sortViewAlreadyRead = 'rating'; }
+                  if( selectedOption.value === 'date' ) { sortViewAlreadyRead = 'date'; }
               }
 
-              this.setState({ booksAlreadyReadView: newBookCardView });
+              this.setState({ settings: {
+                         sortViewAlreadyRead: sortViewAlreadyRead
+                    }
+              });
 
          }
 
@@ -311,7 +319,11 @@ class BookManager extends React.Component {
                  if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
             }
 
-            this.setState({ booksToReadView: newBookCardView });
+            //this.setState({ booksToReadView: newBookCardView });
+            this.setState({ settings: {
+                       sortViewToRead: newBookCardView
+                  }
+            });
 
         }
 
@@ -319,16 +331,17 @@ class BookManager extends React.Component {
 
         changeSettingsColor = (selectedOption) => {
 
-
-
            let newSettingsColor = 'default';
            if(selectedOption) {
                 newSettingsColor = selectedOption.value;
            }
 
-           this.setState({ settingsColor: newSettingsColor });
+           this.setState({ settings: {
+                      color: newSettingsColor
+                 }
+           });
 
-           const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+           const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settings.color';
            localStorage.setItem(localStorageKey, newSettingsColor);
 
        }
@@ -341,9 +354,12 @@ class BookManager extends React.Component {
                newSettingsFont = selectedOption.value;
           }
 
-          this.setState({ settingsFont: newSettingsFont });
+          this.setState({ settings: {
+                     font: newSettingsFont
+               }
+          });
 
-          const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+          const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settings.font';
           localStorage.setItem(localStorageKey, newSettingsFont);
 
      }
@@ -351,7 +367,6 @@ class BookManager extends React.Component {
 
      resetNotification = () => {
           this.setState({ notification: null });
-          //clearTimeout(this.timerId); 
      }
 
      startNotificationTimer = () => {
@@ -369,11 +384,11 @@ class BookManager extends React.Component {
 
        const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
 
-       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settings.color';
        const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
        const settingsColor = settingsColorLocal;
 
-       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settings.font';
        const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
        const settingsFont = settingsFontLocal;
 

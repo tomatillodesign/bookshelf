@@ -8,7 +8,7 @@ function RecentlyAddedToRead(props) {
      // console.log(booksToRead);
      // console.log(booksToRead.length);
 
-      if( booksToRead.length !== 0 && booksToRead !== undefined ) {
+      if( booksToRead !== undefined && booksToRead.length !== 0 ) {
 
            // New sorting
            orderedBooks = [...booksToRead].sort(function (a, b) {

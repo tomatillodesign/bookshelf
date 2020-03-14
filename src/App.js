@@ -38,14 +38,27 @@ class App extends React.Component {
                  [newUserID]: {
                       ownerID: newUserID,
                       ownerEmail: newUserEmail,
-                      booksToRead: [],
-                      booksAlreadyRead: [],
-                      booksToReadView: 'alphabetical',
-                      booksAlreadyReadView: 'alphabetical',
-                      settingsColor: 'default',
-                      settingsFont: 'default',
-                      settingsTightness: 'default',
-                 },
+                      books: [],
+                      settings: {
+                                   color: 'default',
+                                   font: 'default',
+                                   sortViewToRead: 'alphabetical',
+                                   sortViewAlreadyRead: 'alphabetical',
+                                   bookSize: 'default',
+                                   genres: [
+                                        'Fiction',
+                                        'Nonfiction',
+                                        'Memoir',
+                                        'Children',
+                                        'Cooking',
+                                        'Historical Fiction',
+                                        'Mystery',
+                                        'Science Fiction',
+                                        'Young Adult',
+                                   ],
+                                   customFields: [],
+                              },
+                         },
               });
 
               this.setState({
@@ -137,6 +150,7 @@ class App extends React.Component {
    }
 
 
+   // Delete user not working ????
    permanentlyDeleteUserAndInfo = user => {
 
         console.log(user);

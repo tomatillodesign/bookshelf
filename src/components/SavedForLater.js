@@ -21,7 +21,7 @@ class SavedForLater extends React.Component {
 
          const booksToRead = this.props.booksToRead;
          console.log(booksToRead);
-         console.log(booksToRead.length);
+         //console.log(booksToRead.length);
 
          let orderedBooks = booksToRead;
 
@@ -73,7 +73,7 @@ class SavedForLater extends React.Component {
 
 
 
-       if( booksToRead.length === 0 || booksToRead === undefined ) {
+       if( booksToRead === undefined || booksToRead.length === 0  ) {
 
                 return(
                 <div className="saved-for-later-area single-page">
