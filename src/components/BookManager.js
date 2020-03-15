@@ -99,12 +99,6 @@ class BookManager extends React.Component {
 
      // Functions to maniuplate state / books
      addBookAlreadyRead = (bookObj) => {
-         console.log(bookObj);
-
-         // bookObj.bookshelfTimestamp = Date.now();
-         // bookObj.bookshelfRating = 0;
-         // bookObj.bookshelfNote = '';
-         // bookObj.bookshelfCover = null;
 
          // set my fields for books in DB
          const newBook = {};
@@ -142,15 +136,32 @@ class BookManager extends React.Component {
 
 
        addBookToRead = (bookObj) => {
-          console.log(bookObj);
-          bookObj.bookshelfTimestamp = Date.now();
-          bookObj.bookshelfRating = 0;
-          bookObj.bookshelfNote = '';
-          bookObj.bookshelfCover = null;
-          let bookTitle = bookObj.volumeInfo.title;
+            // set my fields for books in DB
+          const newBook = {};
+
+          let subtitle = bookObj.volumeInfo.subtitle;
+          if( subtitle === undefined ) { subtitle = null; }
+
+          newBook.id = bookObj.id;
+          newBook.title = bookObj.volumeInfo.title;
+          newBook.subtitle = subtitle;
+          newBook.authors = bookObj.volumeInfo.authors;
+          newBook.bookshelfTimestamp = Date.now();
+          newBook.bookshelfRating = 0;
+          newBook.notes = [];
+          newBook.coverImg = null;
+          newBook.alreadyRead = false;
+          newBook.googleLink = bookObj.selfLink;
+          newBook.description = bookObj.volumeInfo.description;
+          newBook.publisher = bookObj.volumeInfo.publisher;
+          newBook.publishedDate = bookObj.volumeInfo.publishedDate
+          newBook.pageCount = bookObj.volumeInfo.pageCount;
+          newBook.genre = null;
+
+          console.log(newBook);
           this.setState(prevState => ({
-             booksToRead: [...prevState.booksToRead, bookObj],
-             notification: 'You added ' + bookTitle + ' to your TO READ shelf'
+             books: [...prevState.books, newBook],
+             notification: 'You added ' + newBook.title + ' to your TO READ shelf'
             }));
 
             this.startNotificationTimer();
@@ -159,32 +170,23 @@ class BookManager extends React.Component {
 
 
         moveBooktoAlreadyRead = (bookObj) => {
+
            console.log(bookObj);
-           bookObj.bookshelfTimestamp = Date.now();
-           bookObj.bookshelfRating = 0;
-           bookObj.bookshelfCover = null;
-           // bookObj.volumeInfo.imageLinks.large = '';                  //new value, image only
-           // bookObj.volumeInfo.imageLinks.medium = '';
-           // bookObj.volumeInfo.imageLinks.small = '';
-           let bookTitle = bookObj.volumeInfo.title;
+
+           // get the book object
+           const bookID = bookObj.id;
+           const bookTitle = bookObj.title;
+           const clbCopyBookState = [...this.state.books];
+           const getBookObjInState = clbCopyBookState.filter(obj => {
+            return obj.id === bookID
+           });
+           console.log(getBookObjInState);
+
+           getBookObjInState.alreadyRead = true;
            this.setState(prevState => ({
-              booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
-              notification: 'You moved ' + bookTitle + ' to your ALREADY READ shelf'
-             }));
-
-             this.startNotificationTimer();
-
-            console.log("MOVED: " + JSON.stringify(bookObj));
-            let bookID = bookObj.id;
-            let clbCopyBookState = [...this.state.booksToRead];
-            let getBookObjInState = clbCopyBookState.filter(obj => {
-             return obj.id === bookID
-            });
-
-            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-            clbCopyBookState.splice(index, 1);
-
-            this.setState({ booksToRead: clbCopyBookState });
+             books: [...prevState.books, bookObj],
+             notification: 'You moved ' + bookTitle + ' to your ALREADY READ shelf'
+            }));
 
          }
 
@@ -192,7 +194,7 @@ class BookManager extends React.Component {
        removeBookFromAlreadyRead = (bookObj) => {
           console.log("Removed: " + JSON.stringify(bookObj));
           let bookID = bookObj.id;
-          let clbCopyBookState = [...this.state.booksAlreadyRead];
+          let clbCopyBookState = [...this.state.books];
           let getBookObjInState = clbCopyBookState.filter(obj => {
            return obj.id === bookID
           });
@@ -200,7 +202,7 @@ class BookManager extends React.Component {
           let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
           clbCopyBookState.splice(index, 1);
 
-          this.setState({ booksAlreadyRead: clbCopyBookState });
+          this.setState({ books: clbCopyBookState });
 
         }
 
@@ -208,7 +210,7 @@ class BookManager extends React.Component {
         removeBookFromToRead = (bookObj) => {
            console.log("Removed: " + JSON.stringify(bookObj));
            let bookID = bookObj.id;
-           let clbCopyBookState = [...this.state.booksToRead];
+           let clbCopyBookState = [...this.state.books];
            let getBookObjInState = clbCopyBookState.filter(obj => {
             return obj.id === bookID
            });
@@ -216,7 +218,7 @@ class BookManager extends React.Component {
            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
            clbCopyBookState.splice(index, 1);
 
-           this.setState({ booksToRead: clbCopyBookState });
+           this.setState({ books: clbCopyBookState });
 
          }
 
@@ -224,15 +226,16 @@ class BookManager extends React.Component {
          editBook = (bookObj) => {
             console.log("Editing this book: " + JSON.stringify(bookObj));
                let bookID = bookObj.id;
-               let clbCopyBookState = [...this.state.booksAlreadyRead];
+               let clbCopyBookState = [...this.state.books];
                let getBookObjInState = clbCopyBookState.filter(obj => {
                  return obj.id === bookID
                });
                let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-               let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+               let ids = [...this.state.books];     // create the copy of state array
                ids[index] = bookObj;                  //new value
                console.log(ids[index]);
-               this.setState({ booksAlreadyRead: ids });            //update the value
+
+               this.setState({ books: ids });            //update the value
 
           }
 
@@ -258,12 +261,12 @@ class BookManager extends React.Component {
           addNewImagesAlreadyRead = (bookObj) => {
                console.log("Editing this book: " + JSON.stringify(bookObj));
                   let bookID = bookObj.id;
-                  let clbCopyBookState = [...this.state.booksAlreadyRead];
+                  let clbCopyBookState = [...this.state.books];
                   let getBookObjInState = clbCopyBookState.filter(obj => {
                     return obj.id === bookID
                   });
                   let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-                  let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+                  let ids = [...this.state.books];     // create the copy of state array
                   if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = '' }                 //new value, image only
                   if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = '' }
                   if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = '' }
@@ -275,21 +278,21 @@ class BookManager extends React.Component {
 
 
           addNewImagesToRead = (bookObj) => {
-               console.log("Editing this book: " + JSON.stringify(bookObj));
-                  let bookID = bookObj.id;
-                  let clbCopyBookState = [...this.state.booksToRead];
-                  let getBookObjInState = clbCopyBookState.filter(obj => {
-                    return obj.id === bookID
-                  });
-                  let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-                  let ids = [...this.state.booksToRead];     // create the copy of state array
-                  if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = ''; }               //new value, image only
-                  if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = ''; }
-                  if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = ''; }
-                  if( bookObj.volumeInfo.imageLinks.smallThumbnail) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = ''; }
-                  if( bookObj.volumeInfo.imageLinks.thumbnail) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = ''; }
-                  console.log(ids[index]);
-                  this.setState({ booksToRead: ids });            //update the value
+               // console.log("Editing this book: " + JSON.stringify(bookObj));
+               //    let bookID = bookObj.id;
+               //    let clbCopyBookState = [...this.state.booksToRead];
+               //    let getBookObjInState = clbCopyBookState.filter(obj => {
+               //      return obj.id === bookID
+               //    });
+               //    let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+               //    let ids = [...this.state.booksToRead];     // create the copy of state array
+               //    if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = ''; }               //new value, image only
+               //    if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.smallThumbnail) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.thumbnail) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = ''; }
+               //    console.log(ids[index]);
+               //    this.setState({ booksToRead: ids });            //update the value
           }
 
 
@@ -382,7 +385,7 @@ class BookManager extends React.Component {
 
   render() {
 
-       const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
+       const books = this.state.books;
 
        const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settings.color';
        const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
@@ -391,6 +394,13 @@ class BookManager extends React.Component {
        const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settings.font';
        const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
        const settingsFont = settingsFontLocal;
+
+
+       // run filter operations to separate To Read from Already Read
+       const updatedBooksToRead = books.filter(book => book.alreadyRead === false);
+       const updatedBooksAlreadyRead = books.filter(book => book.alreadyRead === true);
+       console.log(updatedBooksToRead);
+       console.log(updatedBooksAlreadyRead);
 
        return(
             <>
@@ -403,16 +413,16 @@ class BookManager extends React.Component {
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
                  permanentlyDeleteUserAndInfo={this.props.permanentlyDeleteUserAndInfo}
-                 booksAlreadyRead={this.state.booksAlreadyRead}
-                 booksAlreadyReadView={this.state.booksAlreadyReadView}
-                 booksToReadView={this.state.booksToReadView}
+                 booksAlreadyRead={updatedBooksAlreadyRead}
+                 booksAlreadyReadView={this.state.settings.sortViewAlreadyRead}
+                 booksToReadView={this.state.settings.sortViewToRead}
                  changeAlreadyReadView={this.changeAlreadyReadView}
                  changeToReadView={this.changeToReadView}
                  settingsColor={settingsColor}
                  changeSettingsColor={this.changeSettingsColor}
                  settingsFont={settingsFont}
                  changeSettingsFont={this.changeSettingsFont}
-                 booksToRead={this.state.booksToRead}
+                 booksToRead={updatedBooksToRead}
                  editBook={this.editBook}
                  editBookToRead={this.editBookToRead}
                  addBookAlreadyRead={this.addBookAlreadyRead}

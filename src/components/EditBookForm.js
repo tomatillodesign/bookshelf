@@ -50,7 +50,7 @@ class EditBookForm extends React.Component {
 
                if( this.bookshelfTimestamp === undefined ) { this.bookshelfTimestamp = this.state.book.bookshelfTimestamp; }
                if( this.bookshelfRating === undefined ) { this.bookshelfRating = this.state.book.bookshelfRating; }
-               if( this.bookNotes === undefined ) { this.bookNotes = this.state.book.bookshelfNote; }
+               if( this.bookNotes === undefined ) { this.bookNotes = []; }
 
                book.bookshelfRating = this.bookshelfRating;
                book.bookshelfNote = this.bookNotes;
@@ -75,9 +75,9 @@ class EditBookForm extends React.Component {
 
      }
 
-     setNotes = (event) => {
-          this.bookNotes = (event.target.value);
-     }
+     // setNotes = (event) => {
+     //      this.bookNotes = (event.target.value);
+     // }
 
      getCompletedDate = (date) => {
           //this.bookshelfTimestamp = date;
@@ -93,9 +93,9 @@ render() {
      console.log("Current book: " + JSON.stringify(this.props.book));
      console.log("Current book RATING: " + JSON.stringify(this.props.bookshelfRating));
      const defaultRating = this.props.bookshelfRating;
-     const bookshelfNote = this.props.bookshelfNote;
+     //const bookshelfNote = this.props.bookshelfNote;
      const bookshelfTimestamp = this.props.bookshelfTimestamp;
-     console.log("NOTE: " + bookshelfNote);
+     //console.log("NOTE: " + bookshelfNote);
 
        return (
             <>
@@ -119,11 +119,7 @@ render() {
                          </div>
                     }
                </div>
-               <Notes
-                    placeholder={'Add a note...'}
-                    defaultValue={bookshelfNote}
-                    setNotes={this.setNotes}
-               />
+
                <button type="submit" className="update-this-book">Save Changes</button>
             </form>
          </>

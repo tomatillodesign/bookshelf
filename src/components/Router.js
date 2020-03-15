@@ -21,6 +21,9 @@ class Router extends React.Component {
 
      render() {
 
+          console.log(this.props);
+          console.log(this.props.books);
+
           return(
 
                <div className={"clb-grail-body color-" + this.props.settingsColor + " font-" + this.props.settingsFont}>

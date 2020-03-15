@@ -27,7 +27,7 @@ class PreviouslyRead extends React.Component {
 
                // order these books!
                if( this.props.booksAlreadyReadView === 'alphabetical') {
-                    orderedBooks = [...booksAlreadyRead].sort((a, b) => (a.volumeInfo.title > b.volumeInfo.title) ? 1 : -1);
+                    orderedBooks = [...booksAlreadyRead].sort((a, b) => (a.title > b.title) ? 1 : -1);
 
                }
 
@@ -44,8 +44,8 @@ class PreviouslyRead extends React.Component {
                          	// If the count number is the same between both items, sort alphabetically
                          	// If the first item comes first in the alphabet, move it up
                          	// Otherwise move it down
-                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
-               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+                         	if (a.title > b.title) return 1;
+               	          if (a.title < b.title) return -1;
 
                          });
 
@@ -64,8 +64,8 @@ class PreviouslyRead extends React.Component {
                          	// If the count number is the same between both items, sort alphabetically
                          	// If the first item comes first in the alphabet, move it up
                          	// Otherwise move it down
-                         	if (a.volumeInfo.title > b.volumeInfo.title) return 1;
-               	          if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+                         	if (a.title > b.title) return 1;
+               	          if (a.title < b.title) return -1;
 
                          });
 
