@@ -7,6 +7,7 @@ import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import EditBookForm from './EditBookForm.js';
 import BookButtonRemove from './BookButtonRemove';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
+import ProfilePage from './ProfilePage';
 
 import SelectRating from './SelectRating';
 
@@ -23,7 +24,7 @@ export default function BookModal(props) {
      const bookCoverModal = props.bookCoverModal;
      const bookTitleModal = props.bookTitleModal;
 
-     let coverImageURL = null;
+     let coverImageURL = 'https://firebasestorage.googleapis.com/v0/b/bookshelf-9d11e.appspot.com/o/images%2Foverstory-cover.jpg?alt=media&token=52aa3fae-7968-459b-abab-c71daa39d547';
      let title = null;
      let subtitle = null;
      let hasSubtitle = false;
@@ -166,6 +167,7 @@ export default function BookModal(props) {
                     <div className="small-thumbnail-area">
                          <img src={coverImageURL} />
                     </div>
+                    <ProfilePage />
                     {subtitle}
                     {authorsToPublish}
                          <>
