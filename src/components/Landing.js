@@ -20,6 +20,7 @@ function Landing(props) {
           addNewImagesToRead={props.addNewImagesToRead}
           settingsFont={props.settingsFont}
           settingsColor={props.settingsColor}
+          updateCoverImg={props.updateCoverImg}
       />
       <RecentlyAddedAlreadyRead
           booksAlreadyRead={props.booksAlreadyRead}
@@ -28,6 +29,7 @@ function Landing(props) {
           addNewImagesAlreadyRead={props.addNewImagesAlreadyRead}
           settingsFont={props.settingsFont}
           settingsColor={props.settingsColor}
+          updateCoverImg={props.updateCoverImg}
       />
     </div>
   );

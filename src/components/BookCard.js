@@ -27,48 +27,48 @@ class BookCard extends React.Component {
      // get vars from book
      console.log(this.props.book);
 
-     let selfLink = this.props.book.selfLink;
-     console.log(selfLink);
+     // let selfLink = this.props.book.selfLink;
+     // console.log(selfLink);
 
-     if( this.props.alreadyRead === true || this.props.toRead === true ) {
-          if( (this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '')
-               && (this.props.book.volumeInfo.imageLinks.medium === undefined || this.props.book.volumeInfo.imageLinks.medium === '')
-               && (this.props.book.volumeInfo.imageLinks.small === undefined || this.props.book.volumeInfo.imageLinks.small === '') ) {
-
-               // Get the details straight from Google, including larger image sizes
-               fetch(selfLink)
-               .then(res => res.json())
-               .then((originalBookJSON) => {
-                 console.log('Checkout this JSON! ', originalBookJSON);
-                 //coverImageURL = originalBookJSON.volumeInfo.imageLinks.large;
-                 if(originalBookJSON.hasOwnProperty('error')) {
-                      this.setState({
-                          connected: false
-                     });
-                 } else {
-
-                      // update thumbnail URL to larger size if possible
-                      if( this.props.alreadyRead === true  ) { this.props.addNewImagesAlreadyRead(originalBookJSON); }
-                      if( this.props.toRead === true  ) { this.props.addNewImagesToRead(originalBookJSON); }
-                      console.log("UPDATED: " + originalBookJSON.volumeInfo.title);
-
-                      this.setState({
-                           originalBookJSON: originalBookJSON,
-                           connected: true
-                      });
-                 }
-
-                    })
-                    .catch(err => {
-                         this.setState({
-                              connected: false
-                         });
-                         throw err;
-                    });
-
-               }
-
-          }
+     // if( this.props.alreadyRead === true || this.props.toRead === true ) {
+     //      if( (this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '')
+     //           && (this.props.book.volumeInfo.imageLinks.medium === undefined || this.props.book.volumeInfo.imageLinks.medium === '')
+     //           && (this.props.book.volumeInfo.imageLinks.small === undefined || this.props.book.volumeInfo.imageLinks.small === '') ) {
+     //
+     //           // Get the details straight from Google, including larger image sizes
+     //           fetch(selfLink)
+     //           .then(res => res.json())
+     //           .then((originalBookJSON) => {
+     //             console.log('Checkout this JSON! ', originalBookJSON);
+     //             //coverImageURL = originalBookJSON.volumeInfo.imageLinks.large;
+     //             if(originalBookJSON.hasOwnProperty('error')) {
+     //                  this.setState({
+     //                      connected: false
+     //                 });
+     //             } else {
+     //
+     //                  // update thumbnail URL to larger size if possible
+     //                  if( this.props.alreadyRead === true  ) { this.props.addNewImagesAlreadyRead(originalBookJSON); }
+     //                  if( this.props.toRead === true  ) { this.props.addNewImagesToRead(originalBookJSON); }
+     //                  console.log("UPDATED: " + originalBookJSON.volumeInfo.title);
+     //
+     //                  this.setState({
+     //                       originalBookJSON: originalBookJSON,
+     //                       connected: true
+     //                  });
+     //             }
+     //
+     //                })
+     //                .catch(err => {
+     //                     this.setState({
+     //                          connected: false
+     //                     });
+     //                     throw err;
+     //                });
+     //
+     //           }
+     //
+     //      }
 
      }
 
@@ -94,36 +94,14 @@ class BookCard extends React.Component {
           let dateToPublish = null;
           let date = null;
 
-          if( book.volumeInfo !== undefined ) {
+               title = book.title;
+               if( book.subtitle !== undefined ) { subtitle = book.subtitle; }
+               if( book.authors !== undefined ) { authors = book.authors; }
 
-               if( book.volumeInfo.imageLinks !== undefined ) {
-                    console.log(book.volumeInfo.imageLinks.thumbnail);
-                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    coverImageURL = book.volumeInfo.imageLinks.large;
-                    if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.medium;
-                    }
-                    if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.small;
-                    }
-                    if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
-                    }
-                    if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
-                         coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    }
-               }
+               categories = book.categories;
+               date = book.publishedDate;
 
-
-
-               title = book.volumeInfo.title;
-               if( book.volumeInfo.subtitle !== undefined ) { subtitle = book.volumeInfo.subtitle; }
-               if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
-
-               categories = book.volumeInfo.categories;
-               date = book.volumeInfo.publishedDate;
-
-               if( book.volumeInfo.authors !== undefined ) {
+               if( book.authors !== undefined ) {
                     if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
                     if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
                     if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
@@ -133,7 +111,6 @@ class BookCard extends React.Component {
                     let yearOnly = date.toString()
                     dateToPublish = 'Date: ' + yearOnly;
                }
-          }
 
           // show star ratings
           //console.log(this.props.book.bookshelfRating);
@@ -164,6 +141,7 @@ class BookCard extends React.Component {
                          removeBookFromToRead={this.props.removeBookFromToRead}
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                         updateCoverImg={this.props.updateCoverImg}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -180,6 +158,7 @@ class BookCard extends React.Component {
                          removeBookFromToRead={this.props.removeBookFromToRead}
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                         updateCoverImg={this.props.updateCoverImg}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

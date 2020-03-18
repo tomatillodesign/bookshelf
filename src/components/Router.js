@@ -21,6 +21,9 @@ class Router extends React.Component {
 
      render() {
 
+          console.log(this.props);
+          console.log(this.props.books);
+
           return(
 
                <div className={"clb-grail-body color-" + this.props.settingsColor + " font-" + this.props.settingsFont}>
@@ -40,6 +43,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -68,6 +72,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
 
@@ -84,6 +89,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
                <Route exact path="/settings"

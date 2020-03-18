@@ -8,7 +8,7 @@ function RecentlyAddedToRead(props) {
      // console.log(booksToRead);
      // console.log(booksToRead.length);
 
-      if( booksToRead.length !== 0 && booksToRead !== undefined ) {
+      if( booksToRead !== undefined && booksToRead.length !== 0 ) {
 
            // New sorting
            orderedBooks = [...booksToRead].sort(function (a, b) {
@@ -21,8 +21,8 @@ function RecentlyAddedToRead(props) {
                 // If the count number is the same between both items, sort alphabetically
                 // If the first item comes first in the alphabet, move it up
                 // Otherwise move it down
-                if (a.volumeInfo.title > b.volumeInfo.title) return 1;
-                if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+                if (a.title > b.title) return 1;
+                if (a.title < b.title) return -1;
 
            });
 
@@ -44,6 +44,7 @@ function RecentlyAddedToRead(props) {
                                       toRead={true}
                                       settingsFont={props.settingsFont}
                                       settingsColor={props.settingsColor}
+                                      updateCoverImg={props.updateCoverImg}
                               />
                       ))}
                       </div>

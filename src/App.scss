@@ -389,11 +389,35 @@ footer a {
      color: #fff;
 }
 
-
-.small-thumbnail-area img {
-     width: 120px;
+.small-thumbnail-area {
+     width: 160px;
      float: right;
      margin-left: 12px;
+}
+
+.small-thumbnail-area img {
+     width: 160px;
+     float: right;
+     margin-left: 12px;
+}
+
+.replace-cover.button {
+     display: block;
+     text-align: center;
+     padding: 8px;
+     font-size: 12px;
+     background: #eee;
+     color: #333;
+}
+
+.replace-cover.button:hover {
+     background: #333;
+     color: #eee;
+}
+
+.updated-cover-thumbnail img {
+     float: none;
+     margin: 0;
 }
 
 .top-info-line {
@@ -980,6 +1004,8 @@ Accent (Button):
 /* ------- CLB Typography Customizations ----------- */
 
 .App .font-handwritten,
+.font-handwritten button,
+.font-handwritten .button,
 .font-handwritten .logo-area,
 .font-handwritten h1,
 .font-handwritten h2,
@@ -993,6 +1019,8 @@ Accent (Button):
 
 
 .App .font-typewriter,
+.font-typewriter button,
+.font-typewriter .button,
 .font-typewriter .logo-area,
 .font-typewriter h1,
 .font-typewriter h2,
@@ -1006,6 +1034,8 @@ Accent (Button):
 
 
 .App .font-sans,
+.font-sans button,
+.font-sans .button,
 .font-sans .logo-area,
 .font-sans h1,
 .font-sans h2,
@@ -1018,6 +1048,8 @@ Accent (Button):
 
 
 .App .font-serif,
+.font-serif button,
+.font-serif .button,
 .font-serif .logo-area,
 .font-serif h1,
 .font-serif h2,

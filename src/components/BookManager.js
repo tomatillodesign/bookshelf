@@ -7,22 +7,37 @@ import { firebaseApp } from '../base';
 
 
 var shortid = require('shortid');
+const image2base64 = require('image-to-base64');
 
 class BookManager extends React.Component {
 
      constructor(props){
         super(props);
         this.state = {
-             booksToRead: [],
-             booksAlreadyRead: [],
-             booksToReadView: 'alphabetical',
-             booksAlreadyReadView: 'alphabetical',
-             settingsColor: 'default',
-             settingsFont: 'default',
-             settingsTightness: 'default',
+             books: [],
+             settings: {
+                         color: 'default',
+                         font: 'default',
+                         sortViewToRead: 'alphabetical',
+                         sortViewAlreadyRead: 'alphabetical',
+                         bookSize: 'default',
+                         genres: [
+                              'Fiction',
+                              'Nonfiction',
+                              'Memoir',
+                              'Children',
+                              'Cooking',
+                              'Historical Fiction',
+                              'Mystery',
+                              'Science Fiction',
+                              'Young Adult',
+                         ],
+                         customFields: [],
+                    },
              notification: null
-      };
     }
+
+}
 
 
     componentDidMount(){
@@ -34,60 +49,25 @@ class BookManager extends React.Component {
 
        // Firebase Connections
 
-       base.syncState(`${loggedInID}/booksToRead`, {
+       base.syncState(`${loggedInID}/books`, {
          context: this,
-         state: 'booksToRead',
+         state: 'books',
          asArray: true
        });
 
-       base.syncState(`${loggedInID}/booksAlreadyRead`, {
+       base.syncState(`${loggedInID}/settings`, {
          context: this,
-         state: 'booksAlreadyRead',
-         asArray: true
-       });
-
-       base.syncState(`${loggedInID}/booksToReadView`, {
-         context: this,
-         state: 'booksToReadView',
-         defaultValue: 'Alphabetical',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/booksAlreadyReadView`, {
-         context: this,
-         state: 'booksAlreadyReadView',
-         defaultValue: 'Alphabetical',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsColor`, {
-         context: this,
-         state: 'settingsColor',
-         defaultValue: 'default',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsFont`, {
-         context: this,
-         state: 'settingsFont',
-         defaultValue: 'default',
-         asArray: false
-       });
-
-       base.syncState(`${loggedInID}/settingsTightness`, {
-         context: this,
-         state: 'settingsTightness',
-         defaultValue: 'default',
+         state: 'settings',
          asArray: false
        });
 
 
        // Updating theme data & saving to localStorage
        // Color
-       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settings.color';
        const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
 
-            base.fetch(`${loggedInID}/settingsColor`, {
+            base.fetch(`${loggedInID}/settings/color`, {
               context: this,
               asArray: false,
               then(data){
@@ -101,10 +81,10 @@ class BookManager extends React.Component {
 
        // Updating theme data & saving to localStorage
        // Font
-       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settings.font';
        const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
 
-            base.fetch(`${loggedInID}/settingsFont`, {
+            base.fetch(`${loggedInID}/settings/font`, {
               context: this,
               asArray: false,
               then(data){
@@ -120,14 +100,36 @@ class BookManager extends React.Component {
 
      // Functions to maniuplate state / books
      addBookAlreadyRead = (bookObj) => {
-         console.log(bookObj);
-         bookObj.bookshelfTimestamp = Date.now();
-         bookObj.bookshelfRating = 0;
-         bookObj.bookshelfNote = '';
-         bookObj.bookshelfCover = null;
+
+         // set my fields for books in DB
+         const newBook = {};
+
+         this.fetchCoverImage(bookObj);
+
+         let subtitle = bookObj.volumeInfo.subtitle;
+         if( subtitle === undefined ) { subtitle = null; }
+
+         newBook.id = bookObj.id;
+         newBook.title = bookObj.volumeInfo.title;
+         newBook.subtitle = subtitle;
+         newBook.authors = bookObj.volumeInfo.authors;
+         newBook.bookshelfTimestamp = Date.now();
+         newBook.bookshelfRating = 0;
+         newBook.notes = [];
+         newBook.coverImg = null;
+         newBook.alreadyRead = true;
+         newBook.googleLink = bookObj.selfLink;
+         newBook.description = bookObj.volumeInfo.description;
+         newBook.publisher = bookObj.volumeInfo.publisher;
+         newBook.publishedDate = bookObj.volumeInfo.publishedDate
+         newBook.pageCount = bookObj.volumeInfo.pageCount;
+         newBook.genre = null;
+
+         console.log(newBook);
+
          let bookTitle = bookObj.volumeInfo.title;
          this.setState(prevState => ({
-            booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
+            books: [...prevState.books, newBook],
             notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf'
            }));
 
@@ -135,17 +137,89 @@ class BookManager extends React.Component {
 
        }
 
+       // New on March 18, fixes many previous cover image issues
+       fetchCoverImage = (bookObj) => {
+            console.log("FETCH COVER IMAGE");
+            console.log(bookObj);
+            const selfLink = bookObj.selfLink;
+            let coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+
+            // Get the details straight from Google, including larger image sizes
+                 fetch(selfLink)
+                 .then(res => res.json())
+                 .then((originalBookJSON) => {
+
+                   console.log('fetchCoverImage CONNECTED');
+                   console.log(originalBookJSON);
+                   console.log(originalBookJSON.volumeInfo.imageLinks);
+
+                   if( originalBookJSON.volumeInfo.imageLinks.thumbnail !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.thumbnail + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                   if( originalBookJSON.volumeInfo.imageLinks.small !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.small + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                   if( originalBookJSON.volumeInfo.imageLinks.medium !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.medium + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                   if( originalBookJSON.volumeInfo.imageLinks.large !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.large + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                   if( originalBookJSON.volumeInfo.imageLinks.extraLarge !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.extraLarge + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+
+                   console.log(selfLink);
+                   console.log("FINAL IMAGE: " + coverImageURL);
+
+                   // update the book object with the new thumbnail cover image
+                 const bookID = bookObj.id;
+                 const clbCopyBookState = [...this.state.books];
+                 const getBookObjInState = clbCopyBookState.filter(obj => {
+                   return obj.id === bookID
+                 });
+
+                 const bookToUpdate = getBookObjInState[0];
+                 console.log(bookToUpdate);
+                 bookToUpdate.coverImg = coverImageURL;
+                 console.log(bookToUpdate);
+
+                 // REMOVE BOOK
+                 let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                 clbCopyBookState.splice(index, 1);
+                 this.setState({ books: clbCopyBookState });
+
+                 // ADD Book with URL
+                 this.setState(prevState => ({
+                    books: [...prevState.books, bookToUpdate],
+                   }));
+
+         });
+
+
+
+       }
+
 
        addBookToRead = (bookObj) => {
-          console.log(bookObj);
-          bookObj.bookshelfTimestamp = Date.now();
-          bookObj.bookshelfRating = 0;
-          bookObj.bookshelfNote = '';
-          bookObj.bookshelfCover = null;
-          let bookTitle = bookObj.volumeInfo.title;
+            // set my fields for books in DB
+          const newBook = {};
+
+          this.fetchCoverImage(bookObj);
+
+          let subtitle = bookObj.volumeInfo.subtitle;
+          if( subtitle === undefined ) { subtitle = null; }
+
+          newBook.id = bookObj.id;
+          newBook.title = bookObj.volumeInfo.title;
+          newBook.subtitle = subtitle;
+          newBook.authors = bookObj.volumeInfo.authors;
+          newBook.bookshelfTimestamp = Date.now();
+          newBook.bookshelfRating = 0;
+          newBook.notes = [];
+          newBook.coverImg = null;
+          newBook.alreadyRead = false;
+          newBook.googleLink = bookObj.selfLink;
+          newBook.description = bookObj.volumeInfo.description;
+          newBook.publisher = bookObj.volumeInfo.publisher;
+          newBook.publishedDate = bookObj.volumeInfo.publishedDate
+          newBook.pageCount = bookObj.volumeInfo.pageCount;
+          newBook.genre = null;
+
+          console.log(newBook);
           this.setState(prevState => ({
-             booksToRead: [...prevState.booksToRead, bookObj],
-             notification: 'You added ' + bookTitle + ' to your TO READ shelf'
+             books: [...prevState.books, newBook],
+             notification: 'You added ' + newBook.title + ' to your TO READ shelf'
             }));
 
             this.startNotificationTimer();
@@ -154,32 +228,25 @@ class BookManager extends React.Component {
 
 
         moveBooktoAlreadyRead = (bookObj) => {
+
            console.log(bookObj);
-           bookObj.bookshelfTimestamp = Date.now();
-           bookObj.bookshelfRating = 0;
-           bookObj.bookshelfCover = null;
-           // bookObj.volumeInfo.imageLinks.large = '';                  //new value, image only
-           // bookObj.volumeInfo.imageLinks.medium = '';
-           // bookObj.volumeInfo.imageLinks.small = '';
-           let bookTitle = bookObj.volumeInfo.title;
-           this.setState(prevState => ({
-              booksAlreadyRead: [...prevState.booksAlreadyRead, bookObj],
-              notification: 'You moved ' + bookTitle + ' to your ALREADY READ shelf'
-             }));
 
-             this.startNotificationTimer();
+           // get the book object
+           const bookID = bookObj.id;
+           const bookTitle = bookObj.title;
+           const clbCopyBookState = [...this.state.books];
+           const getBookObjInState = clbCopyBookState.filter(obj => {
+            return obj.id === bookID
+           });
+           console.log(getBookObjInState);
 
-            console.log("MOVED: " + JSON.stringify(bookObj));
-            let bookID = bookObj.id;
-            let clbCopyBookState = [...this.state.booksToRead];
-            let getBookObjInState = clbCopyBookState.filter(obj => {
-             return obj.id === bookID
-            });
+           const index = clbCopyBookState.findIndex(obj => {
+            return obj.id === bookID
+           });
+           console.log(index);
 
-            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-            clbCopyBookState.splice(index, 1);
-
-            this.setState({ booksToRead: clbCopyBookState });
+           clbCopyBookState[index].alreadyRead = true;
+           this.setState({ books: this.state.books });
 
          }
 
@@ -187,7 +254,7 @@ class BookManager extends React.Component {
        removeBookFromAlreadyRead = (bookObj) => {
           console.log("Removed: " + JSON.stringify(bookObj));
           let bookID = bookObj.id;
-          let clbCopyBookState = [...this.state.booksAlreadyRead];
+          let clbCopyBookState = [...this.state.books];
           let getBookObjInState = clbCopyBookState.filter(obj => {
            return obj.id === bookID
           });
@@ -195,7 +262,7 @@ class BookManager extends React.Component {
           let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
           clbCopyBookState.splice(index, 1);
 
-          this.setState({ booksAlreadyRead: clbCopyBookState });
+          this.setState({ books: clbCopyBookState });
 
         }
 
@@ -203,7 +270,7 @@ class BookManager extends React.Component {
         removeBookFromToRead = (bookObj) => {
            console.log("Removed: " + JSON.stringify(bookObj));
            let bookID = bookObj.id;
-           let clbCopyBookState = [...this.state.booksToRead];
+           let clbCopyBookState = [...this.state.books];
            let getBookObjInState = clbCopyBookState.filter(obj => {
             return obj.id === bookID
            });
@@ -211,7 +278,7 @@ class BookManager extends React.Component {
            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
            clbCopyBookState.splice(index, 1);
 
-           this.setState({ booksToRead: clbCopyBookState });
+           this.setState({ books: clbCopyBookState });
 
          }
 
@@ -219,15 +286,39 @@ class BookManager extends React.Component {
          editBook = (bookObj) => {
             console.log("Editing this book: " + JSON.stringify(bookObj));
                let bookID = bookObj.id;
-               let clbCopyBookState = [...this.state.booksAlreadyRead];
+               let clbCopyBookState = [...this.state.books];
                let getBookObjInState = clbCopyBookState.filter(obj => {
                  return obj.id === bookID
                });
                let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-               let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+               let ids = [...this.state.books];     // create the copy of state array
                ids[index] = bookObj;                  //new value
                console.log(ids[index]);
-               this.setState({ booksAlreadyRead: ids });            //update the value
+
+               this.setState({ books: ids });            //update the value
+
+          }
+
+          updateCoverImg = ( bookObj, bookCoverURL ) => {
+               console.log(bookObj);
+               console.log(bookCoverURL);
+
+               console.log(bookObj);
+
+              //get the book object
+              const bookID = bookObj.id;
+              const bookTitle = bookObj.title;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+              console.log(getBookObjInState);
+
+              getBookObjInState.coverImg = bookCoverURL;
+              // this.setState(prevState => ({
+              //   books: [...prevState.books, getBookObjInState],
+              //   notification: 'You changed the book cover for ' + bookTitle
+              //  }));
 
           }
 
@@ -253,12 +344,12 @@ class BookManager extends React.Component {
           addNewImagesAlreadyRead = (bookObj) => {
                console.log("Editing this book: " + JSON.stringify(bookObj));
                   let bookID = bookObj.id;
-                  let clbCopyBookState = [...this.state.booksAlreadyRead];
+                  let clbCopyBookState = [...this.state.books];
                   let getBookObjInState = clbCopyBookState.filter(obj => {
                     return obj.id === bookID
                   });
                   let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-                  let ids = [...this.state.booksAlreadyRead];     // create the copy of state array
+                  let ids = [...this.state.books];     // create the copy of state array
                   if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = '' }                 //new value, image only
                   if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = '' }
                   if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = '' }
@@ -270,35 +361,38 @@ class BookManager extends React.Component {
 
 
           addNewImagesToRead = (bookObj) => {
-               console.log("Editing this book: " + JSON.stringify(bookObj));
-                  let bookID = bookObj.id;
-                  let clbCopyBookState = [...this.state.booksToRead];
-                  let getBookObjInState = clbCopyBookState.filter(obj => {
-                    return obj.id === bookID
-                  });
-                  let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-                  let ids = [...this.state.booksToRead];     // create the copy of state array
-                  if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = ''; }               //new value, image only
-                  if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = ''; }
-                  if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = ''; }
-                  if( bookObj.volumeInfo.imageLinks.smallThumbnail) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = ''; }
-                  if( bookObj.volumeInfo.imageLinks.thumbnail) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = ''; }
-                  console.log(ids[index]);
-                  this.setState({ booksToRead: ids });            //update the value
+               // console.log("Editing this book: " + JSON.stringify(bookObj));
+               //    let bookID = bookObj.id;
+               //    let clbCopyBookState = [...this.state.booksToRead];
+               //    let getBookObjInState = clbCopyBookState.filter(obj => {
+               //      return obj.id === bookID
+               //    });
+               //    let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+               //    let ids = [...this.state.booksToRead];     // create the copy of state array
+               //    if( bookObj.volumeInfo.imageLinks.large ) { ids[index].volumeInfo.imageLinks.large = bookObj.volumeInfo.imageLinks.large; } else { ids[index].volumeInfo.imageLinks.large = ''; }               //new value, image only
+               //    if( bookObj.volumeInfo.imageLinks.medium ) { ids[index].volumeInfo.imageLinks.medium = bookObj.volumeInfo.imageLinks.medium; } else { ids[index].volumeInfo.imageLinks.medium = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.small ) { ids[index].volumeInfo.imageLinks.small = bookObj.volumeInfo.imageLinks.small; } else { ids[index].volumeInfo.imageLinks.small = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.smallThumbnail) { ids[index].volumeInfo.imageLinks.smallThumbnail = bookObj.volumeInfo.imageLinks.smallThumbnail; } else { ids[index].volumeInfo.imageLinks.smallThumbnail = ''; }
+               //    if( bookObj.volumeInfo.imageLinks.thumbnail) { ids[index].volumeInfo.imageLinks.thumbnail = bookObj.volumeInfo.imageLinks.thumbnail; } else { ids[index].volumeInfo.imageLinks.thumbnail = ''; }
+               //    console.log(ids[index]);
+               //    this.setState({ booksToRead: ids });            //update the value
           }
 
 
           changeAlreadyReadView = (selectedOption) => {
-              // console.log('CHANGE BEER CARD VIEW');
-              // console.log(newViewString);
+              console.log('CHANGE sortViewAlreadyRead');
+              console.log(selectedOption);
 
-              let newBookCardView = 'alphabetical';
+              let sortViewAlreadyRead = 'alphabetical';
               if(selectedOption) {
-                  if( selectedOption.value === 'rating' ) { newBookCardView = 'rating'; }
-                  if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
+                  if( selectedOption.value === 'rating' ) { sortViewAlreadyRead = 'rating'; }
+                  if( selectedOption.value === 'date' ) { sortViewAlreadyRead = 'date'; }
               }
 
-              this.setState({ booksAlreadyReadView: newBookCardView });
+              this.setState({ settings: {
+                         sortViewAlreadyRead: sortViewAlreadyRead
+                    }
+              });
 
          }
 
@@ -311,7 +405,11 @@ class BookManager extends React.Component {
                  if( selectedOption.value === 'date' ) { newBookCardView = 'date'; }
             }
 
-            this.setState({ booksToReadView: newBookCardView });
+            //this.setState({ booksToReadView: newBookCardView });
+            this.setState({ settings: {
+                       sortViewToRead: newBookCardView
+                  }
+            });
 
         }
 
@@ -319,16 +417,17 @@ class BookManager extends React.Component {
 
         changeSettingsColor = (selectedOption) => {
 
-
-
            let newSettingsColor = 'default';
            if(selectedOption) {
                 newSettingsColor = selectedOption.value;
            }
 
-           this.setState({ settingsColor: newSettingsColor });
+           this.setState({ settings: {
+                      color: newSettingsColor
+                 }
+           });
 
-           const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+           const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settings.color';
            localStorage.setItem(localStorageKey, newSettingsColor);
 
        }
@@ -341,9 +440,12 @@ class BookManager extends React.Component {
                newSettingsFont = selectedOption.value;
           }
 
-          this.setState({ settingsFont: newSettingsFont });
+          this.setState({ settings: {
+                     font: newSettingsFont
+               }
+          });
 
-          const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+          const localStorageKey = 'bookshelf.' + this.props.loggedInID + '.settings.font';
           localStorage.setItem(localStorageKey, newSettingsFont);
 
      }
@@ -351,7 +453,6 @@ class BookManager extends React.Component {
 
      resetNotification = () => {
           this.setState({ notification: null });
-          //clearTimeout(this.timerId); 
      }
 
      startNotificationTimer = () => {
@@ -360,22 +461,29 @@ class BookManager extends React.Component {
            this.resetNotification();
            console.log("startNotificationTimer - tick");
            console.log(this.timerId);
-      }, 8000);
+      }, 6000);
        }
      }
 
 
   render() {
 
-       const booksAlreadyRead = JSON.stringify(this.state.booksAlreadyRead);
+       const books = this.state.books;
 
-       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settingsColor';
+       const localStorageKeyColor = 'bookshelf.' + this.props.loggedInID + '.settings.color';
        const settingsColorLocal = localStorage.getItem(localStorageKeyColor);
        const settingsColor = settingsColorLocal;
 
-       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settingsFont';
+       const localStorageKeyFont = 'bookshelf.' + this.props.loggedInID + '.settings.font';
        const settingsFontLocal = localStorage.getItem(localStorageKeyFont);
        const settingsFont = settingsFontLocal;
+
+
+       // run filter operations to separate To Read from Already Read
+       const updatedBooksToRead = books.filter(book => book.alreadyRead === false);
+       const updatedBooksAlreadyRead = books.filter(book => book.alreadyRead === true);
+       console.log(updatedBooksToRead);
+       console.log(updatedBooksAlreadyRead);
 
        return(
             <>
@@ -388,16 +496,16 @@ class BookManager extends React.Component {
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
                  permanentlyDeleteUserAndInfo={this.props.permanentlyDeleteUserAndInfo}
-                 booksAlreadyRead={this.state.booksAlreadyRead}
-                 booksAlreadyReadView={this.state.booksAlreadyReadView}
-                 booksToReadView={this.state.booksToReadView}
+                 booksAlreadyRead={updatedBooksAlreadyRead}
+                 booksAlreadyReadView={this.state.settings.sortViewAlreadyRead}
+                 booksToReadView={this.state.settings.sortViewToRead}
                  changeAlreadyReadView={this.changeAlreadyReadView}
                  changeToReadView={this.changeToReadView}
                  settingsColor={settingsColor}
                  changeSettingsColor={this.changeSettingsColor}
                  settingsFont={settingsFont}
                  changeSettingsFont={this.changeSettingsFont}
-                 booksToRead={this.state.booksToRead}
+                 booksToRead={updatedBooksToRead}
                  editBook={this.editBook}
                  editBookToRead={this.editBookToRead}
                  addBookAlreadyRead={this.addBookAlreadyRead}
@@ -408,6 +516,7 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
+                 updateCoverImg={this.updateCoverImg}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

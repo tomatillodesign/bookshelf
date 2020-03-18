@@ -7,6 +7,7 @@ import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import EditBookForm from './EditBookForm.js';
 import BookButtonRemove from './BookButtonRemove';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
+import ReplaceCover from './ReplaceCover';
 
 import SelectRating from './SelectRating';
 
@@ -18,6 +19,7 @@ export default function BookModal(props) {
      const handleShow = () => setShow(true);
 
      const book = props.book;
+     console.log(book);
 
      const bookCoverModal = props.bookCoverModal;
      const bookTitleModal = props.bookTitleModal;
@@ -36,40 +38,31 @@ export default function BookModal(props) {
      let date = null;
      let pageCount = null;
 
-     if( book.volumeInfo !== undefined ) {
-          if( book.volumeInfo.imageLinks !== undefined ) {
-               console.log(book.volumeInfo.imageLinks.thumbnail);
-               coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-               coverImageURL = book.volumeInfo.imageLinks.large;
-               if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
-                    coverImageURL = book.volumeInfo.imageLinks.medium;
-               }
-               if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
-                    coverImageURL = book.volumeInfo.imageLinks.small;
-               }
-               if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
-                    coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
-               }
-               if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
-                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-               }
-          }
+     if( props.searchResult !== true ) {
 
-          title = book.volumeInfo.title;
-          if( book.volumeInfo.subtitle !== undefined ) {
+          title = book.title;
+          console.log(title);
+          if( book.subtitle !== undefined ) {
                hasSubtitle = true;
                authorClass = " has-subtitle";
-               subtitle = <h3 className="book-subtitle">{book.volumeInfo.subtitle}</h3>;
+               subtitle = <h3 className="book-subtitle">{book.subtitle}</h3>;
           }
-          if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
+          if( book.authors !== undefined ) { authors = book.authors; }
 
-          description = book.volumeInfo.description;
+          description = book.description;
 
-          categories = book.volumeInfo.categories;
-          date = book.volumeInfo.publishedDate;
-          pageCount = book.volumeInfo.pageCount;
+          categories = book.categories;
+          date = book.publishedDate;
+          pageCount = book.pageCount;
 
-          if( book.volumeInfo.authors !== undefined ) {
+          // new image work here
+          if( book.coverImg == undefined || book.coverImg == null ) {
+               coverImageURL = 'https://firebasestorage.googleapis.com/v0/b/bookshelf-9d11e.appspot.com/o/images%2Foverstory-cover.jpg?alt=media&token=52aa3fae-7968-459b-abab-c71daa39d547';
+          } else {
+               coverImageURL = book.coverImg;
+          }
+
+          if( book.authors !== undefined ) {
                if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
                if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
                if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
@@ -85,6 +78,61 @@ export default function BookModal(props) {
                let yearOnly = date.toString()
                dateToPublish = 'Date: ' + yearOnly;
           }
+
+     } else {
+
+               if( book.volumeInfo !== undefined ) {
+
+               if( book.volumeInfo.imageLinks !== undefined ) {
+                    console.log(book.volumeInfo.imageLinks.thumbnail);
+                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
+                    coverImageURL = book.volumeInfo.imageLinks.large;
+                    if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
+                         coverImageURL = book.volumeInfo.imageLinks.medium;
+                    }
+                    if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
+                         coverImageURL = book.volumeInfo.imageLinks.small;
+                    }
+                    if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
+                         coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
+                    }
+                    if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
+                         coverImageURL = book.volumeInfo.imageLinks.thumbnail;
+                    }
+               }
+
+               title = book.volumeInfo.title;
+               if( book.volumeInfo.subtitle !== undefined ) {
+                    hasSubtitle = true;
+                    authorClass = " has-subtitle";
+                    subtitle = <h3 className="book-subtitle">{book.volumeInfo.subtitle}</h3>;
+               }
+               if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
+
+               description = book.volumeInfo.description;
+
+               categories = book.volumeInfo.categories;
+               date = book.volumeInfo.publishedDate;
+               pageCount = book.volumeInfo.pageCount;
+
+               if( book.volumeInfo.authors !== undefined ) {
+                    if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
+                    if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
+                    if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+
+                    if( hasSubtitle ) {
+                         authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages</div>;
+                    } else {
+                         authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages</div>;
+                    }
+               }
+
+               if( date ) {
+                    let yearOnly = date.toString()
+                    dateToPublish = 'Date: ' + yearOnly;
+               }
+          }
+
      }
 
      //console.log(props.bookshelfRating);
@@ -126,6 +174,12 @@ export default function BookModal(props) {
                 <Modal.Body>
                     <div className="small-thumbnail-area">
                          <img src={coverImageURL} />
+                         {props.searchResult !== true &&
+                              <ReplaceCover
+                                   bookObj={book}
+                                   updateCoverImg={props.updateCoverImg}
+                              />
+                         }
                     </div>
                     {subtitle}
                     {authorsToPublish}
@@ -160,6 +214,7 @@ export default function BookModal(props) {
                      />
                      <BookButtonMoveToAlreadyRead
                           book={props.book}
+                          coverImageURL={coverImageURL}
                           moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
                      />
                      </>
@@ -168,6 +223,7 @@ export default function BookModal(props) {
                      <>
                      <BookButtonToRead />
                      <BookButtonAlreadyRead
+                         coverImageURL={coverImageURL}
                          addBookAlreadyRead={props.addBookAlreadyRead}
                      />
                      </>
@@ -201,6 +257,12 @@ export default function BookModal(props) {
                 <Modal.Body>
                      <div className="small-thumbnail-area">
                           <img src={coverImageURL} />
+                          {props.searchResult !== true &&
+                               <ReplaceCover
+                                    bookObj={book}
+                                    updateCoverImg={props.updateCoverImg}
+                               />
+                          }
                      </div>
                     {subtitle}
                     {authorsToPublish}
