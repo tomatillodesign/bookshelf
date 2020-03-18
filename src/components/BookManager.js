@@ -238,11 +238,13 @@ class BookManager extends React.Component {
            });
            console.log(getBookObjInState);
 
-           getBookObjInState.alreadyRead = true;
-           this.setState(prevState => ({
-             books: [...prevState.books, bookObj],
-             notification: 'You moved ' + bookTitle + ' to your ALREADY READ shelf'
-            }));
+           const index = clbCopyBookState.findIndex(obj => {
+            return obj.id === bookID
+           });
+           console.log(index);
+
+           clbCopyBookState[index].alreadyRead = true;
+           this.setState({ books: this.state.books });
 
          }
 
@@ -317,6 +319,8 @@ class BookManager extends React.Component {
               //  }));
 
           }
+
+
 
           editBookToRead = (bookObj) => {
             console.log("Editing this book: " + JSON.stringify(bookObj));
@@ -455,7 +459,7 @@ class BookManager extends React.Component {
            this.resetNotification();
            console.log("startNotificationTimer - tick");
            console.log(this.timerId);
-      }, 8000);
+      }, 6000);
        }
      }
 
