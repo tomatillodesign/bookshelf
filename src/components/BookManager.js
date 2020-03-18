@@ -103,6 +103,8 @@ class BookManager extends React.Component {
          // set my fields for books in DB
          const newBook = {};
 
+         this.fetchCoverImage(bookObj);
+
          let subtitle = bookObj.volumeInfo.subtitle;
          if( subtitle === undefined ) { subtitle = null; }
 
@@ -134,10 +136,64 @@ class BookManager extends React.Component {
 
        }
 
+       fetchCoverImage = (bookObj) => {
+            console.log("FETCH COVER IMAGE");
+            console.log(bookObj);
+            const selfLink = bookObj.selfLink;
+            let coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+
+            // Get the details straight from Google, including larger image sizes
+                 fetch(selfLink)
+                 .then(res => res.json())
+                 .then((originalBookJSON) => {
+
+                   console.log('fetchCoverImage CONNECTED');
+                   console.log(originalBookJSON);
+                   console.log(originalBookJSON.volumeInfo.imageLinks);
+
+                   if( originalBookJSON.volumeInfo.imageLinks.thumbnail !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.thumbnail }
+                   if( originalBookJSON.volumeInfo.imageLinks.small !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.small }
+                   if( originalBookJSON.volumeInfo.imageLinks.medium !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.medium }
+                   if( originalBookJSON.volumeInfo.imageLinks.large !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.large }
+                   if( originalBookJSON.volumeInfo.imageLinks.extraLarge !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.extraLarge }
+
+                   console.log(selfLink);
+                   console.log("FINAL IMAGE: " + coverImageURL);
+
+                   // update the book object with the new thumbnail cover image
+                 const bookID = bookObj.id;
+                 const clbCopyBookState = [...this.state.books];
+                 const getBookObjInState = clbCopyBookState.filter(obj => {
+                   return obj.id === bookID
+                 });
+
+                 const bookToUpdate = getBookObjInState[0];
+                 console.log(bookToUpdate);
+                 bookToUpdate.coverImg = coverImageURL;
+                 console.log(bookToUpdate);
+
+                 // REMOVE BOOK
+                 let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                 clbCopyBookState.splice(index, 1);
+                 this.setState({ books: clbCopyBookState });
+
+                 // ADD Book with URL
+                 this.setState(prevState => ({
+                    books: [...prevState.books, bookToUpdate],
+                   }));
+
+         });
+
+
+
+       }
+
 
        addBookToRead = (bookObj) => {
             // set my fields for books in DB
           const newBook = {};
+
+          this.fetchCoverImage(bookObj);
 
           let subtitle = bookObj.volumeInfo.subtitle;
           if( subtitle === undefined ) { subtitle = null; }
@@ -239,7 +295,28 @@ class BookManager extends React.Component {
 
           }
 
+          updateCoverImg = ( bookObj, bookCoverURL ) => {
+               console.log(bookObj);
+               console.log(bookCoverURL);
 
+               console.log(bookObj);
+
+              //get the book object
+              const bookID = bookObj.id;
+              const bookTitle = bookObj.title;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+              console.log(getBookObjInState);
+
+              getBookObjInState.coverImg = bookCoverURL;
+              // this.setState(prevState => ({
+              //   books: [...prevState.books, getBookObjInState],
+              //   notification: 'You changed the book cover for ' + bookTitle
+              //  }));
+
+          }
 
           editBookToRead = (bookObj) => {
             console.log("Editing this book: " + JSON.stringify(bookObj));
@@ -433,6 +510,7 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
+                 updateCoverImg={this.updateCoverImg}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

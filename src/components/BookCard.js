@@ -27,8 +27,8 @@ class BookCard extends React.Component {
      // get vars from book
      console.log(this.props.book);
 
-     let selfLink = this.props.book.selfLink;
-     console.log(selfLink);
+     // let selfLink = this.props.book.selfLink;
+     // console.log(selfLink);
 
      // if( this.props.alreadyRead === true || this.props.toRead === true ) {
      //      if( (this.props.book.volumeInfo.imageLinks.large === undefined || this.props.book.volumeInfo.imageLinks.large === '')
@@ -141,6 +141,7 @@ class BookCard extends React.Component {
                          removeBookFromToRead={this.props.removeBookFromToRead}
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                         updateCoverImg={this.props.updateCoverImg}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -157,6 +158,7 @@ class BookCard extends React.Component {
                          removeBookFromToRead={this.props.removeBookFromToRead}
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                         updateCoverImg={this.props.updateCoverImg}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

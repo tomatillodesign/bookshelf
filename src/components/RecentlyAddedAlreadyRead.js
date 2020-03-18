@@ -43,6 +43,7 @@ function RecentlyAddedAlreadyRead(props) {
                                       alreadyRead={true}
                                       settingsFont={props.settingsFont}
                                       settingsColor={props.settingsColor}
+                                      updateCoverImg={props.updateCoverImg}
                               />
                       ))}
                       </div>

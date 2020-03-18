@@ -389,11 +389,35 @@ footer a {
      color: #fff;
 }
 
-
-.small-thumbnail-area img {
-     width: 120px;
+.small-thumbnail-area {
+     width: 160px;
      float: right;
      margin-left: 12px;
+}
+
+.small-thumbnail-area img {
+     width: 160px;
+     float: right;
+     margin-left: 12px;
+}
+
+.replace-cover.button {
+     display: block;
+     text-align: center;
+     padding: 8px;
+     font-size: 12px;
+     background: #eee;
+     color: #333;
+}
+
+.replace-cover.button:hover {
+     background: #333;
+     color: #eee;
+}
+
+.updated-cover-thumbnail img {
+     float: none;
+     margin: 0;
 }
 
 .top-info-line {

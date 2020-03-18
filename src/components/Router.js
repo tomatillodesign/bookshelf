@@ -43,6 +43,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -71,6 +72,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
 
@@ -87,6 +89,7 @@ class Router extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              updateCoverImg={this.props.updateCoverImg}
                          />}
                />
                <Route exact path="/settings"
