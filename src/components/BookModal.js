@@ -8,8 +8,12 @@ import EditBookForm from './EditBookForm.js';
 import BookButtonRemove from './BookButtonRemove';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 import ReplaceCover from './ReplaceCover';
+import Stars from './Stars';
 
 import SelectRating from './SelectRating';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
 
 export default function BookModal(props) {
 
@@ -17,6 +21,11 @@ export default function BookModal(props) {
 
      const handleClose = () => setShow(false);
      const handleShow = () => setShow(true);
+
+     let showDescription = false;
+     const customToggle = () => {
+          showDescription = !showDescription;
+     }
 
      const book = props.book;
      console.log(book);
@@ -37,6 +46,13 @@ export default function BookModal(props) {
      let dateToPublish = null;
      let date = null;
      let pageCount = null;
+     let bookshelfRating = null;
+     let bookshelfTimestamp = null;
+     let dateCompletedRaw = null;
+     let dateCompleted = null;
+     let genre = null;
+     let showDescriptionIndicator = "+";
+
 
      if( props.searchResult !== true ) {
 
@@ -54,6 +70,13 @@ export default function BookModal(props) {
           categories = book.categories;
           date = book.publishedDate;
           pageCount = book.pageCount;
+          bookshelfRating = book.bookshelfRating;
+          bookshelfTimestamp = book.bookshelfTimestamp;
+          dateCompletedRaw = new Date(bookshelfTimestamp);
+          dateCompleted = dateCompletedRaw.toLocaleString("en-US", {month: "long", day: "numeric", year: "numeric"});
+
+          genre = book.genre;
+          if( genre === undefined || genre === null ) { genre = 'Not Assigned'; }
 
           // new image work here
           if( book.coverImg == undefined || book.coverImg == null ) {
@@ -83,23 +106,7 @@ export default function BookModal(props) {
 
                if( book.volumeInfo !== undefined ) {
 
-               if( book.volumeInfo.imageLinks !== undefined ) {
-                    console.log(book.volumeInfo.imageLinks.thumbnail);
-                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    coverImageURL = book.volumeInfo.imageLinks.large;
-                    if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.medium;
-                    }
-                    if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.small;
-                    }
-                    if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
-                    }
-                    if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
-                         coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    }
-               }
+
 
                title = book.volumeInfo.title;
                if( book.volumeInfo.subtitle !== undefined ) {
@@ -110,6 +117,10 @@ export default function BookModal(props) {
                if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
 
                description = book.volumeInfo.description;
+               if( description !== undefined ) {
+                    if( showDescription === false ) { showDescriptionIndicator = "+"; }
+                    else if( showDescription === true ) { showDescriptionIndicator = "–"; }
+               }
 
                categories = book.volumeInfo.categories;
                date = book.volumeInfo.publishedDate;
@@ -161,6 +172,9 @@ export default function BookModal(props) {
 
      if( bookTitleModal ) {
 
+          if( showDescription === false ) { showDescriptionIndicator = "+"; }
+          else if( showDescription === true ) { showDescriptionIndicator = "–"; }
+
           return (
             <>
               <button onClick={handleShow} className="card-book-title">
@@ -184,10 +198,12 @@ export default function BookModal(props) {
                     {subtitle}
                     {authorsToPublish}
                          <>
-                         {editForm}
+                         <div className="rating-area">
+                              Rating: <Stars bookshelfRating={bookshelfRating} /> <span className="star-icon"><FontAwesomeIcon icon={faEdit} /></span>
+                         </div>
                          <Accordion>
                               <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>Description +</h3>
+                                <h3>Description {showDescriptionIndicator}</h3>
                               </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
@@ -266,9 +282,17 @@ export default function BookModal(props) {
                      </div>
                     {subtitle}
                     {authorsToPublish}
-                         {editForm}
+                    <div className="modal-summary-rating-area">
+                         Rating: <Stars bookshelfRating={bookshelfRating} /> <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
+                    </div>
+                    <div className="modal-summary-date-finished-area">
+                         Date Completed: {dateCompleted} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon"><FontAwesomeIcon icon={faMinusCircle} /></span>
+                    </div>
+                    <div className="modal-summary-genre-area">
+                         Genre: {genre} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
+                    </div>
                          <Accordion>
-                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
+                              <Accordion.Toggle onClick={customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
                                 <h3>View Description +</h3>
                               </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">

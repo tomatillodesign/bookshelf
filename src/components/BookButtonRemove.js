@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/pro-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/pro-light-svg-icons';
 
 class BookButtonRemove extends React.Component {
 

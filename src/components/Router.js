@@ -73,6 +73,7 @@ class Router extends React.Component {
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
                               updateCoverImg={this.props.updateCoverImg}
+                              bookSize={this.props.bookSize}
                          />}
                />
 
@@ -90,6 +91,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               updateCoverImg={this.props.updateCoverImg}
+                              bookSize={this.props.bookSize}
                          />}
                />
                <Route exact path="/settings"
@@ -104,6 +106,8 @@ class Router extends React.Component {
                               changeSettingsColor={this.props.changeSettingsColor}
                               settingsFont={this.props.settingsFont}
                               changeSettingsFont={this.props.changeSettingsFont}
+                              changeSettingsBookSize={this.props.changeSettingsBookSize}
+                              bookSize={this.props.bookSize}
                          />}
                />
                <Route exact path="/register"

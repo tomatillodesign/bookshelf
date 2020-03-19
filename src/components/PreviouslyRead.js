@@ -99,7 +99,7 @@ class PreviouslyRead extends React.Component {
                               />
                     </div>
                </div>
-                <div className="results-grid">
+                <div className={"results-grid " + this.props.bookSize}>
                 {orderedBooks.map((book, index) => (
                      <BookCard
                               key={book.id}

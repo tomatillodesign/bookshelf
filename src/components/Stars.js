@@ -10,19 +10,19 @@ function Stars(props) {
 
      let stars = null;
      if(rating === 5) {
-          stars = <><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span></>;
+          stars = <><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span></>;
      }
      else if(rating === 4) {
-          stars = <><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span></>;
+          stars = <><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span></>;
      }
      else if(rating === 3) {
-          stars = <><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span></>;
+          stars = <><span className="star-icon">⭐</span><span className="star-icon">⭐</span><span className="star-icon">⭐</span></>;
      }
      else if(rating === 2) {
-          stars = <><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span></>;
+          stars = <><span className="star-icon">⭐</span><span className="star-icon">⭐</span></>;
      }
      else if(rating === 1) {
-          stars = <><span className="star-icon"><FontAwesomeIcon icon={faStar} /></span></>;
+          stars = <><span className="star-icon">⭐</span></>;
      }
      else {
           stars = <div className="not-yet-rated">Not yet rated</div>;

@@ -415,6 +415,24 @@ class BookManager extends React.Component {
 
 
 
+        changeSettingsBookSize = (selectedOption) => {
+
+             console.log('changeSettingsBookSize');
+
+           let newBookSize = 'default';
+           if(selectedOption) {
+                newBookSize = selectedOption.value;
+           }
+
+           this.setState({ settings: {
+                     bookSize: newBookSize
+                 }
+           });
+
+       }
+
+
+
         changeSettingsColor = (selectedOption) => {
 
            let newSettingsColor = 'default';
@@ -517,6 +535,8 @@ class BookManager extends React.Component {
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
                  updateCoverImg={this.updateCoverImg}
+                 changeSettingsBookSize={this.changeSettingsBookSize}
+                 bookSize={this.state.settings.bookSize}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
