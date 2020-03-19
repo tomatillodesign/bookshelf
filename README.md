@@ -29,9 +29,9 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 
 ## To Do's
 
-- Fix flashing book image (too many hits to Google's servers for the featured image)
-- Re-format JSON --> smaller, more organized book objects
 - Clean up code, remove console logs, etc.
+- ~~Fix flashing book image (too many hits to Google's servers for the featured image)~~
+- ~~Re-format JSON --> smaller, more organized book objects~~
 - ~~Clean up the registration language and make the process as simple as possible~~
 - ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
 - ~~Mobile-friendly~~
