@@ -25,7 +25,7 @@ function Stars(props) {
           stars = <><span className="star-icon">⭐</span></>;
      }
      else {
-          stars = <div className="not-yet-rated">Not yet rated</div>;
+          stars = null;
      }
 
   return (

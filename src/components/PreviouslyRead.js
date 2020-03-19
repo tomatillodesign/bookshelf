@@ -1,6 +1,7 @@
 import React from 'react';
 import BookCard from './BookCard.js';
 import SelectAlreadyReadView from './SelectAlreadyReadView';
+import AdvancedStats from './AdvancedStats.js';
 
 var shortid = require('shortid');
 
@@ -90,6 +91,9 @@ class PreviouslyRead extends React.Component {
          return(
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
+               <AdvancedStats 
+                    books={booksAlreadyRead}
+               />
                <div className="view-type">
                          <div className="viewer-label">View Your Books by: </div>
                          <div className="viewer-selector-area">
