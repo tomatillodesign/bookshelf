@@ -6,6 +6,7 @@ import ReadDate from './ReadDate';
 import Stars from './Stars';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
+import SelectGenre from './SelectGenre';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
@@ -23,6 +24,7 @@ class BookEditor extends React.Component {
                currentlyEditingDate: false,
                currentlyEditingGenre: false,
                viewDescription: false,
+               genre: this.props.book.genre,
           }
      }
 
@@ -36,6 +38,7 @@ class BookEditor extends React.Component {
           console.log("currentlyEditingRating");
           this.setState({ currentlyEditingRating: true });
      }
+
 
      setRating = (selectedOption) => {
           if(selectedOption) {
@@ -58,10 +61,36 @@ class BookEditor extends React.Component {
           this.props.resetTimestampToZero(this.props.book);
      }
 
+     resetGenre = () => {
+          console.log("resetGenre");
+          this.setState({ genre: '' });
+          this.props.resetGenreToZero(this.props.book);
+     }
+
+     currentlyEditingGenre = () => {
+          console.log("currentlyEditingGenre");
+          this.setState({ currentlyEditingGenre: true });
+     }
+
+     setGenre = (selectedOption) => {
+          if(selectedOption) {
+               console.log(selectedOption);
+               this.props.setBookGenre(selectedOption, this.props.book);
+               this.props.addNewGenre(selectedOption.value);
+               this.setState({
+                    genre: selectedOption.value,
+                    currentlyEditingGenre: false
+                });
+          }
+     }
+
 
      render() {
 
           const description = this.props.description;
+
+          ///////////// Rating ////////////////////////////////////
+
           let ratingArea = <div className="rating-area">
                Rating: <Stars bookshelfRating={this.state.bookshelfRating} /> <span className="edit-icon" onClick={this.currentlyEditingRating}><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetRating}><FontAwesomeIcon icon={faMinusCircle} /></span>
           </div>;
@@ -81,9 +110,9 @@ class BookEditor extends React.Component {
                               </div>;
           }
 
-          /////////////////////////////
+          ////////////// Date //////////////////////////////////////////
 
-          console.log(this.props.book.bookshelfTimestamp);
+          console.log(this.props.book);
 
           let dateArea = <div className="date-area">
                               Date Completed: {this.props.dateCompleted} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetTimestamp}><FontAwesomeIcon icon={faMinusCircle} /></span>
@@ -96,12 +125,33 @@ class BookEditor extends React.Component {
            }
 
 
+           ////////////// Genre //////////////////////////////////////////
+
+           let genreArea = <div className="genre-area">
+                Genre: {this.state.genre} <span className="edit-icon"  onClick={this.currentlyEditingGenre}><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetGenre}><FontAwesomeIcon icon={faMinusCircle} /></span>
+           </div>;
+
+           if( this.state.genre === null || this.state.genre === undefined || this.state.genre === '' ) {
+               genreArea = <div className="genre-area">
+                                   <span className="edit-book-subtle-link" onClick={this.currentlyEditingGenre}>Set Genre</span> <span className="edit-icon" onClick={this.currentlyEditingGenre}><FontAwesomeIcon icon={faEdit} /></span>
+                              </div>;
+          }
+
+          if( this.state.currentlyEditingGenre === true) {
+               genreArea = <div className="genre-area">
+                                   <SelectGenre
+                                        genres={this.props.genres}
+                                        setGenre={this.setGenre}
+                                        defaultGenre={this.state.genre}
+                                   />
+                              </div>;
+          }
+
            /////////////////////////////////////////
 
           return (
 
                <>
-               <h2>BookEditor Area</h2>
                <div className="modal-summary-rating-area">
                     {ratingArea}
                </div>
@@ -110,9 +160,9 @@ class BookEditor extends React.Component {
                </div>
 
                {this.props.useGenres &&
-               <div className="modal-summary-genre-area">
-                    Genre: {this.props.genre} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
-               </div>
+                    <div className="modal-summary-genre-area">
+                         {genreArea}
+                    </div>
                }
 
                <Accordion>

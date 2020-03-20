@@ -146,6 +146,10 @@ class BookCard extends React.Component {
                          setBookRating={this.props.setBookRating}
                          resetRatingToZero={this.props.resetRatingToZero}
                          resetTimestampToZero={this.props.resetTimestampToZero}
+                         setBookGenre={this.props.setBookGenre}
+                         genres={this.props.genres}
+                         resetGenreToZero={this.props.resetGenreToZero}
+                         addNewGenre={this.props.addNewGenre}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -167,6 +171,10 @@ class BookCard extends React.Component {
                          setBookRating={this.props.setBookRating}
                          resetRatingToZero={this.props.resetRatingToZero}
                          resetTimestampToZero={this.props.resetTimestampToZero}
+                         setBookGenre={this.props.setBookGenre}
+                         genres={this.props.genres}
+                         resetGenreToZero={this.props.resetGenreToZero}
+                         addNewGenre={this.props.addNewGenre}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

@@ -403,6 +403,30 @@ class BookManager extends React.Component {
           }
 
 
+
+          setBookGenre = (selectedOption, bookObj) => {
+               console.log("Update BOOK GENRE in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].genre = selectedOption.value;
+              this.setState({ books: this.state.books });
+
+          }
+
+
           resetRatingToZero = (bookObj) => {
 
                // get the book object
@@ -439,6 +463,51 @@ class BookManager extends React.Component {
 
               clbCopyBookState[index].bookshelfTimestamp = 0;
               this.setState({ books: this.state.books });
+
+          }
+
+          resetGenreToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].genre = '';
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          addNewGenre = (newGenre) => {
+
+               console.log(newGenre);
+              let previousGenres = [...this.state.settings.genres];
+              console.log(previousGenres);
+              let included = previousGenres.includes(newGenre);
+              console.log(included);
+              if( included === false ) {
+
+                   // Sort all beer types, then update state
+                   let updatedGenres = [...previousGenres, newGenre];
+                   let orderedGenres = [...updatedGenres].sort();
+
+                   // remove any nulls, false, or undefined
+                   orderedGenres = orderedGenres.filter(Boolean);
+                   console.log(orderedGenres);
+
+                   this.setState({ settings: {
+                                            genres: orderedGenres
+                                       }
+                              });
+              }
 
           }
 
@@ -625,6 +694,10 @@ class BookManager extends React.Component {
                  setBookRating={this.setBookRating}
                  resetRatingToZero={this.resetRatingToZero}
                  resetTimestampToZero={this.resetTimestampToZero}
+                 setBookGenre={this.setBookGenre}
+                 genres={this.state.settings.genres}
+                 resetGenreToZero={this.resetGenreToZero}
+                 addNewGenre={this.addNewGenre}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

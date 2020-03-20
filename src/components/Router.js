@@ -98,6 +98,10 @@ class Router extends React.Component {
                               setBookRating={this.props.setBookRating}
                               resetRatingToZero={this.props.resetRatingToZero}
                               resetTimestampToZero={this.props.resetTimestampToZero}
+                              setBookGenre={this.props.setBookGenre}
+                              genres={this.props.genres}
+                              resetGenreToZero={this.props.resetGenreToZero}
+                              addNewGenre={this.props.addNewGenre}
                          />}
                />
                <Route exact path="/settings"

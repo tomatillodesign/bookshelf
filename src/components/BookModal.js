@@ -217,6 +217,10 @@ export default function BookModal(props) {
                          setBookRating={props.setBookRating}
                          resetRatingToZero={props.resetRatingToZero}
                          resetTimestampToZero={props.resetTimestampToZero}
+                         setBookGenre={props.setBookGenre}
+                         genres={props.genres}
+                         resetGenreToZero={props.resetGenreToZero}
+                         addNewGenre={props.addNewGenre}
                      />
 
                 </Modal.Body>
@@ -299,6 +303,10 @@ export default function BookModal(props) {
                         setBookRating={props.setBookRating}
                         resetRatingToZero={props.resetRatingToZero}
                         resetTimestampToZero={props.resetTimestampToZero}
+                        setBookGenre={props.setBookGenre}
+                        genres={props.genres}
+                        resetGenreToZero={props.resetGenreToZero}
+                        addNewGenre={props.addNewGenre}
                     />
 
                 </Modal.Body>
