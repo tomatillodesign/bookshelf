@@ -208,20 +208,16 @@ export default function BookModal(props) {
                      {authorsToPublish}
 
                      <BookEditor
+                         book={book}
                          bookshelfRating={props.bookshelfRating}
                          genre={genre}
                          dateCompleted={dateCompleted}
                          useGenres={props.useGenres}
+                         description={description}
+                         setBookRating={props.setBookRating}
+                         resetRatingToZero={props.resetRatingToZero}
+                         resetTimestampToZero={props.resetTimestampToZero}
                      />
-
-                          <Accordion>
-                               <Accordion.Toggle onClick={customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                 <h3>View Description +</h3>
-                               </Accordion.Toggle>
-                             <Accordion.Collapse eventKey="0">
-                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                             </Accordion.Collapse>
-                         </Accordion>
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -292,25 +288,18 @@ export default function BookModal(props) {
                      </div>
                     {subtitle}
                     {authorsToPublish}
-                    <div className="modal-summary-rating-area">
-                         Rating: <Stars bookshelfRating={bookshelfRating} /> <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
-                    </div>
-                    <div className="modal-summary-date-finished-area">
-                         Date Completed: {dateCompleted} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon"><FontAwesomeIcon icon={faMinusCircle} /></span>
-                    </div>
-                    {props.useGenres &&
-                    <div className="modal-summary-genre-area">
-                         Genre: {genre} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
-                    </div>
-                    }
-                         <Accordion>
-                              <Accordion.Toggle onClick={customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>View Description +</h3>
-                              </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                            </Accordion.Collapse>
-                        </Accordion>
+
+                    <BookEditor
+                         book={book}
+                        bookshelfRating={props.bookshelfRating}
+                        genre={genre}
+                        dateCompleted={dateCompleted}
+                        useGenres={props.useGenres}
+                        description={description}
+                        setBookRating={props.setBookRating}
+                        resetRatingToZero={props.resetRatingToZero}
+                        resetTimestampToZero={props.resetTimestampToZero}
+                    />
 
                 </Modal.Body>
                 <Modal.Footer>

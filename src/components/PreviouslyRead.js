@@ -115,6 +115,9 @@ class PreviouslyRead extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               useGenres={this.props.useGenres}
+                              setBookRating={this.props.setBookRating}
+                              resetRatingToZero={this.props.resetRatingToZero}
+                              resetTimestampToZero={this.props.resetTimestampToZero}
                          />
               ))}
               </div>

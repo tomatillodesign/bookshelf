@@ -380,6 +380,69 @@ class BookManager extends React.Component {
           }
 
 
+          setBookRating = (selectedOption, bookObj) => {
+               console.log("Update BOOK RATING in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfRating = selectedOption.value;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetRatingToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfRating = 0;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetTimestampToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfTimestamp = 0;
+              this.setState({ books: this.state.books });
+
+          }
+
+
           changeAlreadyReadView = (selectedOption) => {
               console.log('CHANGE sortViewAlreadyRead');
               console.log(selectedOption);
@@ -559,6 +622,9 @@ class BookManager extends React.Component {
                  bookSize={this.state.settings.bookSize}
                  changeSettingsUseGenres={this.changeSettingsUseGenres}
                  useGenres={this.state.settings.useGenres}
+                 setBookRating={this.setBookRating}
+                 resetRatingToZero={this.resetRatingToZero}
+                 resetTimestampToZero={this.resetTimestampToZero}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

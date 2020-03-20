@@ -41,7 +41,7 @@ class SelectRating extends React.Component {
 
                return (
                  <Select
-                    placeholder='Rating'
+                    placeholder='Set Rating'
                     options={ratingOptions}
                     defaultValue={defaultRatingPublish}
                     isClearable
@@ -54,7 +54,7 @@ class SelectRating extends React.Component {
 
                return (
                  <Select
-                    placeholder='Rating'
+                    placeholder='Set Rating'
                     options={ratingOptions}
                     isClearable
                     isSearchable
