@@ -107,6 +107,7 @@ class Router extends React.Component {
                               addNewTag={this.props.addNewTag}
                               setBookTags={this.props.setBookTags}
                               tags={this.props.tags}
+                              resetAllTags={this.props.resetAllTags}
                          />}
                />
                <Route exact path="/settings"

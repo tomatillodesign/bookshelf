@@ -225,6 +225,7 @@ export default function BookModal(props) {
                          addNewTag={props.addNewTag}
                          setBookTags={props.setBookTags}
                          tags={props.tags}
+                         resetAllTags={props.resetAllTags}
                      />
 
                 </Modal.Body>
@@ -315,6 +316,7 @@ export default function BookModal(props) {
                         addNewTag={props.addNewTag}
                         setBookTags={props.setBookTags}
                         tags={props.tags}
+                        resetAllTags={props.resetAllTags}
                     />
 
                 </Modal.Body>

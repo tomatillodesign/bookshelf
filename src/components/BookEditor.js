@@ -12,6 +12,8 @@ import SelectTags from './SelectTags';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
 
+const shortid = require('shortid');
+
 ///////////////////////////////////////////////////////////////////////
 
 
@@ -100,15 +102,17 @@ class BookEditor extends React.Component {
           }
      }
 
+
      setTags = (selectedOption) => {
           if(selectedOption) {
                console.log(selectedOption);
-               this.props.setBookTags(selectedOption, this.props.book);
-               this.props.addNewTag(selectedOption.value);
-               this.setState({
-                    tags: selectedOption.value,
-                    currentlyEditingTags: false
-                });
+
+               // this.props.setBookTags(selectedOption, this.props.book);
+               // this.props.addNewTag(selectedOption.value);
+               // this.setState({
+               //      tags: selectedOption.value,
+               //      currentlyEditingTags: false
+               //  });
           }
      }
 
@@ -178,8 +182,15 @@ class BookEditor extends React.Component {
 
           ////////////// Tags //////////////////////////////////////////
 
+          let currentTags = null;
+          if( this.state.tags !== undefined ) {
+               currentTags = this.state.tags.map((tag) =>
+                 <span className="single-tag" key={shortid.generate()}>{tag}</span>
+               );
+          }
+
           let tagArea = <div className="tag-area">
-               Tags: {this.state.tags} <span className="edit-icon" onClick={this.currentlyEditingTags} title="Edit Tags"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTags} title="Remove All Tags"><FontAwesomeIcon icon={faMinusCircle} /></span>
+               Tags: {currentTags} <span className="edit-icon" onClick={this.currentlyEditingTags} title="Edit Tags"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTags} title="Remove All Tags"><FontAwesomeIcon icon={faMinusCircle} /></span>
           </div>;
 
           if( this.state.tags === null || this.state.tags === undefined || this.state.tags === '' || this.state.tags === [] ) {
@@ -194,6 +205,9 @@ class BookEditor extends React.Component {
                                        allTags={this.props.tags}
                                        setTags={this.setTags}
                                        defaultTags={this.state.tags}
+                                       setBookTags={this.props.setBookTags}
+                                       book={this.props.book}
+                                       addNewTag={this.props.addNewTag}
                                   />
                              </div>;
          }
@@ -204,21 +218,21 @@ class BookEditor extends React.Component {
           return (
 
                <>
-               <div className="modal-summary-rating-area">
+               <div className="modal-info-line modal-summary-rating-area">
                     {ratingArea}
                </div>
-               <div className="modal-summary-date-finished-area">
+               <div className="modal-info-line modal-summary-date-finished-area">
                     {dateArea}
                </div>
 
                {this.props.useGenres &&
-                    <div className="modal-summary-genre-area">
+                    <div className="modal-info-line modal-summary-genre-area">
                          {genreArea}
                     </div>
                }
 
                {this.props.useTags &&
-                    <div className="modal-summary-tag-area">
+                    <div className="modal-info-line modal-summary-tag-area">
                          {tagArea}
                     </div>
                }

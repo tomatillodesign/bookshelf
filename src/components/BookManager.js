@@ -431,28 +431,21 @@ class BookManager extends React.Component {
 
 
 
-          addNewTag = (newTag) => {
+          addNewTag = (allTagsArray) => {
 
-               console.log(newTag);
-              let previousTags = [...this.state.settings.tags];
-              console.log(previousTags);
-              let included = previousTags.includes(newTag);
-              console.log(included);
-              if( included === false ) {
+               console.log(allTagsArray);
+               const prevTags = this.state.settings.tags;
+               console.log(prevTags.filter(Boolean));
 
-                   // Sort all beer types, then update state
-                   let updatedTags = [...previousTags, newTag];
-                   let orderedTags = [...updatedTags].sort();
+               let difference = allTagsArray.filter(x => !prevTags.includes(x));
+               console.log("DIFFERENCE");
+               console.log(difference);
 
-                   // remove any nulls, false, or undefined
-                   orderedTags = orderedTags.filter(Boolean);
-                   console.log(orderedTags);
-
-                   this.setState({ settings: {
-                                            tags: orderedTags
-                                       }
-                              });
-              }
+               const updatedTags = prevTags.concat(difference);
+               this.setState({ settings: {
+                                        tags: updatedTags
+                                   }
+                          });
 
           }
 
@@ -475,7 +468,7 @@ class BookManager extends React.Component {
               });
               console.log(index);
 
-              clbCopyBookState[index].tags = selectedOption.value;
+              clbCopyBookState[index].tags = selectedOption;
               this.setState({ books: this.state.books });
 
           }
@@ -787,6 +780,7 @@ class BookManager extends React.Component {
                  setBookRating={this.setBookRating}
                  resetRatingToZero={this.resetRatingToZero}
                  resetTimestampToZero={this.resetTimestampToZero}
+                 resetAllTags={this.resetAllTags}
                  setBookGenre={this.setBookGenre}
                  genres={this.state.settings.genres}
                  tags={this.state.settings.tags}

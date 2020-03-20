@@ -126,6 +126,7 @@ class PreviouslyRead extends React.Component {
                               addNewTag={this.props.addNewTag}
                               setBookTags={this.props.setBookTags}
                               tags={this.props.tags}
+                              resetAllTags={this.props.resetAllTags}
                          />
               ))}
               </div>
