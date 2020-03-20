@@ -32,7 +32,9 @@ class BookManager extends React.Component {
                               'Science Fiction',
                               'Young Adult',
                          ],
+                         tags: [],
                          useGenres: false,
+                         useTags: false,
                          customFields: [],
                     },
              notification: null
@@ -125,6 +127,7 @@ class BookManager extends React.Component {
          newBook.publishedDate = bookObj.volumeInfo.publishedDate
          newBook.pageCount = bookObj.volumeInfo.pageCount;
          newBook.genre = null;
+         newBook.tags = [];
 
          console.log(newBook);
 
@@ -427,6 +430,57 @@ class BookManager extends React.Component {
           }
 
 
+
+          addNewTag = (newTag) => {
+
+               console.log(newTag);
+              let previousTags = [...this.state.settings.tags];
+              console.log(previousTags);
+              let included = previousTags.includes(newTag);
+              console.log(included);
+              if( included === false ) {
+
+                   // Sort all beer types, then update state
+                   let updatedTags = [...previousTags, newTag];
+                   let orderedTags = [...updatedTags].sort();
+
+                   // remove any nulls, false, or undefined
+                   orderedTags = orderedTags.filter(Boolean);
+                   console.log(orderedTags);
+
+                   this.setState({ settings: {
+                                            tags: orderedTags
+                                       }
+                              });
+              }
+
+          }
+
+
+
+          setBookTags = (selectedOption, bookObj) => {
+               console.log("Update TAGS in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].tags = selectedOption.value;
+              this.setState({ books: this.state.books });
+
+          }
+
+
           resetRatingToZero = (bookObj) => {
 
                // get the book object
@@ -481,6 +535,26 @@ class BookManager extends React.Component {
               console.log(index);
 
               clbCopyBookState[index].genre = '';
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetAllTags = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].tags = [];
               this.setState({ books: this.state.books });
 
           }
@@ -582,6 +656,23 @@ class BookManager extends React.Component {
           });
 
      }
+
+
+     changeSettingsUseTags = (selectedOption) => {
+
+          console.log('changeSettingsUseTags');
+
+        let newTagsSetting = false;
+        if(selectedOption) {
+             newTagsSetting = selectedOption.value;
+        }
+
+        this.setState({ settings: {
+                  useTags: newTagsSetting
+             }
+        });
+
+   }
 
 
 
@@ -690,14 +781,19 @@ class BookManager extends React.Component {
                  changeSettingsBookSize={this.changeSettingsBookSize}
                  bookSize={this.state.settings.bookSize}
                  changeSettingsUseGenres={this.changeSettingsUseGenres}
+                 changeSettingsUseTags={this.changeSettingsUseTags}
                  useGenres={this.state.settings.useGenres}
+                 useTags={this.state.settings.useTags}
                  setBookRating={this.setBookRating}
                  resetRatingToZero={this.resetRatingToZero}
                  resetTimestampToZero={this.resetTimestampToZero}
                  setBookGenre={this.setBookGenre}
                  genres={this.state.settings.genres}
+                 tags={this.state.settings.tags}
                  resetGenreToZero={this.resetGenreToZero}
                  addNewGenre={this.addNewGenre}
+                 addNewTag={this.addNewTag}
+                 setBookTags={this.setBookTags}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

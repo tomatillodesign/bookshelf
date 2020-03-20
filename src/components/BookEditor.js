@@ -7,6 +7,7 @@ import Stars from './Stars';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import SelectGenre from './SelectGenre';
+import SelectTags from './SelectTags';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
@@ -23,8 +24,10 @@ class BookEditor extends React.Component {
                bookshelfRating: this.props.bookshelfRating,
                currentlyEditingDate: false,
                currentlyEditingGenre: false,
+               currentlyEditingTags: false,
                viewDescription: false,
                genre: this.props.book.genre,
+               tags: this.props.book.tags,
           }
      }
 
@@ -67,6 +70,19 @@ class BookEditor extends React.Component {
           this.props.resetGenreToZero(this.props.book);
      }
 
+     resetTags = () => {
+          console.log("resetTags");
+          this.setState({ tags: [] });
+          this.props.resetAllTags(this.props.book);
+     }
+
+     currentlyEditingTags = () => {
+          console.log("currentlyEditingTags");
+          console.log("POSSIBLE TAGS");
+          console.log(this.props.tags);
+          this.setState({ currentlyEditingTags: true });
+     }
+
      currentlyEditingGenre = () => {
           console.log("currentlyEditingGenre");
           this.setState({ currentlyEditingGenre: true });
@@ -84,6 +100,18 @@ class BookEditor extends React.Component {
           }
      }
 
+     setTags = (selectedOption) => {
+          if(selectedOption) {
+               console.log(selectedOption);
+               this.props.setBookTags(selectedOption, this.props.book);
+               this.props.addNewTag(selectedOption.value);
+               this.setState({
+                    tags: selectedOption.value,
+                    currentlyEditingTags: false
+                });
+          }
+     }
+
 
      render() {
 
@@ -92,7 +120,7 @@ class BookEditor extends React.Component {
           ///////////// Rating ////////////////////////////////////
 
           let ratingArea = <div className="rating-area">
-               Rating: <Stars bookshelfRating={this.state.bookshelfRating} /> <span className="edit-icon" onClick={this.currentlyEditingRating}><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetRating}><FontAwesomeIcon icon={faMinusCircle} /></span>
+               Rating: <Stars bookshelfRating={this.state.bookshelfRating} /> <span className="edit-icon" onClick={this.currentlyEditingRating} title="Edit Rating"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetRating} title="Remove Rating"><FontAwesomeIcon icon={faMinusCircle} /></span>
           </div>;
 
           if( this.state.currentlyEditingRating === true) {
@@ -115,7 +143,7 @@ class BookEditor extends React.Component {
           console.log(this.props.book);
 
           let dateArea = <div className="date-area">
-                              Date Completed: {this.props.dateCompleted} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetTimestamp}><FontAwesomeIcon icon={faMinusCircle} /></span>
+                              Date Completed: {this.props.dateCompleted} <span className="edit-icon" title="Edit Date"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTimestamp} title="Remove Date"><FontAwesomeIcon icon={faMinusCircle} /></span>
                            </div>;
 
             if( this.props.book.bookshelfTimestamp === 0) {
@@ -128,7 +156,7 @@ class BookEditor extends React.Component {
            ////////////// Genre //////////////////////////////////////////
 
            let genreArea = <div className="genre-area">
-                Genre: {this.state.genre} <span className="edit-icon"  onClick={this.currentlyEditingGenre}><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon" onClick={this.resetGenre}><FontAwesomeIcon icon={faMinusCircle} /></span>
+                Genre: {this.state.genre} <span className="edit-icon" onClick={this.currentlyEditingGenre} title="Edit Genre"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetGenre} title="Remove Genre"><FontAwesomeIcon icon={faMinusCircle} /></span>
            </div>;
 
            if( this.state.genre === null || this.state.genre === undefined || this.state.genre === '' ) {
@@ -147,6 +175,30 @@ class BookEditor extends React.Component {
                               </div>;
           }
 
+
+          ////////////// Tags //////////////////////////////////////////
+
+          let tagArea = <div className="tag-area">
+               Tags: {this.state.tags} <span className="edit-icon" onClick={this.currentlyEditingTags} title="Edit Tags"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTags} title="Remove All Tags"><FontAwesomeIcon icon={faMinusCircle} /></span>
+          </div>;
+
+          if( this.state.tags === null || this.state.tags === undefined || this.state.tags === '' || this.state.tags === [] ) {
+              tagArea = <div className="tag-area">
+                                  <span className="edit-book-subtle-link" onClick={this.currentlyEditingTags}>Add Tags</span> <span className="edit-icon" title="Add Tags Now" onClick={this.currentlyEditingTags}><FontAwesomeIcon icon={faEdit} /></span>
+                             </div>;
+         }
+
+         if( this.state.currentlyEditingTags === true) {
+              tagArea = <div className="tag-area">
+                                  <SelectTags
+                                       allTags={this.props.tags}
+                                       setTags={this.setTags}
+                                       defaultTags={this.state.tags}
+                                  />
+                             </div>;
+         }
+
+
            /////////////////////////////////////////
 
           return (
@@ -162,6 +214,12 @@ class BookEditor extends React.Component {
                {this.props.useGenres &&
                     <div className="modal-summary-genre-area">
                          {genreArea}
+                    </div>
+               }
+
+               {this.props.useTags &&
+                    <div className="modal-summary-tag-area">
+                         {tagArea}
                     </div>
                }
 

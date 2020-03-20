@@ -228,7 +228,7 @@ button.update-this-book {
 .book-card {
      background: #f5f5f5;
      // border-radius: 5px;
-     width: 180px;
+     width: 175px;
      transition: all ease-in-out .5s;
      box-shadow: 0 0 20px rgba(0,0,0,.2);
 }
@@ -544,7 +544,7 @@ h1.logo-area {
 
 .modal-summary-rating-area .star-rating-area {
      display: inline;
-     margin-left: 8px;
+     margin-left: 2px;
 }
 
 .modal-summary-rating-area .not-yet-rated {
@@ -552,10 +552,19 @@ h1.logo-area {
      margin-left: -8px;
 }
 
-.modal-summary-rating-area .edit-icon,
-.modal-summary-date-finished-area .edit-icon,
-.modal-summary-genre-area .edit-icon {
-     color: #aaa;
+.edit-icon {
+     color: #bbb;
+     font-size: 14px;
+     transition: all ease-in-out .2s;
+}
+
+.edit-icon:hover {
+     cursor: pointer;
+     color: #222;
+}
+
+.edit-icon.remove:hover {
+     color: red;
 }
 
 .advanced-stats-area {

@@ -115,6 +115,7 @@ class PreviouslyRead extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               useGenres={this.props.useGenres}
+                              useTags={this.props.useTags}
                               setBookRating={this.props.setBookRating}
                               resetRatingToZero={this.props.resetRatingToZero}
                               resetTimestampToZero={this.props.resetTimestampToZero}
@@ -122,6 +123,9 @@ class PreviouslyRead extends React.Component {
                               genres={this.props.genres}
                               resetGenreToZero={this.props.resetGenreToZero}
                               addNewGenre={this.props.addNewGenre}
+                              addNewTag={this.props.addNewTag}
+                              setBookTags={this.props.setBookTags}
+                              tags={this.props.tags}
                          />
               ))}
               </div>

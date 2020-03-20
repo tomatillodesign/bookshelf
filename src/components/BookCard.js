@@ -143,6 +143,7 @@ class BookCard extends React.Component {
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                          updateCoverImg={this.props.updateCoverImg}
                          useGenres={this.props.useGenres}
+                         useTags={this.props.useTags}
                          setBookRating={this.props.setBookRating}
                          resetRatingToZero={this.props.resetRatingToZero}
                          resetTimestampToZero={this.props.resetTimestampToZero}
@@ -150,6 +151,9 @@ class BookCard extends React.Component {
                          genres={this.props.genres}
                          resetGenreToZero={this.props.resetGenreToZero}
                          addNewGenre={this.props.addNewGenre}
+                         addNewTag={this.props.addNewTag}
+                         setBookTags={this.props.setBookTags}
+                         tags={this.props.tags}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -168,6 +172,7 @@ class BookCard extends React.Component {
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                          updateCoverImg={this.props.updateCoverImg}
                          useGenres={this.props.useGenres}
+                         useTags={this.props.useTags}
                          setBookRating={this.props.setBookRating}
                          resetRatingToZero={this.props.resetRatingToZero}
                          resetTimestampToZero={this.props.resetTimestampToZero}
@@ -175,6 +180,9 @@ class BookCard extends React.Component {
                          genres={this.props.genres}
                          resetGenreToZero={this.props.resetGenreToZero}
                          addNewGenre={this.props.addNewGenre}
+                         addNewTag={this.props.addNewTag}
+                         setBookTags={this.props.setBookTags}
+                         tags={this.props.tags}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

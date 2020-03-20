@@ -45,6 +45,7 @@ class Router extends React.Component {
                               notification={this.props.notification}
                               updateCoverImg={this.props.updateCoverImg}
                               useGenres={this.props.useGenres}
+                              useTags={this.props.useTags}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -95,6 +96,7 @@ class Router extends React.Component {
                               updateCoverImg={this.props.updateCoverImg}
                               bookSize={this.props.bookSize}
                               useGenres={this.props.useGenres}
+                              useTags={this.props.useTags}
                               setBookRating={this.props.setBookRating}
                               resetRatingToZero={this.props.resetRatingToZero}
                               resetTimestampToZero={this.props.resetTimestampToZero}
@@ -102,6 +104,9 @@ class Router extends React.Component {
                               genres={this.props.genres}
                               resetGenreToZero={this.props.resetGenreToZero}
                               addNewGenre={this.props.addNewGenre}
+                              addNewTag={this.props.addNewTag}
+                              setBookTags={this.props.setBookTags}
+                              tags={this.props.tags}
                          />}
                />
                <Route exact path="/settings"
@@ -119,7 +124,9 @@ class Router extends React.Component {
                               changeSettingsBookSize={this.props.changeSettingsBookSize}
                               bookSize={this.props.bookSize}
                               changeSettingsUseGenres={this.props.changeSettingsUseGenres}
+                              changeSettingsUseTags={this.props.changeSettingsUseTags}
                               useGenres={this.props.useGenres}
+                              useTags={this.props.useTags}
                          />}
                />
                <Route exact path="/register"

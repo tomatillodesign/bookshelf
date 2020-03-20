@@ -213,6 +213,7 @@ export default function BookModal(props) {
                          genre={genre}
                          dateCompleted={dateCompleted}
                          useGenres={props.useGenres}
+                         useTags={props.useTags}
                          description={description}
                          setBookRating={props.setBookRating}
                          resetRatingToZero={props.resetRatingToZero}
@@ -221,6 +222,9 @@ export default function BookModal(props) {
                          genres={props.genres}
                          resetGenreToZero={props.resetGenreToZero}
                          addNewGenre={props.addNewGenre}
+                         addNewTag={props.addNewTag}
+                         setBookTags={props.setBookTags}
+                         tags={props.tags}
                      />
 
                 </Modal.Body>
@@ -299,6 +303,7 @@ export default function BookModal(props) {
                         genre={genre}
                         dateCompleted={dateCompleted}
                         useGenres={props.useGenres}
+                        useTags={props.useTags}
                         description={description}
                         setBookRating={props.setBookRating}
                         resetRatingToZero={props.resetRatingToZero}
@@ -307,6 +312,9 @@ export default function BookModal(props) {
                         genres={props.genres}
                         resetGenreToZero={props.resetGenreToZero}
                         addNewGenre={props.addNewGenre}
+                        addNewTag={props.addNewTag}
+                        setBookTags={props.setBookTags}
+                        tags={props.tags}
                     />
 
                 </Modal.Body>
