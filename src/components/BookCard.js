@@ -142,6 +142,7 @@ class BookCard extends React.Component {
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                          updateCoverImg={this.props.updateCoverImg}
+                         useGenres={this.props.useGenres}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -159,6 +160,7 @@ class BookCard extends React.Component {
                          searchResult={this.props.searchResult}
                          moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
                          updateCoverImg={this.props.updateCoverImg}
+                         useGenres={this.props.useGenres}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

@@ -113,6 +113,7 @@ class SavedForLater extends React.Component {
                               addNewImagesToRead={this.props.addNewImagesToRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              useGenres={this.props.useGenres}
                          />
               ))}
          </div>

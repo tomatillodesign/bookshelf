@@ -9,6 +9,7 @@ import BookButtonRemove from './BookButtonRemove';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 import ReplaceCover from './ReplaceCover';
 import Stars from './Stars';
+import BookEditor from './BookEditor.js';
 
 import SelectRating from './SelectRating';
 
@@ -175,6 +176,14 @@ export default function BookModal(props) {
           if( showDescription === false ) { showDescriptionIndicator = "+"; }
           else if( showDescription === true ) { showDescriptionIndicator = "–"; }
 
+          if( coverImageURL !== null ) {
+               //console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
+               if( coverImageURL.startsWith("http://") ) {
+                    coverImageURL = coverImageURL.replace("http://", "https://");
+                    //console.log("Updated COVER IMG URL: " + coverImageURL);
+               }
+          }
+
           return (
             <>
               <button onClick={handleShow} className="card-book-title">
@@ -183,42 +192,46 @@ export default function BookModal(props) {
 
               <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
                 <Modal.Header closeButton>
-                  <Modal.Title className="single-book-title">{title}</Modal.Title>
+                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="small-thumbnail-area">
-                         <img src={coverImageURL} />
-                         {props.searchResult !== true &&
-                              <ReplaceCover
-                                   bookObj={book}
-                                   updateCoverImg={props.updateCoverImg}
-                              />
-                         }
-                    </div>
-                    {subtitle}
-                    {authorsToPublish}
-                         <>
-                         <div className="rating-area">
-                              Rating: <Stars bookshelfRating={bookshelfRating} /> <span className="star-icon"><FontAwesomeIcon icon={faEdit} /></span>
-                         </div>
-                         <Accordion>
-                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>Description {showDescriptionIndicator}</h3>
-                              </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                            </Accordion.Collapse>
-                        </Accordion>
-                        </>
+                     <div className="small-thumbnail-area">
+                          <img src={coverImageURL} />
+                          {props.searchResult !== true &&
+                               <ReplaceCover
+                                     bookObj={book}
+                                     updateCoverImg={props.updateCoverImg}
+                               />
+                          }
+                     </div>
+                     {subtitle}
+                     {authorsToPublish}
+
+                     <BookEditor
+                         bookshelfRating={props.bookshelfRating}
+                         genre={genre}
+                         dateCompleted={dateCompleted}
+                         useGenres={props.useGenres}
+                     />
+
+                          <Accordion>
+                               <Accordion.Toggle onClick={customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
+                                 <h3>View Description +</h3>
+                               </Accordion.Toggle>
+                             <Accordion.Collapse eventKey="0">
+                               <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
+                             </Accordion.Collapse>
+                         </Accordion>
+
                 </Modal.Body>
                 <Modal.Footer>
                 <div className="book-meta button-area">
                 { props.alreadyRead &&
                      <BookButtonRemove
-                         book={book}
-                         context={'removeBookFromAlreadyRead'}
-                         removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
-                      />
+                          book={book}
+                          context={'removeBookFromAlreadyRead'}
+                          removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                       />
                 }
                 { props.savedForLater &&
                      <>
@@ -230,7 +243,6 @@ export default function BookModal(props) {
                      />
                      <BookButtonMoveToAlreadyRead
                           book={props.book}
-                          coverImageURL={coverImageURL}
                           moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
                      />
                      </>
@@ -238,15 +250,13 @@ export default function BookModal(props) {
                 { props.searchResult &&
                      <>
                      <BookButtonToRead />
-                     <BookButtonAlreadyRead
-                         coverImageURL={coverImageURL}
-                         addBookAlreadyRead={props.addBookAlreadyRead}
-                     />
+                     <BookButtonAlreadyRead />
                      </>
                 }
                 </div>
                 </Modal.Footer>
               </Modal>
+
             </>
           );
 
@@ -288,9 +298,11 @@ export default function BookModal(props) {
                     <div className="modal-summary-date-finished-area">
                          Date Completed: {dateCompleted} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon"><FontAwesomeIcon icon={faMinusCircle} /></span>
                     </div>
+                    {props.useGenres &&
                     <div className="modal-summary-genre-area">
                          Genre: {genre} <span className="edit-icon"><FontAwesomeIcon icon={faEdit} /></span>
                     </div>
+                    }
                          <Accordion>
                               <Accordion.Toggle onClick={customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
                                 <h3>View Description +</h3>

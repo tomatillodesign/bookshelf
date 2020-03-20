@@ -32,6 +32,7 @@ class BookManager extends React.Component {
                               'Science Fiction',
                               'Young Adult',
                          ],
+                         useGenres: false,
                          customFields: [],
                     },
              notification: null
@@ -433,6 +434,25 @@ class BookManager extends React.Component {
 
 
 
+
+       changeSettingsUseGenres = (selectedOption) => {
+
+            console.log('changeSettingsUseGenres');
+
+          let newGenreSetting = false;
+          if(selectedOption) {
+               newGenreSetting = selectedOption.value;
+          }
+
+          this.setState({ settings: {
+                    useGenres: newGenreSetting
+               }
+          });
+
+     }
+
+
+
         changeSettingsColor = (selectedOption) => {
 
            let newSettingsColor = 'default';
@@ -537,6 +557,8 @@ class BookManager extends React.Component {
                  updateCoverImg={this.updateCoverImg}
                  changeSettingsBookSize={this.changeSettingsBookSize}
                  bookSize={this.state.settings.bookSize}
+                 changeSettingsUseGenres={this.changeSettingsUseGenres}
+                 useGenres={this.state.settings.useGenres}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

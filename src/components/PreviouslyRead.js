@@ -91,7 +91,7 @@ class PreviouslyRead extends React.Component {
          return(
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
-               <AdvancedStats 
+               <AdvancedStats
                     books={booksAlreadyRead}
                />
                <div className="view-type">
@@ -114,6 +114,7 @@ class PreviouslyRead extends React.Component {
                               addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              useGenres={this.props.useGenres}
                          />
               ))}
               </div>

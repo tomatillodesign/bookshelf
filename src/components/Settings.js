@@ -5,6 +5,7 @@ import DeleteAccount from './DeleteAccount.js';
 import SelectThemeColor from './SelectThemeColor.js';
 import SelectThemeFont from './SelectThemeFont.js';
 import SelectBookSize from './SelectBookSize.js';
+import SelectUseGenres from './SelectUseGenres.js';
 import base from '../base';
 import { firebaseApp } from '../base';
 
@@ -92,9 +93,9 @@ class Settings extends React.Component {
                 </div>
                 <div className="select-font-area">
                     <h4>Use Genres?</h4>
-                     <SelectThemeFont
-                         settingsFont={this.props.settingsFont}
-                         changeSettingsFont={this.props.changeSettingsFont}
+                     <SelectUseGenres
+                         changeSettingsUseGenres={this.props.changeSettingsUseGenres}
+                         useGenres={this.props.useGenres}
                      />
                 </div>
            </div>

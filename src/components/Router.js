@@ -44,6 +44,7 @@ class Router extends React.Component {
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
                               updateCoverImg={this.props.updateCoverImg}
+                              useGenres={this.props.useGenres}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -74,6 +75,7 @@ class Router extends React.Component {
                               notification={this.props.notification}
                               updateCoverImg={this.props.updateCoverImg}
                               bookSize={this.props.bookSize}
+                              useGenres={this.props.useGenres}
                          />}
                />
 
@@ -92,6 +94,7 @@ class Router extends React.Component {
                               settingsColor={this.props.settingsColor}
                               updateCoverImg={this.props.updateCoverImg}
                               bookSize={this.props.bookSize}
+                              useGenres={this.props.useGenres}
                          />}
                />
                <Route exact path="/settings"
@@ -108,6 +111,8 @@ class Router extends React.Component {
                               changeSettingsFont={this.props.changeSettingsFont}
                               changeSettingsBookSize={this.props.changeSettingsBookSize}
                               bookSize={this.props.bookSize}
+                              changeSettingsUseGenres={this.props.changeSettingsUseGenres}
+                              useGenres={this.props.useGenres}
                          />}
                />
                <Route exact path="/register"
