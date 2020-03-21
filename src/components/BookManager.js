@@ -250,6 +250,7 @@ class BookManager extends React.Component {
            console.log(index);
 
            clbCopyBookState[index].alreadyRead = true;
+           clbCopyBookState[index].bookshelfTimestamp = Date.now();
            this.setState({ books: this.state.books });
 
          }
@@ -736,8 +737,8 @@ class BookManager extends React.Component {
        // run filter operations to separate To Read from Already Read
        const updatedBooksToRead = books.filter(book => book.alreadyRead === false);
        const updatedBooksAlreadyRead = books.filter(book => book.alreadyRead === true);
-       console.log(updatedBooksToRead);
-       console.log(updatedBooksAlreadyRead);
+       // console.log(updatedBooksToRead);
+       // console.log(updatedBooksAlreadyRead);
 
        return(
             <>

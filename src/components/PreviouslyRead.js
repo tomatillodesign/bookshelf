@@ -2,6 +2,7 @@ import React from 'react';
 import BookCard from './BookCard.js';
 import SelectAlreadyReadView from './SelectAlreadyReadView';
 import AdvancedStats from './AdvancedStats.js';
+import SelectFilter from './SelectFilter.js';
 
 var shortid = require('shortid');
 
@@ -95,13 +96,31 @@ class PreviouslyRead extends React.Component {
                     books={booksAlreadyRead}
                />
                <div className="view-type">
-                         <div className="viewer-label">View Your Books by: </div>
+                         <div className="viewer-label">Order by: </div>
                          <div className="viewer-selector-area">
                               <SelectAlreadyReadView
                                    defaultView={this.props.booksAlreadyReadView}
                                    changeAlreadyReadView={this.props.changeAlreadyReadView}
                               />
                     </div>
+               </div>
+               <div className="view-type">
+                         <div className="viewer-label">Filter by: </div>
+                         <div className="viewer-selector-area">
+                              <SelectFilter
+                                   type={"rating"}
+                              />
+                         </div>
+                         <div className="viewer-selector-area">
+                              <SelectFilter
+                                   type={"categories"}
+                              />
+                         </div>
+                         <div className="viewer-selector-area">
+                              <SelectFilter
+                                   type={"tags"}
+                              />
+                         </div>
                </div>
                 <div className={"results-grid " + this.props.bookSize}>
                 {orderedBooks.map((book, index) => (

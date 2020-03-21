@@ -11,6 +11,7 @@ class SelectTags extends React.Component {
           super(props);
           this.state = {
                tags: this.props.defaultTags,
+               madeChange: false,
             };
      }
 
@@ -21,7 +22,8 @@ class SelectTags extends React.Component {
 
      addTagToState = (selectedOption) => {
           console.log(selectedOption);
-          this.setState({ tags: selectedOption });
+          this.setState({ tags: selectedOption, madeChange: true });
+
      }
 
 
@@ -82,7 +84,9 @@ class SelectTags extends React.Component {
                          formatCreateLabel={this.handleCreateLabel}
                          onChange={this.addTagToState}
                       />
-                      <button className="add-tags">Add Tags</button>
+                      {this.state.madeChange === true &&
+                           <button className="add-tags">Update Tags</button>
+                      }
                     </form>
                );
 
@@ -99,7 +103,7 @@ class SelectTags extends React.Component {
                          formatCreateLabel={this.handleCreateLabel}
                          onChange={this.addTagToState}
                       />
-                      <button className="add-tags">Add Tags</button>
+                      <button className="add-tags">Update Tags</button>
                     </form>
                );
 

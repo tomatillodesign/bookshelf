@@ -117,6 +117,14 @@ class BookEditor extends React.Component {
      }
 
 
+     customToggle = () => {
+          //console.log("customToggle");
+          this.setState(prevState => ({
+            viewDescription: !prevState.viewDescription
+          }));
+     }
+
+
      render() {
 
           const description = this.props.description;
@@ -239,7 +247,12 @@ class BookEditor extends React.Component {
 
                <Accordion>
                     <Accordion.Toggle onClick={this.customToggle} as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                     <h3>View Description +</h3>
+                     { this.state.viewDescription === true &&
+                          <h3>View Description –</h3>
+                     }
+                     { this.state.viewDescription === false &&
+                          <h3>View Description +</h3>
+                     }
                     </Accordion.Toggle>
                   <Accordion.Collapse eventKey="0">
                     <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>

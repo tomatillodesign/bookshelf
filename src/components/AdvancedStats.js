@@ -8,7 +8,7 @@ export default function AdvancedStats(props) {
      }
 
        const books = props.books;
-       console.log(props.books);
+       // console.log(props.books);
 
        // get total pages
        let totalPages = 0;
@@ -21,9 +21,9 @@ export default function AdvancedStats(props) {
             }
        }
 
-       console.log(starRatingsArray);
+       // console.log(starRatingsArray);
        let sum = starRatingsArray.reduce((previous, current) => current += previous);
-       console.log(sum);
+       // console.log(sum);
        let avg = sum / starRatingsArray.length;
        let avgToPublish = avg.toFixed(2)
 

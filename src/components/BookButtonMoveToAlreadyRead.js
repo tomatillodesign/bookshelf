@@ -31,7 +31,7 @@ class BookButtonMoveToAlreadyRead extends React.Component {
                     title="Move this book to your Already Read shelf"
                     onClick={this.createNewBook}
                     >
-                    <FontAwesomeIcon icon={faBook} /> Move this Book
+                    <FontAwesomeIcon icon={faBook} />
                </button>
           );
 

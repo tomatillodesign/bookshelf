@@ -6,7 +6,7 @@ function Stars(props) {
 
 
      const rating = parseInt(props.bookshelfRating);
-     console.log(props.bookshelfRating);
+     // console.log(props.bookshelfRating);
 
      let stars = null;
      if(rating === 5) {

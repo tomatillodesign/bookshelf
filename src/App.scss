@@ -142,7 +142,7 @@ button.already-read-description-toggle {
 button.already-read-description-toggle h3 {
      padding: 0;
      margin: 0;
-     margin-bottom: 12px;
+     
 }
 
 button.already-read-description-toggle:hover {
@@ -335,8 +335,8 @@ button.card-book-cover img {
      margin-top: 6px;
      margin-bottom: 6px;
      display: flex;
-     justify-content: space-evenly;
-     // justify-content: center;
+     //justify-content: space-evenly;
+     justify-content: center;
 }
 
 .modal-footer button.read-action.already-read {
@@ -382,6 +382,10 @@ button.read-action:hover {
 
 .star-icon {
      font-size: 20px;
+}
+
+.results-grid.small .star-icon {
+     font-size: 15px;
 }
 
 .view-type {
@@ -586,6 +590,23 @@ h1.logo-area {
      margin-bottom: 8px;
 }
 
+h3.saved-for-later-description-headline {
+     margin-left: 20px;
+}
+
+button.add-tags {
+    font-size: 13px;
+    background: #e85555;
+    border-radius: 5px;
+    padding: 8px;
+    margin-top: 8px;
+}
+
+.saved-for-later-text {
+     margin: 20px;
+     margin-top: 0;
+}
+
 
 @media only screen and (min-width: 960px) {
 
@@ -717,7 +738,7 @@ h1.logo-area {
 
 .modal-title {
   margin-bottom: 0;
-  line-height: 1.5;
+  line-height: 1.2;
 }
 
 .modal-body {
@@ -788,6 +809,7 @@ button.close {
     cursor: pointer;
     background: 0 0;
     border: 0;
+    margin-left: 4px;
 }
 
 .modal-header .close {

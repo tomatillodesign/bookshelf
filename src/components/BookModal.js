@@ -29,7 +29,7 @@ export default function BookModal(props) {
      }
 
      const book = props.book;
-     console.log(book);
+     // console.log(book);
 
      const bookCoverModal = props.bookCoverModal;
      const bookTitleModal = props.bookTitleModal;
@@ -58,7 +58,7 @@ export default function BookModal(props) {
      if( props.searchResult !== true ) {
 
           title = book.title;
-          console.log(title);
+          // console.log(title);
           if( book.subtitle !== undefined ) {
                hasSubtitle = true;
                authorClass = " has-subtitle";
@@ -207,6 +207,7 @@ export default function BookModal(props) {
                      {subtitle}
                      {authorsToPublish}
 
+                     {props.alreadyRead &&
                      <BookEditor
                          book={book}
                          bookshelfRating={props.bookshelfRating}
@@ -227,6 +228,16 @@ export default function BookModal(props) {
                          tags={props.tags}
                          resetAllTags={props.resetAllTags}
                      />
+                    }
+
+                    {props.savedForLater &&
+                         <div className="saved-for-later-description-area">
+                         <h3 className="saved-for-later-description-headline">Description</h3>
+                              <div className="saved-for-later-text">
+                              {props.book.description}
+                              </div>
+                         </div>
+                    }
 
                 </Modal.Body>
                 <Modal.Footer>
@@ -275,13 +286,19 @@ export default function BookModal(props) {
                }
           }
 
+          let additionalModalClasses = null;
+          if( props.savedForLater === true ) { additionalModalClasses = " saved-for-later"; }
+          if( props.alreadyRead === true ) { additionalModalClasses = " already-read"; }
+          if( props.searchResult === true ) { additionalModalClasses = " search-result"; }
+
+
           return (
             <>
               <div className="cover-image-area">
                    <button onClick={handleShow} className="card-book-cover"><img src={coverImageURL} className="cover-image" /></button>
               </div>
 
-              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
+              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor + additionalModalClasses}>
                 <Modal.Header closeButton>
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
@@ -298,6 +315,7 @@ export default function BookModal(props) {
                     {subtitle}
                     {authorsToPublish}
 
+                    {props.alreadyRead &&
                     <BookEditor
                          book={book}
                         bookshelfRating={props.bookshelfRating}
@@ -318,6 +336,16 @@ export default function BookModal(props) {
                         tags={props.tags}
                         resetAllTags={props.resetAllTags}
                     />
+               }
+
+               {props.savedForLater &&
+                    <div className="saved-for-later-description-area">
+                    <h3 className="saved-for-later-description-headline">Description</h3>
+                         <div className="saved-for-later-text">
+                         {props.book.description}
+                         </div>
+                    </div>
+               }
 
                 </Modal.Body>
                 <Modal.Footer>
