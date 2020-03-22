@@ -9,9 +9,10 @@ class SelectFilter extends React.Component {
      }
 
 
-     setView = (selectedOption) => {
+     setFilter = (selectedOption) => {
           if(selectedOption) {
-               this.props.changeAlreadyReadView(selectedOption);
+               console.log(selectedOption);
+               //this.props.changeAlreadyReadView(selectedOption);
           }
 
      }
@@ -20,53 +21,45 @@ class SelectFilter extends React.Component {
 
      render() {
 
-          const defaultView = this.props.defaultView;
-          console.log(defaultView);
+          // create empty variables
+          let filterOptions = [];
+          let placeholder = '';
 
-               var myViewToPublish = null;
-               if( defaultView === 'alphabetical' ) { myViewToPublish = 'Alphabetical'; }
-               if( defaultView === 'rating' ) { myViewToPublish = 'Rating (High to Low)'; }
-               if( defaultView === 'date' ) { myViewToPublish = 'Date (Recently Completed)'; }
-
-          let defaultViewPublish = {
-               value: defaultView,
-               label: myViewToPublish
-          };
-          if( defaultView === null ) { defaultViewPublish = null; }
-          //console.log(defaultView);
-
-          const ratingOptions = [
-               { value: 'alphabetical', label: 'Alphabetical' },
-               { value: 'rating', label: 'Rating (High to Low)' },
-               { value: 'date', label: 'Date (Recently Completed)' },
-          ];
-
-          if( defaultView ) {
-
-               return (
-                 <Select
-                    placeholder='Rating'
-                    options={ratingOptions}
-                    defaultValue={defaultViewPublish}
-                    isClearable
-                    isSearchable
-                    onChange={this.setView}
-                 />
-               );
-
-          } else {
-
-               return (
-                 <Select
-                    placeholder='Rating'
-                    options={ratingOptions}
-                    isClearable
-                    isSearchable
-                    onChange={this.setView}
-                 />
-               );
-
+          // set vars based on props //////////////////////////////////////////
+          // RATING selections //////////////
+          if( this.props.type === 'rating' ) {
+               placeholder = 'Rating';
+               filterOptions = [
+                    { value: '5', label: '⭐⭐⭐⭐⭐ Life-Changing' },
+                    { value: '4', label: '⭐⭐⭐⭐ Great and higher' },
+                    { value: '3', label: '⭐⭐⭐ Good and higher' },
+                    { value: '2', label: '⭐⭐ OK and higher' },
+               ]
           }
+
+
+          // CATEGORIES selections //////////////
+          if( this.props.type === 'genres' ) {
+               placeholder = 'Genre';
+          }
+
+
+          // TAGS selections //////////////
+          if( this.props.type === 'tags' ) {
+               placeholder = 'Tag';
+          }
+
+
+
+               return (
+                 <Select
+                    placeholder={placeholder}
+                    options={filterOptions}
+                    isClearable
+                    isSearchable
+                    onChange={this.setFilter}
+                 />
+               );
 
      }
 

@@ -106,21 +106,25 @@ class PreviouslyRead extends React.Component {
                </div>
                <div className="view-type">
                          <div className="viewer-label">Filter by: </div>
-                         <div className="viewer-selector-area">
+                         <div className="viewer-selector-area filter">
                               <SelectFilter
                                    type={"rating"}
                               />
                          </div>
-                         <div className="viewer-selector-area">
+                         {this.props.useGenres &&
+                         <div className="viewer-selector-area filter">
                               <SelectFilter
-                                   type={"categories"}
+                                   type={"genres"}
                               />
                          </div>
-                         <div className="viewer-selector-area">
+                         }
+                         {this.props.useTags &&
+                         <div className="viewer-selector-area filter">
                               <SelectFilter
                                    type={"tags"}
                               />
                          </div>
+                         }
                </div>
                 <div className={"results-grid " + this.props.bookSize}>
                 {orderedBooks.map((book, index) => (
