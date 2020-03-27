@@ -78,11 +78,11 @@ export default function AdvancedStats(props) {
                                                        });
        // re-order the array of books by timestamp
        booksWithDate.sort((a, b) => (a.bookshelfTimestamp < b.bookshelfTimestamp) ? 1 : -1)
-       console.log(booksWithDate);
+       //console.log(booksWithDate);
 
        let yearlyChart = [];
        let prevDateRaw = new Date( booksWithDate[0].bookshelfTimestamp );
-       console.log(booksWithDate[0].bookshelfTimestamp);
+       //console.log(booksWithDate[0].bookshelfTimestamp);
        let prevDateYear = prevDateRaw.getFullYear();
        let currentYearBooks = [];
 
@@ -97,8 +97,8 @@ export default function AdvancedStats(props) {
 
                  // create new array, filtered just for this year
                  currentYearBooks = books.filter(function(book) { return getYear(book) === currentBookYear; });
-                 console.log(currentBookYear);
-                 console.log(currentYearBooks);
+                 // console.log(currentBookYear);
+                 // console.log(currentYearBooks);
 
                  yearlyChart.push(
                       <div className="yearly-chart-area">
@@ -143,7 +143,7 @@ export default function AdvancedStats(props) {
                <div className="stat-item total-books-read">Total books read: {books.length}</div>
                <div className="stat-item total-pages-read">Approx. total pages read: {getTotalPages(books)}</div>
                <div className="stat-item alltime-avg-stars">All-time average rating: {avgToPublish}</div>
-               <div className="stat-item this-year-avg-stars">
+               <div className="stat-item chart-area-all-years">
                     { yearlyChart.map((year) => (
                          <div key={shortid.generate()} className="single-year">{year}</div>
                     ))}</div>

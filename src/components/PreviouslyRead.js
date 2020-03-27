@@ -11,70 +11,157 @@ class PreviouslyRead extends React.Component {
      constructor(props){
         super(props);
         this.state = {
-             // booksAlreadyRead: [],
-             // booksAlreadyReadView: '',
+             bookOrder: this.props.booksAlreadyReadView,
+             genreFilter: '',
+             tagFilter: '',
+             ratingFilter: 0,
+             displayedBooks: this.props.booksAlreadyRead,
       };
+    }
+
+
+    orderBooks = ( bookOrderString, booksArray ) => {
+         console.log( bookOrderString );
+         console.log( booksArray )
+
+         let orderedBooks = null;
+         if( bookOrderString === 'alphabetical') {
+              orderedBooks = [...booksArray].sort((a, b) => (a.title > b.title) ? 1 : -1);
+         }
+
+         if( this.props.booksAlreadyReadView === 'date') {
+
+                   // New sorting
+                   orderedBooks = [...booksArray].sort(function (a, b) {
+
+                        // If the first item has a higher number, move it down
+                        // If the first item has a lower number, move it up
+                        if (a.bookshelfTimestamp > b.bookshelfTimestamp) return -1;
+                        if (a.bookshelfTimestamp < b.bookshelfTimestamp) return 1;
+
+                        // If the count number is the same between both items, sort alphabetically
+                        // If the first item comes first in the alphabet, move it up
+                        // Otherwise move it down
+                        if (a.title > b.title) return 1;
+                        if (a.title < b.title) return -1;
+
+                   });
+
+         }
+
+         if( this.props.booksAlreadyReadView === 'rating') {
+
+                   // New sorting
+                   orderedBooks = [...booksArray].sort(function (a, b) {
+
+                        // If the first item has a higher number, move it down
+                        // If the first item has a lower number, move it up
+                        if (a.bookshelfRating > b.bookshelfRating) return -1;
+                        if (a.bookshelfRating < b.bookshelfRating) return 1;
+
+                        // If the count number is the same between both items, sort alphabetically
+                        // If the first item comes first in the alphabet, move it up
+                        // Otherwise move it down
+                        if (a.title > b.title) return 1;
+                        if (a.title < b.title) return -1;
+
+                   });
+
+         }
+
+         return orderedBooks;
+    }
+
+
+    setGenreFilter = ( string ) => {
+         console.log("setGenreFilter = " + string);
+         const genre = string;
+         let filteredBooks = null;
+         if( genre != '' ) {
+              filteredBooks = this.props.booksAlreadyRead.filter(function(book) {
+                return book.genre === genre;
+              });
+
+              // run the re-ordering function to make sure everything is in the correct order
+              const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+              this.setState({
+                   genreFilter: string,
+                   displayedBooks: filteredBooksInOrder
+              });
+         }
+    }
+
+    clearGenreFilter = () => {
+         console.log("resetGenreFilter");
+         const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
+         this.setState({
+              genreFilter: '',
+              displayedBooks: filteredBooksInOrder
+         });
     }
 
 
 
 
+
+    setTagFilter = ( string ) => {
+         console.log("setTagFilter = " + string);
+         const tag = string;
+         let filteredBooks = null;
+         if( tag != '' && tag != undefined ) {
+              filteredBooks = this.props.booksAlreadyRead.filter(function(book) {
+                   let myBookTags = book.tags;
+                   if( myBookTags === undefined ) { console.log("UNDEF"); myBookTags = ''; }
+                   console.log(myBookTags);
+                   if( book.tags === undefined ) { book.tags = ''; }
+                   return myBookTags.includes(tag);
+              });
+
+              // run the re-ordering function to make sure everything is in the correct order
+              const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+              this.setState({
+                   tagFilter: string,
+                   displayedBooks: filteredBooksInOrder
+              });
+         }
+    }
+
+    clearTagFilter = () => {
+         console.log("resetTagFilter");
+         const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
+         this.setState({
+              tagFilter: '',
+              displayedBooks: filteredBooksInOrder
+         });
+    }
+
+
+
+    componentWillMount() {
+         const booksAlreadyRead = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
+         this.setState({
+              displayedBooks: booksAlreadyRead
+         });
+    }
+
+
+
     render() {
 
+
          const booksAlreadyRead = this.props.booksAlreadyRead;
+         const displayedBooks = this.state.displayedBooks;
          console.log(booksAlreadyRead);
+         console.log(displayedBooks);
 
-         console.log(this.props.booksAlreadyReadView);
-         let orderedBooks = null;
-
-               // order these books!
-               if( this.props.booksAlreadyReadView === 'alphabetical') {
-                    orderedBooks = [...booksAlreadyRead].sort((a, b) => (a.title > b.title) ? 1 : -1);
-
-               }
-
-               if( this.props.booksAlreadyReadView === 'date') {
-
-                         // New sorting
-                         orderedBooks = [...booksAlreadyRead].sort(function (a, b) {
-
-                         	// If the first item has a higher number, move it down
-                         	// If the first item has a lower number, move it up
-                         	if (a.bookshelfTimestamp > b.bookshelfTimestamp) return -1;
-                         	if (a.bookshelfTimestamp < b.bookshelfTimestamp) return 1;
-
-                         	// If the count number is the same between both items, sort alphabetically
-                         	// If the first item comes first in the alphabet, move it up
-                         	// Otherwise move it down
-                         	if (a.title > b.title) return 1;
-               	          if (a.title < b.title) return -1;
-
-                         });
-
-               }
-
-               if( this.props.booksAlreadyReadView === 'rating') {
-
-                         // New sorting
-                         orderedBooks = [...booksAlreadyRead].sort(function (a, b) {
-
-                         	// If the first item has a higher number, move it down
-                         	// If the first item has a lower number, move it up
-                         	if (a.bookshelfRating > b.bookshelfRating) return -1;
-                         	if (a.bookshelfRating < b.bookshelfRating) return 1;
-
-                         	// If the count number is the same between both items, sort alphabetically
-                         	// If the first item comes first in the alphabet, move it up
-                         	// Otherwise move it down
-                         	if (a.title > b.title) return 1;
-               	          if (a.title < b.title) return -1;
-
-                         });
-
-               }
-
-
-
+         let clearButton = null;
+         if( this.state.genreFilter != '' || this.state.tagFilter != '' || this.state.ratingFilter != 0 ) {
+              clearButton = (<div className="viewer-selector-area clear">
+                   <button id="clear-all-filters" className="clear-all-filters">Clear All Filters</button>
+              </div>);
+         }
 
 
          if( booksAlreadyRead === undefined || booksAlreadyRead.length === 0 ) {
@@ -108,26 +195,34 @@ class PreviouslyRead extends React.Component {
                          <div className="viewer-label">Filter by: </div>
                          <div className="viewer-selector-area filter">
                               <SelectFilter
+                                   books={booksAlreadyRead}
                                    type={"rating"}
                               />
                          </div>
                          {this.props.useGenres &&
                          <div className="viewer-selector-area filter">
                               <SelectFilter
+                                   books={booksAlreadyRead}
                                    type={"genres"}
+                                   setGenreFilter={this.setGenreFilter}
+                                   clearGenreFilter={this.clearGenreFilter}
                               />
                          </div>
                          }
                          {this.props.useTags &&
                          <div className="viewer-selector-area filter">
                               <SelectFilter
+                                   books={booksAlreadyRead}
                                    type={"tags"}
+                                   setTagFilter={this.setTagFilter}
+                                   clearTagFilter={this.clearTagFilter}
                               />
                          </div>
                          }
+                         {clearButton}
                </div>
                 <div className={"results-grid " + this.props.bookSize}>
-                {orderedBooks.map((book, index) => (
+                {displayedBooks.map((book, index) => (
                      <BookCard
                               key={book.id}
                               book={book}
