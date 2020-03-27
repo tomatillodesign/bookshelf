@@ -75,64 +75,49 @@ class PreviouslyRead extends React.Component {
 
     setGenreFilter = ( string ) => {
          console.log("setGenreFilter = " + string);
-         const genre = string;
-         let filteredBooks = null;
-         if( genre != '' ) {
-              filteredBooks = this.props.booksAlreadyRead.filter(function(book) {
-                return book.genre === genre;
-              });
-
-              // run the re-ordering function to make sure everything is in the correct order
-              const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
-
-              this.setState({
-                   genreFilter: string,
-                   displayedBooks: filteredBooksInOrder
-              });
-         }
+         this.setState({ genreFilter: string });
     }
 
     clearGenreFilter = () => {
          console.log("resetGenreFilter");
-         const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
-         this.setState({
-              genreFilter: '',
-              displayedBooks: filteredBooksInOrder
-         });
+         this.setState({ genreFilter: '' });
     }
-
 
 
 
 
     setTagFilter = ( string ) => {
          console.log("setTagFilter = " + string);
-         const tag = string;
-         let filteredBooks = null;
-         if( tag != '' && tag != undefined ) {
-              filteredBooks = this.props.booksAlreadyRead.filter(function(book) {
-                   let myBookTags = book.tags;
-                   if( myBookTags === undefined ) { console.log("UNDEF"); myBookTags = ''; }
-                   console.log(myBookTags);
-                   if( book.tags === undefined ) { book.tags = ''; }
-                   return myBookTags.includes(tag);
-              });
-
-              // run the re-ordering function to make sure everything is in the correct order
-              const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
-
-              this.setState({
-                   tagFilter: string,
-                   displayedBooks: filteredBooksInOrder
-              });
-         }
+         this.setState({ tagFilter: string });
     }
 
     clearTagFilter = () => {
          console.log("resetTagFilter");
+         this.setState({ tagFilter: '' });
+    }
+
+
+
+
+    setRatingFilter = ( number ) => {
+         console.log("setRatingFilter = " + number);
+         this.setState({ ratingFilter: number });
+    }
+
+    clearRatingFilter = () => {
+         console.log("resetRatingFilter");
+         this.setState({ ratingFilter: 0 });
+    }
+
+
+
+    clearAllFilters = (e) => {
+         e.preventDefault();
          const filteredBooksInOrder = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
          this.setState({
               tagFilter: '',
+              genreFilter: '',
+              ratingFilter: 0,
               displayedBooks: filteredBooksInOrder
          });
     }
@@ -151,15 +136,65 @@ class PreviouslyRead extends React.Component {
     render() {
 
 
-         const booksAlreadyRead = this.props.booksAlreadyRead;
-         const displayedBooks = this.state.displayedBooks;
+         let booksAlreadyRead = this.props.booksAlreadyRead;
+         let displayedBooks = this.state.displayedBooks;
          console.log(booksAlreadyRead);
          console.log(displayedBooks);
+
+
+         /////////// Getting all of the button resets right and current displayedBooks ///////
+         console.log('Rating filter: ' + this.state.ratingFilter);
+         console.log('Genre filter: ' + this.state.genreFilter);
+         console.log('Tag filter: ' + this.state.tagFilter);
+
+              // Let's do GENRE
+              const genre = this.state.genreFilter;
+              let filteredBooks = null;
+              if( genre != '' ) {
+                   filteredBooks = displayedBooks.filter(function(book) {
+                     return book.genre === genre;
+                   });
+
+                   // run the re-ordering function to make sure everything is in the correct order
+                   displayedBooks = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+              }
+
+               // Let's do TAGS
+               const tag = this.state.tagFilter;
+               if( tag != '' && tag != undefined ) {
+               filteredBooks = displayedBooks.filter(function(book) {
+                  let myBookTags = book.tags;
+                  if( myBookTags === undefined ) { console.log("UNDEF"); myBookTags = ''; }
+                  console.log(myBookTags);
+                  if( book.tags === undefined ) { book.tags = ''; }
+                  return myBookTags.includes(tag);
+               });
+
+               // run the re-ordering function to make sure everything is in the correct order
+               displayedBooks = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+               }
+
+               // And Now Rating
+               const minRating = this.state.ratingFilter;
+               if( minRating != 0 ) {
+                    filteredBooks = displayedBooks.filter(function(book) {
+                      return book.bookshelfRating >= minRating;
+                    });
+
+               // run the re-ordering function to make sure everything is in the correct order
+               displayedBooks = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+               }
+
+
+
 
          let clearButton = null;
          if( this.state.genreFilter != '' || this.state.tagFilter != '' || this.state.ratingFilter != 0 ) {
               clearButton = (<div className="viewer-selector-area clear">
-                   <button id="clear-all-filters" className="clear-all-filters">Clear All Filters</button>
+                   <button id="clear-all-filters" className="clear-all-filters" onClick={this.clearAllFilters}>Clear All Filters</button>
               </div>);
          }
 
@@ -195,15 +230,19 @@ class PreviouslyRead extends React.Component {
                          <div className="viewer-label">Filter by: </div>
                          <div className="viewer-selector-area filter">
                               <SelectFilter
-                                   books={booksAlreadyRead}
+                                   books={displayedBooks}
                                    type={"rating"}
+                                   currentSelection={this.state.ratingFilter}
+                                   setRatingFilter={this.setRatingFilter}
+                                   clearRatingFilter={this.clearRatingFilter}
                               />
                          </div>
                          {this.props.useGenres &&
                          <div className="viewer-selector-area filter">
                               <SelectFilter
-                                   books={booksAlreadyRead}
+                                   books={displayedBooks}
                                    type={"genres"}
+                                   currentSelection={this.state.genreFilter}
                                    setGenreFilter={this.setGenreFilter}
                                    clearGenreFilter={this.clearGenreFilter}
                               />
@@ -212,8 +251,9 @@ class PreviouslyRead extends React.Component {
                          {this.props.useTags &&
                          <div className="viewer-selector-area filter">
                               <SelectFilter
-                                   books={booksAlreadyRead}
+                                   books={displayedBooks}
                                    type={"tags"}
+                                   currentSelection={this.state.tagFilter}
                                    setTagFilter={this.setTagFilter}
                                    clearTagFilter={this.clearTagFilter}
                               />

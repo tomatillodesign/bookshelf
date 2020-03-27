@@ -9,10 +9,12 @@ class SelectFilter extends React.Component {
      }
 
 
-     setFilter = (selectedOption) => {
+     selectRating = (selectedOption) => {
           if(selectedOption) {
                console.log(selectedOption);
-               //this.props.changeAlreadyReadView(selectedOption);
+               this.props.setRatingFilter(selectedOption.value);
+          } else {
+               this.props.clearRatingFilter();
           }
 
      }
@@ -70,9 +72,10 @@ class SelectFilter extends React.Component {
                  <Select
                     placeholder={placeholder}
                     options={filterOptions}
+                    value={this.props.currentSelection}
                     isClearable
                     isSearchable
-                    onChange={this.setFilter}
+                    onChange={this.selectRating}
                  />
                );
 
@@ -94,16 +97,32 @@ class SelectFilter extends React.Component {
                }
 
                placeholder = 'Genre';
+               if( this.props.currentSelection === '' ) {
 
-               return (
-                 <Select
-                    placeholder={placeholder}
-                    options={filterOptions}
-                    isClearable
-                    isSearchable
-                    onChange={this.selectGenre}
-                 />
-               );
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         value={null}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectGenre}
+                      />
+                    );
+
+               } else {
+
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectGenre}
+                      />
+                    );
+
+               }
 
           }
 
@@ -125,16 +144,32 @@ class SelectFilter extends React.Component {
                }
 
                placeholder = 'Tags';
+               if( this.props.currentSelection === '' ) {
 
-               return (
-                 <Select
-                    placeholder={placeholder}
-                    options={filterOptions}
-                    isClearable
-                    isSearchable
-                    onChange={this.selectTag}
-                 />
-               );
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         value={null}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectTag}
+                      />
+                    );
+
+               } else {
+
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectTag}
+                      />
+                    );
+
+               }
 
           }
 
