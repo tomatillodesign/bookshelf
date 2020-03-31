@@ -150,7 +150,7 @@ class PreviouslyRead extends React.Component {
               // Let's do GENRE
               const genre = this.state.genreFilter;
               let filteredBooks = null;
-              if( genre != '' ) {
+              if( genre !== '' ) {
                    filteredBooks = displayedBooks.filter(function(book) {
                      return book.genre === genre;
                    });
@@ -162,7 +162,7 @@ class PreviouslyRead extends React.Component {
 
                // Let's do TAGS
                const tag = this.state.tagFilter;
-               if( tag != '' && tag != undefined ) {
+               if( tag !== '' && tag !== undefined ) {
                filteredBooks = displayedBooks.filter(function(book) {
                   let myBookTags = book.tags;
                   if( myBookTags === undefined ) { console.log("UNDEF"); myBookTags = ''; }
@@ -178,7 +178,7 @@ class PreviouslyRead extends React.Component {
 
                // And Now Rating
                const minRating = this.state.ratingFilter;
-               if( minRating != 0 ) {
+               if( minRating !== 0 ) {
                     filteredBooks = displayedBooks.filter(function(book) {
                       return book.bookshelfRating >= minRating;
                     });
@@ -192,7 +192,7 @@ class PreviouslyRead extends React.Component {
 
 
          let clearButton = null;
-         if( this.state.genreFilter != '' || this.state.tagFilter != '' || this.state.ratingFilter != 0 ) {
+         if( this.state.genreFilter !== '' || this.state.tagFilter !== '' || this.state.ratingFilter !== 0 ) {
               clearButton = (<div className="viewer-selector-area clear">
                    <button id="clear-all-filters" className="clear-all-filters" onClick={this.clearAllFilters}>Clear All Filters</button>
               </div>);
