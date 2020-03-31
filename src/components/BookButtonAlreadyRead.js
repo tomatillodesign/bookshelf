@@ -11,7 +11,7 @@ class BookButtonAlreadyRead extends React.Component {
      }
 
      componentDidMount() {
-          console.log(this.props.addBookAlreadyRead);
+          //console.log(this.props.addBookAlreadyRead);
      }
 
      createNewBook = (event) => {

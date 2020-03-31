@@ -14,9 +14,10 @@ class Results extends React.Component {
      }
 
      componentDidMount() {
-          console.log(this.props.location);
+          // console.log(this.props);
+          // console.log(this.props.location);
           const data = this.props.location.data;
-          console.log(data);
+          // console.log(data);
           if (data && data.results.length > 0) {
 
            this.setState({
@@ -31,9 +32,8 @@ class Results extends React.Component {
 
      render() {
 
-          console.log(this.state.books);
-          console.log(this.props.addBookAlreadyRead);
-          console.log(this.props.test);
+          // console.log(this.state.books);
+          // console.log(this.props.addBookAlreadyRead);
 
        return (
          <div className="results-page-area single-page">

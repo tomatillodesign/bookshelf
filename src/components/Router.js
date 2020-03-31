@@ -46,17 +46,19 @@ class Router extends React.Component {
                               updateCoverImg={this.props.updateCoverImg}
                               useGenres={this.props.useGenres}
                               useTags={this.props.useTags}
+                              setBookRating={this.props.setBookRating}
+                              resetRatingToZero={this.props.resetRatingToZero}
                          />}
                />
                <Route exact path="/search" component={Search} />
                <Route exact path="/results"
-                    render={(props) => <Results {...props} test={true}
-                                                  addBookAlreadyRead={this.props.addBookAlreadyRead}
-                                                  addBookToRead={this.props.addBookToRead}
-                                                  settingsFont={this.props.settingsFont}
-                                                  settingsColor={this.props.settingsColor}
-                                                  notification={this.props.notification}
-                                             />}
+                                        render={(props) => <Results {...props} test={true}
+                                             addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                             addBookToRead={this.props.addBookToRead}
+                                             settingsFont={this.props.settingsFont}
+                                             settingsColor={this.props.settingsColor}
+                                             notification={this.props.notification}
+                                        />}
                />
 
                <Route exact path="/saved"

@@ -160,8 +160,8 @@ class PreviouslyRead extends React.Component {
 
          let booksAlreadyRead = this.props.booksAlreadyRead;
          let displayedBooks = this.state.displayedBooks;
-         console.log(booksAlreadyRead);
-         console.log(displayedBooks);
+         // console.log(booksAlreadyRead);
+         // console.log(displayedBooks);
 
 
          /////////// Getting all of the button resets right and current displayedBooks ///////
