@@ -53,10 +53,13 @@ export default function AdvancedStats(props) {
        }
 
        // console.log(starRatingsArray);
-       let sum = starRatingsArray.reduce((previous, current) => current += previous);
-       // console.log(sum);
-       let avg = sum / starRatingsArray.length;
-       let avgToPublish = avg.toFixed(1);
+       let avgToPublish = 'No ratings assigned yet';
+       if( starRatingsArray.lenth > 0 ) {
+            let sum = starRatingsArray.reduce((previous, current) => current += previous);
+            // console.log(sum);
+            let avg = sum / starRatingsArray.length;
+            let avgToPublish = avg.toFixed(1);
+       }
 
 
        // get number of books read each year
