@@ -21,8 +21,8 @@ function RecentlyAddedAlreadyRead(props) {
                 // If the count number is the same between both items, sort alphabetically
                 // If the first item comes first in the alphabet, move it up
                 // Otherwise move it down
-                if (a.volumeInfo.title > b.volumeInfo.title) return 1;
-                if (a.volumeInfo.title < b.volumeInfo.title) return -1;
+                if (a.title > b.title) return 1;
+                if (a.title < b.title) return -1;
 
            });
 

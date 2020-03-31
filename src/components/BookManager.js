@@ -32,6 +32,9 @@ class BookManager extends React.Component {
                               'Science Fiction',
                               'Young Adult',
                          ],
+                         tags: [],
+                         useGenres: false,
+                         useTags: false,
                          customFields: [],
                     },
              notification: null
@@ -124,6 +127,7 @@ class BookManager extends React.Component {
          newBook.publishedDate = bookObj.volumeInfo.publishedDate
          newBook.pageCount = bookObj.volumeInfo.pageCount;
          newBook.genre = null;
+         newBook.tags = [];
 
          console.log(newBook);
 
@@ -246,6 +250,7 @@ class BookManager extends React.Component {
            console.log(index);
 
            clbCopyBookState[index].alreadyRead = true;
+           clbCopyBookState[index].bookshelfTimestamp = Date.now();
            this.setState({ books: this.state.books });
 
          }
@@ -379,6 +384,202 @@ class BookManager extends React.Component {
           }
 
 
+          setBookRating = (selectedOption, bookObj) => {
+               console.log("Update BOOK RATING in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfRating = selectedOption.value;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+
+          setBookGenre = (selectedOption, bookObj) => {
+               console.log("Update BOOK GENRE in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].genre = selectedOption.value;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+
+          addNewTag = (allTagsArray) => {
+
+               console.log(allTagsArray);
+               const prevTags = this.state.settings.tags;
+               console.log(prevTags.filter(Boolean));
+
+               let difference = allTagsArray.filter(x => !prevTags.includes(x));
+               console.log("DIFFERENCE");
+               console.log(difference);
+
+               const updatedTags = prevTags.concat(difference);
+               this.setState({ settings: {
+                                        tags: updatedTags
+                                   }
+                          });
+
+          }
+
+
+
+          setBookTags = (selectedOption, bookObj) => {
+               console.log("Update TAGS in DB");
+               console.log(selectedOption);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].tags = selectedOption;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetRatingToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfRating = 0;
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetTimestampToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfTimestamp = 0;
+              this.setState({ books: this.state.books });
+
+          }
+
+          resetGenreToZero = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].genre = '';
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          resetAllTags = (bookObj) => {
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].tags = [];
+              this.setState({ books: this.state.books });
+
+          }
+
+
+          addNewGenre = (newGenre) => {
+
+               console.log(newGenre);
+              let previousGenres = [...this.state.settings.genres];
+              console.log(previousGenres);
+              let included = previousGenres.includes(newGenre);
+              console.log(included);
+              if( included === false ) {
+
+                   // Sort all beer types, then update state
+                   let updatedGenres = [...previousGenres, newGenre];
+                   let orderedGenres = [...updatedGenres].sort();
+
+                   // remove any nulls, false, or undefined
+                   orderedGenres = orderedGenres.filter(Boolean);
+                   console.log(orderedGenres);
+
+                   this.setState({ settings: {
+                                            genres: orderedGenres
+                                       }
+                              });
+              }
+
+          }
+
+
           changeAlreadyReadView = (selectedOption) => {
               console.log('CHANGE sortViewAlreadyRead');
               console.log(selectedOption);
@@ -412,6 +613,60 @@ class BookManager extends React.Component {
             });
 
         }
+
+
+
+        changeSettingsBookSize = (selectedOption) => {
+
+             console.log('changeSettingsBookSize');
+
+           let newBookSize = 'default';
+           if(selectedOption) {
+                newBookSize = selectedOption.value;
+           }
+
+           this.setState({ settings: {
+                     bookSize: newBookSize
+                 }
+           });
+
+       }
+
+
+
+
+       changeSettingsUseGenres = (selectedOption) => {
+
+            console.log('changeSettingsUseGenres');
+
+          let newGenreSetting = false;
+          if(selectedOption) {
+               newGenreSetting = selectedOption.value;
+          }
+
+          this.setState({ settings: {
+                    useGenres: newGenreSetting
+               }
+          });
+
+     }
+
+
+     changeSettingsUseTags = (selectedOption) => {
+
+          console.log('changeSettingsUseTags');
+
+        let newTagsSetting = false;
+        if(selectedOption) {
+             newTagsSetting = selectedOption.value;
+        }
+
+        this.setState({ settings: {
+                  useTags: newTagsSetting
+             }
+        });
+
+   }
 
 
 
@@ -482,8 +737,8 @@ class BookManager extends React.Component {
        // run filter operations to separate To Read from Already Read
        const updatedBooksToRead = books.filter(book => book.alreadyRead === false);
        const updatedBooksAlreadyRead = books.filter(book => book.alreadyRead === true);
-       console.log(updatedBooksToRead);
-       console.log(updatedBooksAlreadyRead);
+       // console.log(updatedBooksToRead);
+       // console.log(updatedBooksAlreadyRead);
 
        return(
             <>
@@ -517,6 +772,23 @@ class BookManager extends React.Component {
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
                  updateCoverImg={this.updateCoverImg}
+                 changeSettingsBookSize={this.changeSettingsBookSize}
+                 bookSize={this.state.settings.bookSize}
+                 changeSettingsUseGenres={this.changeSettingsUseGenres}
+                 changeSettingsUseTags={this.changeSettingsUseTags}
+                 useGenres={this.state.settings.useGenres}
+                 useTags={this.state.settings.useTags}
+                 setBookRating={this.setBookRating}
+                 resetRatingToZero={this.resetRatingToZero}
+                 resetTimestampToZero={this.resetTimestampToZero}
+                 resetAllTags={this.resetAllTags}
+                 setBookGenre={this.setBookGenre}
+                 genres={this.state.settings.genres}
+                 tags={this.state.settings.tags}
+                 resetGenreToZero={this.resetGenreToZero}
+                 addNewGenre={this.addNewGenre}
+                 addNewTag={this.addNewTag}
+                 setBookTags={this.setBookTags}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

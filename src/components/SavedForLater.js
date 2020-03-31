@@ -100,7 +100,7 @@ class SavedForLater extends React.Component {
                           />
                 </div>
            </div>
-           <div className="results-grid">
+           <div className={"results-grid " + this.props.bookSize}>
                 {orderedBooks.map((book, index) => (
                      <BookCard
                               key={book.id}
@@ -113,6 +113,7 @@ class SavedForLater extends React.Component {
                               addNewImagesToRead={this.props.addNewImagesToRead}
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
+                              useGenres={this.props.useGenres}
                          />
               ))}
          </div>

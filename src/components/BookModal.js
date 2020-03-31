@@ -8,8 +8,13 @@ import EditBookForm from './EditBookForm.js';
 import BookButtonRemove from './BookButtonRemove';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 import ReplaceCover from './ReplaceCover';
+import Stars from './Stars';
+import BookEditor from './BookEditor.js';
 
 import SelectRating from './SelectRating';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
 
 export default function BookModal(props) {
 
@@ -18,8 +23,13 @@ export default function BookModal(props) {
      const handleClose = () => setShow(false);
      const handleShow = () => setShow(true);
 
+     let showDescription = false;
+     const customToggle = () => {
+          showDescription = !showDescription;
+     }
+
      const book = props.book;
-     console.log(book);
+     // console.log(book);
 
      const bookCoverModal = props.bookCoverModal;
      const bookTitleModal = props.bookTitleModal;
@@ -37,11 +47,18 @@ export default function BookModal(props) {
      let dateToPublish = null;
      let date = null;
      let pageCount = null;
+     let bookshelfRating = null;
+     let bookshelfTimestamp = null;
+     let dateCompletedRaw = null;
+     let dateCompleted = null;
+     let genre = null;
+     let showDescriptionIndicator = "+";
+
 
      if( props.searchResult !== true ) {
 
           title = book.title;
-          console.log(title);
+          // console.log(title);
           if( book.subtitle !== undefined ) {
                hasSubtitle = true;
                authorClass = " has-subtitle";
@@ -54,6 +71,13 @@ export default function BookModal(props) {
           categories = book.categories;
           date = book.publishedDate;
           pageCount = book.pageCount;
+          bookshelfRating = book.bookshelfRating;
+          bookshelfTimestamp = book.bookshelfTimestamp;
+          dateCompletedRaw = new Date(bookshelfTimestamp);
+          dateCompleted = dateCompletedRaw.toLocaleString("en-US", {month: "long", day: "numeric", year: "numeric"});
+
+          genre = book.genre;
+          if( genre === undefined || genre === null ) { genre = 'Not Assigned'; }
 
           // new image work here
           if( book.coverImg == undefined || book.coverImg == null ) {
@@ -83,23 +107,7 @@ export default function BookModal(props) {
 
                if( book.volumeInfo !== undefined ) {
 
-               if( book.volumeInfo.imageLinks !== undefined ) {
-                    console.log(book.volumeInfo.imageLinks.thumbnail);
-                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    coverImageURL = book.volumeInfo.imageLinks.large;
-                    if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.medium;
-                    }
-                    if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.small;
-                    }
-                    if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
-                         coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
-                    }
-                    if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
-                         coverImageURL = book.volumeInfo.imageLinks.thumbnail;
-                    }
-               }
+
 
                title = book.volumeInfo.title;
                if( book.volumeInfo.subtitle !== undefined ) {
@@ -110,6 +118,10 @@ export default function BookModal(props) {
                if( book.volumeInfo.authors !== undefined ) { authors = book.volumeInfo.authors; }
 
                description = book.volumeInfo.description;
+               if( description !== undefined ) {
+                    if( showDescription === false ) { showDescriptionIndicator = "+"; }
+                    else if( showDescription === true ) { showDescriptionIndicator = "–"; }
+               }
 
                categories = book.volumeInfo.categories;
                date = book.volumeInfo.publishedDate;
@@ -161,6 +173,17 @@ export default function BookModal(props) {
 
      if( bookTitleModal ) {
 
+          if( showDescription === false ) { showDescriptionIndicator = "+"; }
+          else if( showDescription === true ) { showDescriptionIndicator = "–"; }
+
+          if( coverImageURL !== null ) {
+               //console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
+               if( coverImageURL.startsWith("http://") ) {
+                    coverImageURL = coverImageURL.replace("http://", "https://");
+                    //console.log("Updated COVER IMG URL: " + coverImageURL);
+               }
+          }
+
           return (
             <>
               <button onClick={handleShow} className="card-book-title">
@@ -169,40 +192,62 @@ export default function BookModal(props) {
 
               <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
                 <Modal.Header closeButton>
-                  <Modal.Title className="single-book-title">{title}</Modal.Title>
+                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="small-thumbnail-area">
-                         <img src={coverImageURL} />
-                         {props.searchResult !== true &&
-                              <ReplaceCover
-                                   bookObj={book}
-                                   updateCoverImg={props.updateCoverImg}
-                              />
-                         }
-                    </div>
-                    {subtitle}
-                    {authorsToPublish}
-                         <>
-                         {editForm}
-                         <Accordion>
-                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>Description +</h3>
-                              </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                            </Accordion.Collapse>
-                        </Accordion>
-                        </>
+                     <div className="small-thumbnail-area">
+                          <img src={coverImageURL} />
+                          {props.searchResult !== true &&
+                               <ReplaceCover
+                                     bookObj={book}
+                                     updateCoverImg={props.updateCoverImg}
+                               />
+                          }
+                     </div>
+                     {subtitle}
+                     {authorsToPublish}
+
+                     {props.alreadyRead &&
+                     <BookEditor
+                         book={book}
+                         bookshelfRating={props.bookshelfRating}
+                         genre={genre}
+                         dateCompleted={dateCompleted}
+                         useGenres={props.useGenres}
+                         useTags={props.useTags}
+                         description={description}
+                         setBookRating={props.setBookRating}
+                         resetRatingToZero={props.resetRatingToZero}
+                         resetTimestampToZero={props.resetTimestampToZero}
+                         setBookGenre={props.setBookGenre}
+                         genres={props.genres}
+                         resetGenreToZero={props.resetGenreToZero}
+                         addNewGenre={props.addNewGenre}
+                         addNewTag={props.addNewTag}
+                         setBookTags={props.setBookTags}
+                         tags={props.tags}
+                         resetAllTags={props.resetAllTags}
+                     />
+                    }
+
+                    {props.savedForLater &&
+                         <div className="saved-for-later-description-area">
+                         <h3 className="saved-for-later-description-headline">Description</h3>
+                              <div className="saved-for-later-text">
+                              {props.book.description}
+                              </div>
+                         </div>
+                    }
+
                 </Modal.Body>
                 <Modal.Footer>
                 <div className="book-meta button-area">
                 { props.alreadyRead &&
                      <BookButtonRemove
-                         book={book}
-                         context={'removeBookFromAlreadyRead'}
-                         removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
-                      />
+                          book={book}
+                          context={'removeBookFromAlreadyRead'}
+                          removeBookFromAlreadyRead={props.removeBookFromAlreadyRead}
+                       />
                 }
                 { props.savedForLater &&
                      <>
@@ -214,7 +259,6 @@ export default function BookModal(props) {
                      />
                      <BookButtonMoveToAlreadyRead
                           book={props.book}
-                          coverImageURL={coverImageURL}
                           moveBooktoAlreadyRead={props.moveBooktoAlreadyRead}
                      />
                      </>
@@ -222,15 +266,13 @@ export default function BookModal(props) {
                 { props.searchResult &&
                      <>
                      <BookButtonToRead />
-                     <BookButtonAlreadyRead
-                         coverImageURL={coverImageURL}
-                         addBookAlreadyRead={props.addBookAlreadyRead}
-                     />
+                     <BookButtonAlreadyRead />
                      </>
                 }
                 </div>
                 </Modal.Footer>
               </Modal>
+
             </>
           );
 
@@ -244,13 +286,19 @@ export default function BookModal(props) {
                }
           }
 
+          let additionalModalClasses = null;
+          if( props.savedForLater === true ) { additionalModalClasses = " saved-for-later"; }
+          if( props.alreadyRead === true ) { additionalModalClasses = " already-read"; }
+          if( props.searchResult === true ) { additionalModalClasses = " search-result"; }
+
+
           return (
             <>
               <div className="cover-image-area">
                    <button onClick={handleShow} className="card-book-cover"><img src={coverImageURL} className="cover-image" /></button>
               </div>
 
-              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor}>
+              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor + additionalModalClasses}>
                 <Modal.Header closeButton>
                   <Modal.Title className="single-book-title">{title}</Modal.Title>
                 </Modal.Header>
@@ -266,15 +314,38 @@ export default function BookModal(props) {
                      </div>
                     {subtitle}
                     {authorsToPublish}
-                         {editForm}
-                         <Accordion>
-                              <Accordion.Toggle as={Button} variant="link" eventKey="0" className="already-read-description-toggle">
-                                <h3>View Description +</h3>
-                              </Accordion.Toggle>
-                            <Accordion.Collapse eventKey="0">
-                              <div className="book-description" dangerouslySetInnerHTML={ { __html: description } }></div>
-                            </Accordion.Collapse>
-                        </Accordion>
+
+                    {props.alreadyRead &&
+                    <BookEditor
+                         book={book}
+                        bookshelfRating={props.bookshelfRating}
+                        genre={genre}
+                        dateCompleted={dateCompleted}
+                        useGenres={props.useGenres}
+                        useTags={props.useTags}
+                        description={description}
+                        setBookRating={props.setBookRating}
+                        resetRatingToZero={props.resetRatingToZero}
+                        resetTimestampToZero={props.resetTimestampToZero}
+                        setBookGenre={props.setBookGenre}
+                        genres={props.genres}
+                        resetGenreToZero={props.resetGenreToZero}
+                        addNewGenre={props.addNewGenre}
+                        addNewTag={props.addNewTag}
+                        setBookTags={props.setBookTags}
+                        tags={props.tags}
+                        resetAllTags={props.resetAllTags}
+                    />
+               }
+
+               {props.savedForLater &&
+                    <div className="saved-for-later-description-area">
+                    <h3 className="saved-for-later-description-headline">Description</h3>
+                         <div className="saved-for-later-text">
+                         {props.book.description}
+                         </div>
+                    </div>
+               }
 
                 </Modal.Body>
                 <Modal.Footer>
