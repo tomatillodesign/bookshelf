@@ -227,6 +227,7 @@ export default function BookModal(props) {
                          setBookTags={props.setBookTags}
                          tags={props.tags}
                          resetAllTags={props.resetAllTags}
+                         setBookTimestamp={props.setBookTimestamp}
                      />
                     }
 
@@ -335,6 +336,7 @@ export default function BookModal(props) {
                         setBookTags={props.setBookTags}
                         tags={props.tags}
                         resetAllTags={props.resetAllTags}
+                        setBookTimestamp={props.setBookTimestamp}
                     />
                }
 

@@ -53,7 +53,7 @@ export default function AdvancedStats(props) {
        }
 
        // console.log(starRatingsArray);
-       let avgToPublish = 'No ratings assigned yet';
+       let avgToPublish = 'No ratings assigned';
        if( starRatingsArray.lenth > 0 ) {
             let sum = starRatingsArray.reduce((previous, current) => current += previous);
             // console.log(sum);
@@ -119,30 +119,25 @@ export default function AdvancedStats(props) {
             }
 
 
-
-            // if( currentBookYear !== prevDateYear ) {
-            //      yearlyChart.push(
-            //           <div className="yearly-chart-area">
-            //              <h3 className="yearly-summary">{currentBookYear}</h3>
-            //           </div>
-            //         );
-            //      prevDateYear = currentBookYear;
-            // }
-
        }
 
        // now end with all the books that don't have a year assigned
+       // first check if there are any books with a date === 0
+       let booksWithoutDate = [];
+       booksWithoutDate = books.filter(function(book) { return book.bookshelfTimestamp === 0; });
+       if( booksWithoutDate.length > 0 ) {
        yearlyChart.push(<div className="yearly-chart-area">
                               <h3 className="yearly-summary">No date assigned</h3>
                               <div className="number-of-books">Books read: {booksNoDateAssigned.length}</div>
                               <div className="pages">Approx. pages: {getTotalPages(booksNoDateAssigned)}</div>
                               <div className="average-rating">Average rating: {getAverageRating(booksNoDateAssigned)}</div>
                            </div>);
+                      }
 
 
        return (
             <div className="advanced-stats-area">
-               <h2>Advanced Stats Here</h2>
+               <h2>Your Reading, by the Numbers</h2>
                <div className="stat-item total-books-read">Total books read: {books.length}</div>
                <div className="stat-item total-pages-read">Approx. total pages read: {getTotalPages(books)}</div>
                <div className="stat-item alltime-avg-stars">All-time average rating: {avgToPublish}</div>

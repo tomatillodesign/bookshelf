@@ -431,6 +431,29 @@ class BookManager extends React.Component {
           }
 
 
+          setBookTimestamp = (newDateTimestamp, bookObj) => {
+               console.log("Update BOOK Timestamp in DB");
+               console.log(newDateTimestamp);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfTimestamp = newDateTimestamp;
+              this.setState({ books: this.state.books });
+
+          }
+
+
 
           addNewTag = (allTagsArray) => {
 
@@ -789,6 +812,7 @@ class BookManager extends React.Component {
                  addNewGenre={this.addNewGenre}
                  addNewTag={this.addNewTag}
                  setBookTags={this.setBookTags}
+                 setBookTimestamp={this.setBookTimestamp}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

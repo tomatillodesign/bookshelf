@@ -36,10 +36,15 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
 - ~~Mobile-friendly~~
 - ~~Speed up navigation (possibly remove React Router - try it on a new branch)~~
+- ~~Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.~~
 
+## Bugs
+
+- Date picker text input will crash it; would like to simply disable the text part
+- After setting date (PreviouslyRead), cannot scroll up and down in the browser
 
 ## Next Level
 
 - Add your own book (not using Google Books search)
 - Upload your own cover image for any book
-- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
+- Ignore articles when alphabetizing book order

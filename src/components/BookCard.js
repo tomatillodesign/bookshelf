@@ -109,6 +109,7 @@ class BookCard extends React.Component {
                          setBookTags={this.props.setBookTags}
                          tags={this.props.tags}
                          resetAllTags={this.props.resetAllTags}
+                         setBookTimestamp={this.props.setBookTimestamp}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -139,6 +140,7 @@ class BookCard extends React.Component {
                          setBookTags={this.props.setBookTags}
                          tags={this.props.tags}
                          resetAllTags={this.props.resetAllTags}
+                         setBookTimestamp={this.props.setBookTimestamp}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>

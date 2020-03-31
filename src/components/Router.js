@@ -108,6 +108,7 @@ class Router extends React.Component {
                               setBookTags={this.props.setBookTags}
                               tags={this.props.tags}
                               resetAllTags={this.props.resetAllTags}
+                              setBookTimestamp={this.props.setBookTimestamp}
                          />}
                />
                <Route exact path="/settings"
