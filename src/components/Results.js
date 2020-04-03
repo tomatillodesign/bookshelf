@@ -8,7 +8,8 @@ class Results extends React.Component {
 
      this.state = {
           books: [],
-          noResults: false
+          noResults: false,
+          notification: this.props.notification,
        };
 
      }
@@ -28,6 +29,7 @@ class Results extends React.Component {
              noResults: true
            });
          }
+
      }
 
      render() {
@@ -35,11 +37,18 @@ class Results extends React.Component {
           // console.log(this.state.books);
           // console.log(this.props.addBookAlreadyRead);
 
+          let notificationArea = null;
+          if( this.state.noResults !== true && this.props.notification ) {
+
+               let currentTimestamp = Date.now();
+               if( this.props.notificationTimestamp > currentTimestamp - 1000 ) {
+                    notificationArea = ( <div className="notification-area">{this.props.notification}<br/>Timestamp: {this.props.notificationTimestamp}<br/>Current: {Date.now()}</div> );
+               }
+          }
+
        return (
          <div className="results-page-area single-page">
-         { this.props.notification &&
-              <div className="notification-area">{this.props.notification}</div>
-         }
+         { notificationArea }
            <h1>Search Results</h1>
 
            <div className="results-grid">

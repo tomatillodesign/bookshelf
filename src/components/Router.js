@@ -43,6 +43,7 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              notificationTimestamp={this.props.notificationTimestamp}
                               updateCoverImg={this.props.updateCoverImg}
                               useGenres={this.props.useGenres}
                               useTags={this.props.useTags}
@@ -58,6 +59,7 @@ class Router extends React.Component {
                                              settingsFont={this.props.settingsFont}
                                              settingsColor={this.props.settingsColor}
                                              notification={this.props.notification}
+                                             notificationTimestamp={this.props.notificationTimestamp}
                                         />}
                />
 

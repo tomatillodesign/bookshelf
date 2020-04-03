@@ -46,7 +46,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - After setting date (PreviouslyRead), cannot scroll up and down in the browser
 - JS error when adding very first tag "prevTags is undefined (BookManager line 461)"
 - Error when a user has been deleted elsewhere and they load bookshelf (data in local storage doesn't match)
-- Sometimes, on Results page, action message stays locked in place and won't disappear
+- ~~Sometimes, on Results page, action message stays locked in place and won't disappear~~
 - ~~All-time average rating not working, should calculate avg from all the non-zero books~~
 
 ## Next Level

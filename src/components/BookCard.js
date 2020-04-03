@@ -83,7 +83,7 @@ class BookCard extends React.Component {
                if( this.props.searchResult ) {
 
                          description = book.volumeInfo.description;
-                         console.log(description);
+                         //console.log(description);
 
                          if( book.volumeInfo !== undefined ) {
 

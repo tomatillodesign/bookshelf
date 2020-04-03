@@ -64,7 +64,7 @@ export default function BookModal(props) {
                                         {props.description}
                                         </div>
                                    </div>);
-          console.log(props.description);
+          //console.log(props.description);
      } else { description = props.book.description; }
      }
 

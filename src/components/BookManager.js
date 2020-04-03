@@ -37,7 +37,8 @@ class BookManager extends React.Component {
                          useTags: false,
                          customFields: [],
                     },
-             notification: null
+             notification: null,
+             notificationTimestamp: null,
     }
 
 }
@@ -134,7 +135,8 @@ class BookManager extends React.Component {
          let bookTitle = bookObj.volumeInfo.title;
          this.setState(prevState => ({
             books: [...prevState.books, newBook],
-            notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf'
+            notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf',
+            notificationTimestamp: Date.now(),
            }));
 
            this.startNotificationTimer();
@@ -223,7 +225,8 @@ class BookManager extends React.Component {
           console.log(newBook);
           this.setState(prevState => ({
              books: [...prevState.books, newBook],
-             notification: 'You added ' + newBook.title + ' to your TO READ shelf'
+             notification: 'You added ' + newBook.title + ' to your TO READ shelf',
+             notificationTimestamp: Date.now(),
             }));
 
             this.startNotificationTimer();
@@ -730,7 +733,7 @@ class BookManager extends React.Component {
 
 
      resetNotification = () => {
-          this.setState({ notification: null });
+          this.setState({ notification: null, notificationTimestamp: null, });
      }
 
      startNotificationTimer = () => {
@@ -794,6 +797,7 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
+                 notificationTimestamp={this.state.notificationTimestamp}
                  updateCoverImg={this.updateCoverImg}
                  changeSettingsBookSize={this.changeSettingsBookSize}
                  bookSize={this.state.settings.bookSize}

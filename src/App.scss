@@ -1,4 +1,4 @@
-.App {
+.App, input {
      text-align: center;
      font-family: 'Roboto Condensed', sans-serif;
 }
@@ -1196,7 +1196,8 @@ Accent (Button):
 .font-handwritten h2,
 .single-book-modal.font-handwritten,
 .font-handwritten .single-book-title.modal-title.h4,
-.font-handwritten .book-subtitle {
+.font-handwritten .book-subtitle,
+.font-handwritten input {
     font-family: 'Kalam', cursive;
 }
 
@@ -1215,7 +1216,8 @@ Accent (Button):
 .font-typewriter h2,
 .single-book-modal.font-typewriter,
 .font-typewriter .single-book-title.modal-title.h4,
-.font-typewriter .book-subtitle {
+.font-typewriter .book-subtitle,
+.font-typewriter input {
      font-family: 'Courier Prime', monospace;
 }
 .font-typewriter .MuiTypography-body1 {
@@ -1235,7 +1237,8 @@ Accent (Button):
 .font-sans h2,
 .single-book-modal.font-sans,
 .font-sans .single-book-title.modal-title.h4,
-.font-sans .book-subtitle {
+.font-sans .book-subtitle,
+.font-sans input {
      font-family: 'Open Sans', sans-serif;
 }
 .font-sans .MuiTypography-body1 {
@@ -1252,7 +1255,8 @@ Accent (Button):
 .font-serif h2,
 .single-book-modal.font-serif,
 .font-serif .single-book-title.modal-title.h4,
-.font-serif .book-subtitle  {
+.font-serif .book-subtitle,
+.font-serif input  {
      font-family: 'Playfair Display', serif;
 }
 .font-serif .MuiTypography-body1 {
