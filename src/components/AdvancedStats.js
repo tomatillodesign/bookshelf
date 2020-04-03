@@ -48,17 +48,19 @@ export default function AdvancedStats(props) {
             //console.log(books[i].pageCount);
             totalPages += books[i].pageCount;
             if( books[i].bookshelfRating > 0 ) {
+                 //console.log(books[i]);
                  starRatingsArray.push(parseInt(books[i].bookshelfRating));
             }
        }
 
        // console.log(starRatingsArray);
        let avgToPublish = 'No ratings assigned';
-       if( starRatingsArray.lenth > 0 ) {
+       if( starRatingsArray.length > 0 ) {
             let sum = starRatingsArray.reduce((previous, current) => current += previous);
             // console.log(sum);
+            // console.log(starRatingsArray.length);
             let avg = sum / starRatingsArray.length;
-            let avgToPublish = avg.toFixed(1);
+            avgToPublish = avg.toFixed(1);
        }
 
 

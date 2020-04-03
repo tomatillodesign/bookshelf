@@ -55,7 +55,7 @@ export default function BookModal(props) {
      let showDescriptionIndicator = "+";
      let descriptionToPublish = null;
 
-     console.log(props.searchResult);
+     //console.log(props.searchResult);
      if( props.searchResult !== undefined ) {
           if( props.description !== '' && props.description !== undefined ) {
           descriptionToPublish = (<div className="saved-for-later-description-area">
@@ -316,7 +316,7 @@ export default function BookModal(props) {
           if( props.alreadyRead === true ) { additionalModalClasses = " already-read"; }
           if( props.searchResult === true ) { additionalModalClasses = " search-result"; }
 
-          console.log("DESCRIPTION: " + props.book.description);
+          //console.log("DESCRIPTION: " + props.book.description);
 
           return (
             <>
