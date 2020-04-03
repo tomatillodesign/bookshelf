@@ -461,7 +461,9 @@ class BookManager extends React.Component {
           addNewTag = (allTagsArray) => {
 
                console.log(allTagsArray);
-               const prevTags = this.state.settings.tags;
+               let prevTags = this.state.settings.tags;
+                    if( prevTags === undefined ) { prevTags = []; }
+               console.log(prevTags);
                console.log(prevTags.filter(Boolean));
 
                let difference = allTagsArray.filter(x => !prevTags.includes(x));

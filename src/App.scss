@@ -401,6 +401,7 @@ button.read-action:hover {
 
 .viewer-label {
      margin-right: 12px;
+     width: 74px;
 }
 
 .viewer-selector-area {
@@ -667,7 +668,10 @@ h3.yearly-summary {
      margin-left: 12px;
 }
 
-
+#clear-all-filters {
+     padding: 10px 16px;
+     font-size: 12px;
+}
 
 
 @media only screen and (min-width: 960px) {
