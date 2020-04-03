@@ -8,15 +8,17 @@ class Results extends React.Component {
 
      this.state = {
           books: [],
-          noResults: false
+          noResults: false,
+          notification: this.props.notification,
        };
 
      }
 
      componentDidMount() {
-          console.log(this.props.location);
+          // console.log(this.props);
+          // console.log(this.props.location);
           const data = this.props.location.data;
-          console.log(data);
+          // console.log(data);
           if (data && data.results.length > 0) {
 
            this.setState({
@@ -27,19 +29,26 @@ class Results extends React.Component {
              noResults: true
            });
          }
+
      }
 
      render() {
 
-          console.log(this.state.books);
-          console.log(this.props.addBookAlreadyRead);
-          console.log(this.props.test);
+          // console.log(this.state.books);
+          // console.log(this.props.addBookAlreadyRead);
+
+          let notificationArea = null;
+          if( this.state.noResults !== true && this.props.notification ) {
+
+               let currentTimestamp = Date.now();
+               if( this.props.notificationTimestamp > currentTimestamp - 1000 ) {
+                    notificationArea = ( <div className="notification-area">{this.props.notification}<br/>Timestamp: {this.props.notificationTimestamp}<br/>Current: {Date.now()}</div> );
+               }
+          }
 
        return (
          <div className="results-page-area single-page">
-         { this.props.notification &&
-              <div className="notification-area">{this.props.notification}</div>
-         }
+         { notificationArea }
            <h1>Search Results</h1>
 
            <div className="results-grid">

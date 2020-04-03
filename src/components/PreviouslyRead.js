@@ -3,6 +3,10 @@ import BookCard from './BookCard.js';
 import SelectAlreadyReadView from './SelectAlreadyReadView';
 import AdvancedStats from './AdvancedStats.js';
 import SelectFilter from './SelectFilter.js';
+import Switch from '@material-ui/core/Switch';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+
 
 var shortid = require('shortid');
 
@@ -16,6 +20,8 @@ class PreviouslyRead extends React.Component {
              tagFilter: '',
              ratingFilter: 0,
              displayedBooks: this.props.booksAlreadyRead,
+             showStats: false,
+             showFilters: false,
       };
     }
 
@@ -124,7 +130,23 @@ class PreviouslyRead extends React.Component {
 
 
 
-    componentWillMount() {
+     showHideStats = (event) => {
+          console.log("showHideStats");
+          this.setState(prevState => ({
+               showStats: !prevState.showStats
+          }));
+     };
+
+     showHideFilters = (event) => {
+          console.log("showHideFilters");
+          this.setState(prevState => ({
+               showFilters: !prevState.showFilters
+          }));
+     };
+
+
+
+    componentDidMount() {
          const booksAlreadyRead = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
          this.setState({
               displayedBooks: booksAlreadyRead
@@ -138,8 +160,8 @@ class PreviouslyRead extends React.Component {
 
          let booksAlreadyRead = this.props.booksAlreadyRead;
          let displayedBooks = this.state.displayedBooks;
-         console.log(booksAlreadyRead);
-         console.log(displayedBooks);
+         // console.log(booksAlreadyRead);
+         // console.log(displayedBooks);
 
 
          /////////// Getting all of the button resets right and current displayedBooks ///////
@@ -214,19 +236,51 @@ class PreviouslyRead extends React.Component {
          return(
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
+               <div className="switch-area">
+                    <div className="single-switch stats">
+                    <FormControlLabel
+                       control={
+                            <Switch
+                              checked={this.state.showStats}
+                              onChange={this.showHideStats}
+                              label="Show Advanced Reading Stats"
+                              inputProps={{ 'aria-label': 'show stats' }}
+                           />
+                       }
+                       label="Show Stats"
+                     />
+                     </div>
+                     <div className="single-switch filters">
+                     <FormControlLabel
+                        control={
+                             <Switch
+                               checked={this.state.showFilters}
+                               onChange={this.showHideFilters}
+                               label="Use Filters"
+                               inputProps={{ 'aria-label': 'show filters' }}
+                            />
+                        }
+                        label="Use Filters"
+                      />
+                      </div>
+               </div>
+               {this.state.showStats &&
                <AdvancedStats
                     books={booksAlreadyRead}
                />
-               <div className="view-type">
-                         <div className="viewer-label">Order by: </div>
-                         <div className="viewer-selector-area">
-                              <SelectAlreadyReadView
-                                   defaultView={this.props.booksAlreadyReadView}
-                                   changeAlreadyReadView={this.props.changeAlreadyReadView}
-                              />
+               }
+               <div className="prev-views">
+                    <div className="view-type orderby-area">
+                              <div className="viewer-label">Order by: </div>
+                              <div className="viewer-selector-area">
+                                   <SelectAlreadyReadView
+                                        defaultView={this.props.booksAlreadyReadView}
+                                        changeAlreadyReadView={this.props.changeAlreadyReadView}
+                                   />
+                         </div>
                     </div>
-               </div>
-               <div className="view-type">
+               {this.state.showFilters &&
+               <div className="view-type filters-area">
                          <div className="viewer-label">Filter by: </div>
                          <div className="viewer-selector-area filter">
                               <SelectFilter
@@ -261,6 +315,8 @@ class PreviouslyRead extends React.Component {
                          }
                          {clearButton}
                </div>
+          }
+          </div>
                 <div className={"results-grid " + this.props.bookSize}>
                 {displayedBooks.map((book, index) => (
                      <BookCard
@@ -285,6 +341,7 @@ class PreviouslyRead extends React.Component {
                               setBookTags={this.props.setBookTags}
                               tags={this.props.tags}
                               resetAllTags={this.props.resetAllTags}
+                              setBookTimestamp={this.props.setBookTimestamp}
                          />
               ))}
               </div>

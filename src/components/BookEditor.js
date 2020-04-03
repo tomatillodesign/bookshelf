@@ -4,10 +4,14 @@ import SelectRating from './SelectRating';
 import Notes from './Notes';
 import ReadDate from './ReadDate';
 import Stars from './Stars';
+import BookDate from './BookDate';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 import SelectGenre from './SelectGenre';
 import SelectTags from './SelectTags';
+import DateFnsUtils from '@date-io/date-fns';
+import MomentUtils from '@date-io/moment';
+import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
@@ -90,6 +94,11 @@ class BookEditor extends React.Component {
           this.setState({ currentlyEditingGenre: true });
      }
 
+     currentlyEditingDate = () => {
+          console.log("currentlyEditingDate");
+          this.setState({ currentlyEditingDate: true });
+     }
+
      setGenre = (selectedOption) => {
           if(selectedOption) {
                console.log(selectedOption);
@@ -106,19 +115,26 @@ class BookEditor extends React.Component {
      setTags = (selectedOption) => {
           if(selectedOption) {
                console.log(selectedOption);
-
-               // this.props.setBookTags(selectedOption, this.props.book);
-               // this.props.addNewTag(selectedOption.value);
-               // this.setState({
-               //      tags: selectedOption.value,
-               //      currentlyEditingTags: false
-               //  });
           }
      }
 
 
+     selectedDate = new Date();
+
+
+     handleDateChange = (e, date) => {
+          console.log(e);
+          console.log(date);
+          let theDate = new Date(date);
+          let newDateTimestamp = theDate.getTime();
+          console.log(theDate);
+          this.props.setBookTimestamp(newDateTimestamp, this.props.book);
+          this.setState({ currentlyEditingDate: false });
+
+     }
+
+
      customToggle = () => {
-          //console.log("customToggle");
           this.setState(prevState => ({
             viewDescription: !prevState.viewDescription
           }));
@@ -154,13 +170,28 @@ class BookEditor extends React.Component {
 
           console.log(this.props.book);
 
+
           let dateArea = <div className="date-area">
-                              Date Completed: {this.props.dateCompleted} <span className="edit-icon" title="Edit Date"><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTimestamp} title="Remove Date"><FontAwesomeIcon icon={faMinusCircle} /></span>
+                              Date Completed: {this.props.dateCompleted} <span className="edit-icon" title="Edit Date" onClick={this.currentlyEditingDate}><FontAwesomeIcon icon={faEdit} /></span> <span className="edit-icon remove" onClick={this.resetTimestamp} title="Remove Date"><FontAwesomeIcon icon={faMinusCircle} /></span>
                            </div>;
 
             if( this.props.book.bookshelfTimestamp === 0) {
                 dateArea = <div className="date-area">
-                                    <span className="edit-book-subtle-link" onClick={this.currentlyEditingRating}>Set Date</span> <span className="edit-icon" onClick={this.currentlyEditingRating}><FontAwesomeIcon icon={faEdit} /></span>
+                                    <span className="edit-book-subtle-link" onClick={this.currentlyEditingDate}>Set Date</span> <span className="edit-icon" onClick={this.currentlyEditingDate}><FontAwesomeIcon icon={faEdit} /></span>
+                               </div>;
+           }
+
+           if( this.state.currentlyEditingDate === true) {
+                dateArea = <div id="date-picker-area" className="date-area">
+                                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                                         <KeyboardDatePicker
+                                             clearable
+                                             value={this.selectedDate}
+                                             onChange={this.handleDateChange}
+                                             disableFuture
+                                             format={"MM/DD/YYYY"}
+                                         />
+                                     </MuiPickersUtilsProvider>
                                </div>;
            }
 

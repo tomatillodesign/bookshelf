@@ -1,6 +1,11 @@
-.App {
+.App, input {
      text-align: center;
      font-family: 'Roboto Condensed', sans-serif;
+}
+
+.MuiTypography-body1 {
+     font-family: 'Roboto Condensed', sans-serif !important;
+     font-size: 13px !important;
 }
 
 .logo-area, h1, h2 {
@@ -340,10 +345,10 @@ button.card-book-cover img {
 }
 
 .modal-footer button.read-action.already-read {
-     padding: 8px 20px 6px;
-     background: #eee;
-     line-height: 1;
-     font-size: 14px;
+     // padding: 8px 20px 6px;
+     // background: #eee;
+     // line-height: 1;
+     font-size: 48px;
 }
 
 .modal-footer .book-meta.button-area {
@@ -396,10 +401,16 @@ button.read-action:hover {
 
 .viewer-label {
      margin-right: 12px;
+     width: 74px;
 }
 
 .viewer-selector-area {
-     width: 260px;
+     width: 253px;
+}
+
+.switch-area {
+     display: flex;
+     justify-content: center;
 }
 
 .recently-added-already-read-area h2.section-title, .recently-added-to-read-area h2.section-title {
@@ -633,8 +644,34 @@ h3.yearly-summary {
 
 .viewer-selector-area.filter {
      text-align: left;
+     margin-right: 6px;
 }
 
+#book-title-search .form-control {
+     font-family: 'Roboto Condensed', sans-serif;
+}
+
+.single-switch .MuiSwitch-colorSecondary.Mui-checked {
+     color: #e85555;
+}
+
+.single-switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+     background-color: #e85555;
+}
+
+.prev-views {
+     display: flex;
+     justify-content: center;
+}
+
+.prev-views .view-type.filters-area {
+     margin-left: 12px;
+}
+
+#clear-all-filters {
+     padding: 10px 16px;
+     font-size: 12px;
+}
 
 
 @media only screen and (min-width: 960px) {
@@ -981,6 +1018,14 @@ Accent (Button):
      color: #834b7c;
 }
 
+.color-purple .single-switch .MuiSwitch-colorSecondary.Mui-checked {
+     color: #834b7c;
+}
+
+.color-purple .single-switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+     background-color: #834b7c;
+}
+
 .color-purple.header a:hover {
      color: #e3cee1;
 }
@@ -1016,6 +1061,14 @@ Accent (Button):
      background: linear-gradient(to right, #777, #333); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+.color-gray .single-switch .MuiSwitch-colorSecondary.Mui-checked {
+     color: #333;
+}
+
+.color-gray .single-switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+     background-color: #333;
+}
+
 .clb-bookshelf-footer.color-gray {
      background: #333;  /* fallback for old browsers */
 }
@@ -1046,6 +1099,14 @@ Accent (Button):
 .color-green button.read-action.already-read
 {
      color: #008030;
+}
+
+.color-green .single-switch .MuiSwitch-colorSecondary.Mui-checked {
+     color: #008030;
+}
+
+.color-green .single-switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+     background-color: #008030;
 }
 
 .color-green.header a:hover {
@@ -1094,6 +1155,14 @@ Accent (Button):
      color: #e47353;
 }
 
+.color-orange .single-switch .MuiSwitch-colorSecondary.Mui-checked {
+     color: #e47353;
+}
+
+.color-orange .single-switch .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+     background-color: #e47353;
+}
+
 .color-orange.header a:hover {
      color: #f5c9bd;
 }
@@ -1121,6 +1190,8 @@ Accent (Button):
 
 /* ------- CLB Typography Customizations ----------- */
 
+
+
 .App .font-handwritten,
 .font-handwritten button,
 .font-handwritten .button,
@@ -1129,10 +1200,15 @@ Accent (Button):
 .font-handwritten h2,
 .single-book-modal.font-handwritten,
 .font-handwritten .single-book-title.modal-title.h4,
-.font-handwritten .book-subtitle
-{
+.font-handwritten .book-subtitle,
+.font-handwritten input {
     font-family: 'Kalam', cursive;
 }
+
+.font-handwritten .MuiTypography-body1 {
+     font-family: 'Kalam', cursive !important;
+}
+
 
 
 
@@ -1144,9 +1220,15 @@ Accent (Button):
 .font-typewriter h2,
 .single-book-modal.font-typewriter,
 .font-typewriter .single-book-title.modal-title.h4,
-.font-typewriter .book-subtitle {
+.font-typewriter .book-subtitle,
+.font-typewriter input {
      font-family: 'Courier Prime', monospace;
 }
+.font-typewriter .MuiTypography-body1 {
+     font-family: 'Courier Prime', monospace !important;
+}
+
+
 
 
 
@@ -1159,8 +1241,12 @@ Accent (Button):
 .font-sans h2,
 .single-book-modal.font-sans,
 .font-sans .single-book-title.modal-title.h4,
-.font-sans .book-subtitle {
+.font-sans .book-subtitle,
+.font-sans input {
      font-family: 'Open Sans', sans-serif;
+}
+.font-sans .MuiTypography-body1 {
+     font-family: 'Open Sans', sans-serif !important;
 }
 
 
@@ -1173,8 +1259,12 @@ Accent (Button):
 .font-serif h2,
 .single-book-modal.font-serif,
 .font-serif .single-book-title.modal-title.h4,
-.font-serif .book-subtitle  {
+.font-serif .book-subtitle,
+.font-serif input  {
      font-family: 'Playfair Display', serif;
+}
+.font-serif .MuiTypography-body1 {
+     font-family: 'Playfair Display', serif !important;
 }
 
 .font-serif .logo-area,

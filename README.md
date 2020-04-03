@@ -15,6 +15,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - Clean, clear navigation using React Router
 - Filter and sort shelves view by different criteria
 - User can select different themes (color + font choices)
+- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
 - Mobile-friendly
 
 
@@ -24,6 +25,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - [React Router](https://www.npmjs.com/package/react-router)
 - [MaterialUI](https://material-ui.com/)
 - [React Bootstrap](https://react-bootstrap.github.io/)
+- [React Select](https://react-select.com/home)
 - [GitHub Pages](https://github.com/gitname/react-gh-pages)
 
 
@@ -36,10 +38,20 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - ~~Setup 3-4 different themes (fonts + colors), available on the Settings page~~
 - ~~Mobile-friendly~~
 - ~~Speed up navigation (possibly remove React Router - try it on a new branch)~~
+- ~~Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.~~
 
+## Bugs
+
+- Date picker text input will crash it; would like to simply disable the text part
+- After setting date (PreviouslyRead), cannot scroll up and down in the browser
+- ~~JS error when adding very first tag "prevTags is undefined (BookManager line 461)"~~
+- Error when a user has been deleted elsewhere and they load bookshelf (data in local storage doesn't match)
+- ~~Sometimes, on Results page, action message stays locked in place and won't disappear~~
+- ~~All-time average rating not working, should calculate avg from all the non-zero books~~
 
 ## Next Level
 
+- Try different date picker setup --> NEW BRANCH
 - Add your own book (not using Google Books search)
 - Upload your own cover image for any book
-- Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
+- Ignore articles when alphabetizing book order

@@ -5,7 +5,9 @@ class SelectFilter extends React.Component {
 
      constructor(props) {
           super(props);
-
+          this.state = {
+               selectRating: this.props.currentSelection
+          }
      }
 
 
@@ -13,6 +15,7 @@ class SelectFilter extends React.Component {
           if(selectedOption) {
                console.log(selectedOption);
                this.props.setRatingFilter(selectedOption.value);
+               this.setState({ selectRating: selectedOption.value });
           } else {
                this.props.clearRatingFilter();
           }
@@ -60,24 +63,62 @@ class SelectFilter extends React.Component {
           // RATING selections //////////////
           if( this.props.type === 'rating' ) {
                placeholder = 'Rating';
+               console.log("CURRENT RATING SELECTION: " + this.state.selectRating);
+               console.log("CURRENT PROPS SELECTION: " + this.props.currentSelection);
                filterOptions = [
                     { value: '5', label: '⭐⭐⭐⭐⭐ Life-Changing' },
-                    { value: '4', label: '⭐⭐⭐⭐ Great and higher' },
-                    { value: '3', label: '⭐⭐⭐ Good and higher' },
-                    { value: '2', label: '⭐⭐ OK and higher' },
-               ]
+                    { value: '4', label: '⭐⭐⭐⭐ Great +' },
+                    { value: '3', label: '⭐⭐⭐ Good +' },
+                    { value: '2', label: '⭐⭐ OK +' },
+               ];
 
+               let myRatingToPublish = null;
+               let defaultRating = this.state.selectRating;
+               if( defaultRating > 0 ) {
+                    if( defaultRating === '5' ) { myRatingToPublish = '⭐⭐⭐⭐⭐ Life-Changing'; }
+                    if( defaultRating === '4' ) { myRatingToPublish = '⭐⭐⭐⭐ Great'; }
+                    if( defaultRating === '3' ) { myRatingToPublish = '⭐⭐⭐ Good'; }
+                    if( defaultRating === '2' ) { myRatingToPublish = '⭐⭐ OK'; }
+                    if( defaultRating === '1' ) { myRatingToPublish = "⭐ Bad / Didn't Finish"; }
+               }
 
-               return (
-                 <Select
-                    placeholder={placeholder}
-                    options={filterOptions}
-                    value={this.props.currentSelection}
-                    isClearable
-                    isSearchable
-                    onChange={this.selectRating}
-                 />
-               );
+               let defaultRatingPublish = {
+                    value: defaultRating,
+                    label: myRatingToPublish
+               };
+
+               if( defaultRating > 0 && this.props.currentSelection > 0 ) {
+
+                    console.log("Returning option 1");
+
+                    return (
+                      <Select
+                         placeholder='Set Rating'
+                         options={filterOptions}
+                         defaultValue={defaultRatingPublish}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectRating}
+                      />
+                    );
+
+               } else {
+
+                    console.log("Returning option 2");
+
+                    return (
+                      <Select
+                         placeholder='Set Rating'
+                         defaultValue={''}
+                         value={null}
+                         options={filterOptions}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectRating}
+                      />
+                    );
+
+               }
 
 
           }

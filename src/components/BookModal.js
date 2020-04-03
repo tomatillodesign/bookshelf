@@ -53,6 +53,20 @@ export default function BookModal(props) {
      let dateCompleted = null;
      let genre = null;
      let showDescriptionIndicator = "+";
+     let descriptionToPublish = null;
+
+     //console.log(props.searchResult);
+     if( props.searchResult !== undefined ) {
+          if( props.description !== '' && props.description !== undefined ) {
+          descriptionToPublish = (<div className="saved-for-later-description-area">
+                                   <h3 className="saved-for-later-description-headline">Description</h3>
+                                        <div className="saved-for-later-text">
+                                        {props.description}
+                                        </div>
+                                   </div>);
+          //console.log(props.description);
+     } else { description = props.book.description; }
+     }
 
 
      if( props.searchResult !== true ) {
@@ -65,8 +79,6 @@ export default function BookModal(props) {
                subtitle = <h3 className="book-subtitle">{book.subtitle}</h3>;
           }
           if( book.authors !== undefined ) { authors = book.authors; }
-
-          description = book.description;
 
           categories = book.categories;
           date = book.publishedDate;
@@ -107,7 +119,7 @@ export default function BookModal(props) {
 
                if( book.volumeInfo !== undefined ) {
 
-
+               coverImageURL = props.coverImageURL;
 
                title = book.volumeInfo.title;
                if( book.volumeInfo.subtitle !== undefined ) {
@@ -215,7 +227,7 @@ export default function BookModal(props) {
                          dateCompleted={dateCompleted}
                          useGenres={props.useGenres}
                          useTags={props.useTags}
-                         description={description}
+                         description={props.book.description}
                          setBookRating={props.setBookRating}
                          resetRatingToZero={props.resetRatingToZero}
                          resetTimestampToZero={props.resetTimestampToZero}
@@ -227,6 +239,7 @@ export default function BookModal(props) {
                          setBookTags={props.setBookTags}
                          tags={props.tags}
                          resetAllTags={props.resetAllTags}
+                         setBookTimestamp={props.setBookTimestamp}
                      />
                     }
 
@@ -237,6 +250,12 @@ export default function BookModal(props) {
                               {props.book.description}
                               </div>
                          </div>
+                    }
+
+                    {props.searchResult &&
+                         <>
+                         {descriptionToPublish}
+                         </>
                     }
 
                 </Modal.Body>
@@ -265,8 +284,14 @@ export default function BookModal(props) {
                 }
                 { props.searchResult &&
                      <>
-                     <BookButtonToRead />
-                     <BookButtonAlreadyRead />
+                     <BookButtonToRead
+                          book={props.book}
+                          addBookToRead={props.addBookToRead}
+                     />
+                     <BookButtonAlreadyRead
+                         book={props.book}
+                         addBookAlreadyRead={props.addBookAlreadyRead}
+                    />
                      </>
                 }
                 </div>
@@ -291,6 +316,7 @@ export default function BookModal(props) {
           if( props.alreadyRead === true ) { additionalModalClasses = " already-read"; }
           if( props.searchResult === true ) { additionalModalClasses = " search-result"; }
 
+          //console.log("DESCRIPTION: " + props.book.description);
 
           return (
             <>
@@ -323,7 +349,7 @@ export default function BookModal(props) {
                         dateCompleted={dateCompleted}
                         useGenres={props.useGenres}
                         useTags={props.useTags}
-                        description={description}
+                        description={props.book.description}
                         setBookRating={props.setBookRating}
                         resetRatingToZero={props.resetRatingToZero}
                         resetTimestampToZero={props.resetTimestampToZero}
@@ -335,6 +361,7 @@ export default function BookModal(props) {
                         setBookTags={props.setBookTags}
                         tags={props.tags}
                         resetAllTags={props.resetAllTags}
+                        setBookTimestamp={props.setBookTimestamp}
                     />
                }
 
@@ -345,6 +372,12 @@ export default function BookModal(props) {
                          {props.book.description}
                          </div>
                     </div>
+               }
+
+               {props.searchResult &&
+                    <>
+                    {descriptionToPublish}
+                    </>
                }
 
                 </Modal.Body>
@@ -373,8 +406,14 @@ export default function BookModal(props) {
                 }
                 { props.searchResult &&
                      <>
-                     <BookButtonToRead />
-                     <BookButtonAlreadyRead />
+                     <BookButtonToRead
+                          book={props.book}
+                          addBookToRead={props.addBookToRead}
+                     />
+                     <BookButtonAlreadyRead
+                         book={props.book}
+                         addBookAlreadyRead={props.addBookAlreadyRead}
+                    />
                      </>
                 }
                 </div>

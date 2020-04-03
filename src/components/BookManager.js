@@ -37,7 +37,8 @@ class BookManager extends React.Component {
                          useTags: false,
                          customFields: [],
                     },
-             notification: null
+             notification: null,
+             notificationTimestamp: null,
     }
 
 }
@@ -134,7 +135,8 @@ class BookManager extends React.Component {
          let bookTitle = bookObj.volumeInfo.title;
          this.setState(prevState => ({
             books: [...prevState.books, newBook],
-            notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf'
+            notification: 'You added ' + bookTitle + ' to your ALREADY READ shelf',
+            notificationTimestamp: Date.now(),
            }));
 
            this.startNotificationTimer();
@@ -223,7 +225,8 @@ class BookManager extends React.Component {
           console.log(newBook);
           this.setState(prevState => ({
              books: [...prevState.books, newBook],
-             notification: 'You added ' + newBook.title + ' to your TO READ shelf'
+             notification: 'You added ' + newBook.title + ' to your TO READ shelf',
+             notificationTimestamp: Date.now(),
             }));
 
             this.startNotificationTimer();
@@ -431,11 +434,36 @@ class BookManager extends React.Component {
           }
 
 
+          setBookTimestamp = (newDateTimestamp, bookObj) => {
+               console.log("Update BOOK Timestamp in DB");
+               console.log(newDateTimestamp);
+               console.log(bookObj);
+
+               // get the book object
+              const bookID = bookObj.id;
+              const clbCopyBookState = [...this.state.books];
+              const getBookObjInState = clbCopyBookState.filter(obj => {
+               return obj.id === bookID
+              });
+
+              const index = clbCopyBookState.findIndex(obj => {
+               return obj.id === bookID
+              });
+              console.log(index);
+
+              clbCopyBookState[index].bookshelfTimestamp = newDateTimestamp;
+              this.setState({ books: this.state.books });
+
+          }
+
+
 
           addNewTag = (allTagsArray) => {
 
                console.log(allTagsArray);
-               const prevTags = this.state.settings.tags;
+               let prevTags = this.state.settings.tags;
+                    if( prevTags === undefined ) { prevTags = []; }
+               console.log(prevTags);
                console.log(prevTags.filter(Boolean));
 
                let difference = allTagsArray.filter(x => !prevTags.includes(x));
@@ -707,7 +735,7 @@ class BookManager extends React.Component {
 
 
      resetNotification = () => {
-          this.setState({ notification: null });
+          this.setState({ notification: null, notificationTimestamp: null, });
      }
 
      startNotificationTimer = () => {
@@ -771,6 +799,7 @@ class BookManager extends React.Component {
                  addNewImagesAlreadyRead={this.addNewImagesAlreadyRead}
                  addNewImagesToRead={this.addNewImagesToRead}
                  notification={this.state.notification}
+                 notificationTimestamp={this.state.notificationTimestamp}
                  updateCoverImg={this.updateCoverImg}
                  changeSettingsBookSize={this.changeSettingsBookSize}
                  bookSize={this.state.settings.bookSize}
@@ -789,6 +818,7 @@ class BookManager extends React.Component {
                  addNewGenre={this.addNewGenre}
                  addNewTag={this.addNewTag}
                  setBookTags={this.setBookTags}
+                 setBookTimestamp={this.setBookTimestamp}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

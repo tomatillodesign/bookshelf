@@ -43,20 +43,24 @@ class Router extends React.Component {
                               settingsFont={this.props.settingsFont}
                               settingsColor={this.props.settingsColor}
                               notification={this.props.notification}
+                              notificationTimestamp={this.props.notificationTimestamp}
                               updateCoverImg={this.props.updateCoverImg}
                               useGenres={this.props.useGenres}
                               useTags={this.props.useTags}
+                              setBookRating={this.props.setBookRating}
+                              resetRatingToZero={this.props.resetRatingToZero}
                          />}
                />
                <Route exact path="/search" component={Search} />
                <Route exact path="/results"
-                    render={(props) => <Results {...props} test={true}
-                                                  addBookAlreadyRead={this.props.addBookAlreadyRead}
-                                                  addBookToRead={this.props.addBookToRead}
-                                                  settingsFont={this.props.settingsFont}
-                                                  settingsColor={this.props.settingsColor}
-                                                  notification={this.props.notification}
-                                             />}
+                                        render={(props) => <Results {...props} test={true}
+                                             addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                             addBookToRead={this.props.addBookToRead}
+                                             settingsFont={this.props.settingsFont}
+                                             settingsColor={this.props.settingsColor}
+                                             notification={this.props.notification}
+                                             notificationTimestamp={this.props.notificationTimestamp}
+                                        />}
                />
 
                <Route exact path="/saved"
@@ -108,6 +112,7 @@ class Router extends React.Component {
                               setBookTags={this.props.setBookTags}
                               tags={this.props.tags}
                               resetAllTags={this.props.resetAllTags}
+                              setBookTimestamp={this.props.setBookTimestamp}
                          />}
                />
                <Route exact path="/settings"

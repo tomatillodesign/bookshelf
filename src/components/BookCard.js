@@ -39,7 +39,7 @@ class BookCard extends React.Component {
 
           if( book !== null ) {
 
-          let coverImageURL = null;
+          // let coverImageURL = null;
           let title = null;
           let subtitle = null;
           let authors = null;
@@ -47,6 +47,7 @@ class BookCard extends React.Component {
           let authorsToPublish = null;
           let dateToPublish = null;
           let date = null;
+          let description = null;
 
                title = book.title;
                if( book.subtitle !== undefined ) { subtitle = book.subtitle; }
@@ -77,6 +78,40 @@ class BookCard extends React.Component {
           //console.log(this.props.removeBookFromAlreadyRead);
 
 
+               // If search results, get the covers straight from Google in correct JSON format
+               let coverImageURL = null;
+               if( this.props.searchResult ) {
+
+                         description = book.volumeInfo.description;
+                         //console.log(description);
+
+                         if( book.volumeInfo !== undefined ) {
+
+                         if( book.volumeInfo.imageLinks !== undefined ) {
+                              //console.log(book.volumeInfo.imageLinks.thumbnail);
+                              coverImageURL = book.volumeInfo.imageLinks.thumbnail;
+                              coverImageURL = book.volumeInfo.imageLinks.large;
+                              if( book.volumeInfo.imageLinks.large === undefined || book.volumeInfo.imageLinks.large === '' ) {
+                                   coverImageURL = book.volumeInfo.imageLinks.medium;
+                              }
+                              if( book.volumeInfo.imageLinks.medium === undefined || book.volumeInfo.imageLinks.medium === '' ) {
+                                   coverImageURL = book.volumeInfo.imageLinks.small;
+                              }
+                              if( book.volumeInfo.imageLinks.small === undefined || book.volumeInfo.imageLinks.small === '' ) {
+                                   coverImageURL = book.volumeInfo.imageLinks.smallThumbnail;
+                              }
+                              if( book.volumeInfo.imageLinks.smallThumbnail === undefined ) {
+                                   coverImageURL = book.volumeInfo.imageLinks.thumbnail;
+                              }
+                         }
+                    }
+               }
+
+
+
+               /////////////////////////////////////////////////////////////////////////////
+
+
           return(
 
                <div className="book-card">
@@ -87,6 +122,9 @@ class BookCard extends React.Component {
                          book={book}
                          alreadyRead={this.props.alreadyRead}
                          savedForLater={this.props.savedForLater}
+                         coverImageURL={coverImageURL}
+                         addBookToRead={this.props.addBookToRead}
+                         addBookAlreadyRead={this.props.addBookAlreadyRead}
                          editBook={this.props.editBook}
                          bookshelfRating={bookshelfRating}
                          bookshelfNote={bookshelfNote}
@@ -109,6 +147,8 @@ class BookCard extends React.Component {
                          setBookTags={this.props.setBookTags}
                          tags={this.props.tags}
                          resetAllTags={this.props.resetAllTags}
+                         setBookTimestamp={this.props.setBookTimestamp}
+                         description={description}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -117,6 +157,9 @@ class BookCard extends React.Component {
                          book={book}
                          alreadyRead={this.props.alreadyRead}
                          savedForLater={this.props.savedForLater}
+                         coverImageURL={coverImageURL}
+                         addBookToRead={this.props.addBookToRead}
+                         addBookAlreadyRead={this.props.addBookAlreadyRead}
                          editBook={this.props.editBook}
                          bookshelfRating={bookshelfRating}
                          bookshelfNote={bookshelfNote}
@@ -139,6 +182,8 @@ class BookCard extends React.Component {
                          setBookTags={this.props.setBookTags}
                          tags={this.props.tags}
                          resetAllTags={this.props.resetAllTags}
+                         setBookTimestamp={this.props.setBookTimestamp}
+                         description={description}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
