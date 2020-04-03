@@ -11,6 +11,7 @@ import SelectGenre from './SelectGenre';
 import SelectTags from './SelectTags';
 import DateFnsUtils from '@date-io/date-fns';
 import MomentUtils from '@date-io/moment';
+import NewDatePicker from './NewDatePicker';
 import { DatePicker, KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -183,16 +184,11 @@ class BookEditor extends React.Component {
 
            if( this.state.currentlyEditingDate === true) {
                 dateArea = <div id="date-picker-area" className="date-area">
-                                    <MuiPickersUtilsProvider utils={MomentUtils}>
-                                         <KeyboardDatePicker
-                                             clearable
-                                             value={this.selectedDate}
-                                             onChange={this.handleDateChange}
-                                             disableFuture
-                                             format={"MM/DD/YYYY"}
-                                         />
-                                     </MuiPickersUtilsProvider>
-                               </div>;
+                                   <NewDatePicker
+                                        setBookTimestamp={this.props.setBookTimestamp}
+                                        book={this.props.book}
+                                   />
+                              </div>
            }
 
 
