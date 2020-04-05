@@ -342,6 +342,7 @@ class PreviouslyRead extends React.Component {
                               tags={this.props.tags}
                               resetAllTags={this.props.resetAllTags}
                               setBookTimestamp={this.props.setBookTimestamp}
+                              updateCoverImg={this.props.updateCoverImg}
                          />
               ))}
               </div>
