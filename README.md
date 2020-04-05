@@ -15,6 +15,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - User can select different themes (color + font choices)
 - Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
 - Mobile-friendly
+- Upload your own book covers if necessary
 
 ## Technical Credits
 
