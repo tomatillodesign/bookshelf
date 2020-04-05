@@ -673,11 +673,21 @@ h3.yearly-summary {
      font-size: 12px;
 }
 
-.save-date {
+.save-date, .finalize-new-cover-button, .cancel-new-cover {
      padding: 8px 12px;
      font-size: 11px;
      margin-left: 8px;
      margin-bottom: 2px;
+}
+
+.finalize-new-cover-button, .cancel-new-cover {
+     text-align: center;
+     width: 100%;
+     margin-left: 0px;
+}
+
+.cancel-new-cover {
+     background: #aaa;
 }
 
 
@@ -701,6 +711,15 @@ h3.yearly-summary {
      border-radius: 0;
 }
 
+
+.replace-book-cover {
+     clear: both;
+     padding-top: 6px;
+}
+
+.button.replace-cover {
+     border-radius: 0;
+}
 
 
 @media only screen and (min-width: 960px) {

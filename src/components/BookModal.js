@@ -103,10 +103,16 @@ export default function BookModal(props) {
                if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
                if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
 
+               if( date ) {
+                    let yearOnly = date.toString()
+                    yearOnly = date.substring(0, 4);
+                    dateToPublish = ' (' + yearOnly + ')';
+               }
+
                if( hasSubtitle ) {
-                    authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages</div>;
+                    authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages {dateToPublish}</div>;
                } else {
-                    authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages</div>;
+                    authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages {dateToPublish}</div>;
                }
           }
 
@@ -136,8 +142,14 @@ export default function BookModal(props) {
                }
 
                categories = book.volumeInfo.categories;
-               date = book.volumeInfo.publishedDate;
+               date = book.publishedDate;
                pageCount = book.volumeInfo.pageCount;
+
+               if( date ) {
+                    let yearOnly = date.toString()
+                    yearOnly = date.substring(0, 4);
+                    dateToPublish = ' (' + yearOnly + ')';
+               }
 
                if( book.volumeInfo.authors !== undefined ) {
                     if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
@@ -145,16 +157,13 @@ export default function BookModal(props) {
                     if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
 
                     if( hasSubtitle ) {
-                         authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages</div>;
+                         authorsToPublish = <div className={"authors" + authorClass}>{authorsToPublish}, {pageCount} pages {dateToPublish}</div>;
                     } else {
-                         authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages</div>;
+                         authorsToPublish = <div className="authors">{authorsToPublish}, {pageCount} pages {dateToPublish}</div>;
                     }
                }
 
-               if( date ) {
-                    let yearOnly = date.toString()
-                    dateToPublish = 'Date: ' + yearOnly;
-               }
+
           }
 
      }

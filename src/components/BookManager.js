@@ -307,11 +307,11 @@ class BookManager extends React.Component {
 
           }
 
-          updateCoverImg = ( bookObj, bookCoverURL ) => {
+
+
+          updateCoverImg = ( bookCoverURL, bookObj ) => {
                console.log(bookObj);
                console.log(bookCoverURL);
-
-               console.log(bookObj);
 
               //get the book object
               const bookID = bookObj.id;
@@ -320,13 +320,18 @@ class BookManager extends React.Component {
               const getBookObjInState = clbCopyBookState.filter(obj => {
                return obj.id === bookID
               });
+              console.log("getBookObjInState");
               console.log(getBookObjInState);
 
               getBookObjInState.coverImg = bookCoverURL;
-              // this.setState(prevState => ({
-              //   books: [...prevState.books, getBookObjInState],
-              //   notification: 'You changed the book cover for ' + bookTitle
-              //  }));
+
+              const index = clbCopyBookState.findIndex(obj => {
+              return obj.id === bookID
+             });
+             console.log(index);
+
+             clbCopyBookState[index].coverImg = bookCoverURL;
+             this.setState({ books: this.state.books });
 
           }
 
