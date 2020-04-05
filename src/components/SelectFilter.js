@@ -93,7 +93,7 @@ class SelectFilter extends React.Component {
 
                     return (
                       <Select
-                         placeholder='Set Rating'
+                         placeholder='Rating'
                          options={filterOptions}
                          defaultValue={defaultRatingPublish}
                          isClearable
@@ -108,7 +108,7 @@ class SelectFilter extends React.Component {
 
                     return (
                       <Select
-                         placeholder='Set Rating'
+                         placeholder='Rating'
                          defaultValue={''}
                          value={null}
                          options={filterOptions}

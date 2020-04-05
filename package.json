@@ -32,6 +32,7 @@
     "re-base": "^4.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
+    "react-date-picker": "^8.0.0",
     "react-dnd": "^10.0.2",
     "react-dom": "^16.13.1",
     "react-firebase-file-uploader": "^2.4.3",
