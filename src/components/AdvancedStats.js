@@ -15,9 +15,12 @@ export default function AdvancedStats(props) {
      }
 
      function getTotalPages(books) {
+          //console.log("getTotalPages");
           let totalPages = 0;
           for( let i = 0; i < books.length; i++ ) {
-               totalPages += books[i].pageCount;
+               if( books[i].pageCount !== null && books[i].pageCount !== undefined && books[i].pageCount > 0 ) {
+                    totalPages += books[i].pageCount;
+               }
           }
           return totalPages.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
      }
@@ -83,7 +86,7 @@ export default function AdvancedStats(props) {
                                                        });
        // re-order the array of books by timestamp
        booksWithDate.sort((a, b) => (a.bookshelfTimestamp < b.bookshelfTimestamp) ? 1 : -1)
-       //console.log(booksWithDate);
+       console.log(booksWithDate);
 
        let yearlyChart = [];
        let prevDateRaw = new Date( booksWithDate[0].bookshelfTimestamp );
@@ -95,6 +98,7 @@ export default function AdvancedStats(props) {
 
             let bookDate = new Date(booksWithDate[j].bookshelfTimestamp);
             let currentBookYear = bookDate.getFullYear();
+            console.log("currentBookYear: " + currentBookYear);
 
             //currentYearBooks.push(booksWithDate[j]);
 
@@ -102,8 +106,9 @@ export default function AdvancedStats(props) {
 
                  // create new array, filtered just for this year
                  currentYearBooks = books.filter(function(book) { return getYear(book) === currentBookYear; });
-                 // console.log(currentBookYear);
-                 // console.log(currentYearBooks);
+                 console.log(currentBookYear);
+                 console.log(prevDateYear);
+                 console.log(j);
 
                  yearlyChart.push(
                       <div className="yearly-chart-area">
@@ -114,12 +119,16 @@ export default function AdvancedStats(props) {
                       </div>
                     );
 
+
+               prevDateYear = currentBookYear;
+
             }
 
             if( currentBookYear !== prevDateYear ) {
                  currentYearBooks = [];
             }
 
+            console.log(yearlyChart);
 
        }
 
