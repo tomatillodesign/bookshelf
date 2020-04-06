@@ -36,7 +36,7 @@ export default function AdvancedStats(props) {
           if( starRatingsArray.length === 0 ) { return(<span className="no-ratings-assigned-message">No ratings assigned</span>); }
           let sum = starRatingsArray.reduce((previous, current) => current += previous);
           let avg = sum / starRatingsArray.length;
-          let avgToPublish = avg.toFixed(1);
+          let avgToPublish = avg.toFixed(2);
 
           return avgToPublish;
      }
@@ -63,7 +63,7 @@ export default function AdvancedStats(props) {
             // console.log(sum);
             // console.log(starRatingsArray.length);
             let avg = sum / starRatingsArray.length;
-            avgToPublish = avg.toFixed(1);
+            avgToPublish = avg.toFixed(2);
        }
 
 
