@@ -149,6 +149,7 @@ class BookCard extends React.Component {
                          resetAllTags={this.props.resetAllTags}
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
+                         createNotification={this.props.createNotification}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -184,6 +185,7 @@ class BookCard extends React.Component {
                          resetAllTags={this.props.resetAllTags}
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
+                         createNotification={this.props.createNotification}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
@@ -204,6 +206,7 @@ class BookCard extends React.Component {
                               <BookButtonMoveToAlreadyRead
                                    book={this.props.book}
                                    moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                                   createNotification={this.props.createNotification}
                               />
                               </>
                          }

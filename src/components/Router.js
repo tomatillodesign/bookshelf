@@ -49,6 +49,8 @@ class Router extends React.Component {
                               useTags={this.props.useTags}
                               setBookRating={this.props.setBookRating}
                               resetRatingToZero={this.props.resetRatingToZero}
+                              resetTimestampToZero={this.props.resetTimestampToZero}
+                              setBookTimestamp={this.props.setBookTimestamp}
                          />}
                />
                <Route exact path="/search" component={Search} />

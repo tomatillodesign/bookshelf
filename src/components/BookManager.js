@@ -113,8 +113,18 @@ class BookManager extends React.Component {
          let subtitle = bookObj.volumeInfo.subtitle;
          if( subtitle === undefined ) { subtitle = null; }
 
+         let description = bookObj.volumeInfo.description;
+         if( description === undefined ) { description = null; }
+
+         let publisher = bookObj.volumeInfo.publisher;
+         if( publisher === undefined ) { publisher = null; }
+
+         let pageCount = bookObj.volumeInfo.pageCount;
+         if( pageCount === undefined ) { pageCount = null; }
+
          newBook.id = bookObj.id;
          newBook.title = bookObj.volumeInfo.title;
+         newBook.titleForSorting = this.createAlphabeticalSortingTitle(bookObj.volumeInfo.title);
          newBook.subtitle = subtitle;
          newBook.authors = bookObj.volumeInfo.authors;
          newBook.bookshelfTimestamp = Date.now();
@@ -123,10 +133,10 @@ class BookManager extends React.Component {
          newBook.coverImg = null;
          newBook.alreadyRead = true;
          newBook.googleLink = bookObj.selfLink;
-         newBook.description = bookObj.volumeInfo.description;
-         newBook.publisher = bookObj.volumeInfo.publisher;
+         newBook.description = description;
+         newBook.publisher = publisher;
          newBook.publishedDate = bookObj.volumeInfo.publishedDate
-         newBook.pageCount = bookObj.volumeInfo.pageCount;
+         newBook.pageCount = pageCount;
          newBook.genre = null;
          newBook.tags = [];
 
@@ -206,8 +216,18 @@ class BookManager extends React.Component {
           let subtitle = bookObj.volumeInfo.subtitle;
           if( subtitle === undefined ) { subtitle = null; }
 
+          let description = bookObj.volumeInfo.description;
+          if( description === undefined ) { description = null; }
+
+          let publisher = bookObj.volumeInfo.publisher;
+          if( publisher === undefined ) { publisher = null; }
+
+          let pageCount = bookObj.volumeInfo.pageCount;
+         if( pageCount === undefined ) { pageCount = null; }
+
           newBook.id = bookObj.id;
           newBook.title = bookObj.volumeInfo.title;
+          newBook.titleForSorting = this.createAlphabeticalSortingTitle(bookObj.volumeInfo.title);
           newBook.subtitle = subtitle;
           newBook.authors = bookObj.volumeInfo.authors;
           newBook.bookshelfTimestamp = Date.now();
@@ -216,10 +236,10 @@ class BookManager extends React.Component {
           newBook.coverImg = null;
           newBook.alreadyRead = false;
           newBook.googleLink = bookObj.selfLink;
-          newBook.description = bookObj.volumeInfo.description;
-          newBook.publisher = bookObj.volumeInfo.publisher;
+          newBook.description = description;
+          newBook.publisher = publisher;
           newBook.publishedDate = bookObj.volumeInfo.publishedDate
-          newBook.pageCount = bookObj.volumeInfo.pageCount;
+          newBook.pageCount = pageCount;
           newBook.genre = null;
 
           console.log(newBook);
@@ -754,6 +774,25 @@ class BookManager extends React.Component {
      }
 
 
+
+     // Title work, move "The" "A" "An" to the back for alphabetizing
+     createAlphabeticalSortingTitle = ( title ) => {
+          let updatedTitle = title;
+          console.log("createAlphabeticalSortingTitle");
+
+               if( title.startsWith('The ') ) {
+                    updatedTitle = title.substr(4) + ', The';
+               } else if( title.startsWith('A ') ) {
+                    updatedTitle = title.substr(2) + ', A';
+               } else if( title.startsWith('An ') ) {
+                    updatedTitle = title.substr(3) + ', An';
+               }
+
+          console.log(updatedTitle);
+          return updatedTitle;
+     }
+
+
   render() {
 
        const books = this.state.books;
@@ -824,6 +863,7 @@ class BookManager extends React.Component {
                  addNewTag={this.addNewTag}
                  setBookTags={this.setBookTags}
                  setBookTimestamp={this.setBookTimestamp}
+                 resetNotification={this.resetNotification}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

@@ -29,15 +29,17 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 
 ## To Do's
 
-- Ignore articles when alphabetizing book order
 - Clean up code, remove console logs, etc.
 - Add your own book (not using Google Books search)
+- Ignore duplicates
+- ~~Ignore articles when alphabetizing book order~~
 - ~~Try different date picker setup --> NEW BRANCH~~
 - ~~Upload your own cover image for any book~~
 
 ## Bugs
 
 - Error when a user has been deleted elsewhere and they load bookshelf (data in local storage doesn't match)
+- Move notifications to its own component, not in BookManager
 - ~~Date picker text input will crash it; would like to simply disable the text part~~
 - ~~After setting date (PreviouslyRead), cannot scroll up and down in the browser~~
 - ~~JS error when adding very first tag "prevTags is undefined (BookManager line 461)"~~

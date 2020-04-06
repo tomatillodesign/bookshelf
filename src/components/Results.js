@@ -42,7 +42,7 @@ class Results extends React.Component {
 
                let currentTimestamp = Date.now();
                if( this.props.notificationTimestamp > currentTimestamp - 1000 ) {
-                    notificationArea = ( <div className="notification-area">{this.props.notification}<br/>Timestamp: {this.props.notificationTimestamp}<br/>Current: {Date.now()}</div> );
+                    notificationArea = ( <div className="notification-area">{this.props.notification}</div> );
                }
           }
 

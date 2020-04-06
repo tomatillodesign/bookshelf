@@ -46,6 +46,8 @@ function RecentlyAddedAlreadyRead(props) {
                                       updateCoverImg={props.updateCoverImg}
                                       setBookRating={props.setBookRating}
                                       resetRatingToZero={props.resetRatingToZero}
+                                      resetTimestampToZero={props.resetTimestampToZero}
+                                      setBookTimestamp={props.setBookTimestamp}
                               />
                       ))}
                       </div>

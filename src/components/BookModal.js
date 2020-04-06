@@ -93,7 +93,7 @@ export default function BookModal(props) {
 
           // new image work here
           if( book.coverImg == undefined || book.coverImg == null ) {
-               coverImageURL = 'https://firebasestorage.googleapis.com/v0/b/bookshelf-9d11e.appspot.com/o/images%2Foverstory-cover.jpg?alt=media&token=52aa3fae-7968-459b-abab-c71daa39d547';
+               coverImageURL = 'https://firebasestorage.googleapis.com/v0/b/bookshelf-9d11e.appspot.com/o/images%2F400px%20x%20600px-r01BookNotPictured.jpg?alt=media&token=772367ce-e89a-400d-95fe-f76e9ea65385';
           } else {
                coverImageURL = book.coverImg;
           }

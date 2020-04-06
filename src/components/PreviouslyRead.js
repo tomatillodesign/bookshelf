@@ -26,13 +26,14 @@ class PreviouslyRead extends React.Component {
     }
 
 
+
     orderBooks = ( bookOrderString, booksArray ) => {
          console.log( bookOrderString );
          console.log( booksArray )
 
          let orderedBooks = null;
          if( bookOrderString === 'alphabetical') {
-              orderedBooks = [...booksArray].sort((a, b) => (a.title > b.title) ? 1 : -1);
+              orderedBooks = [...booksArray].sort((a, b) => (a.titleForSorting > b.titleForSorting) ? 1 : -1);
          }
 
          if( this.props.booksAlreadyReadView === 'date') {
@@ -68,8 +69,8 @@ class PreviouslyRead extends React.Component {
                         // If the count number is the same between both items, sort alphabetically
                         // If the first item comes first in the alphabet, move it up
                         // Otherwise move it down
-                        if (a.title > b.title) return 1;
-                        if (a.title < b.title) return -1;
+                        if (a.titleForSorting > b.titleForSorting) return 1;
+                        if (a.titleForSorting < b.titleForSorting) return -1;
 
                    });
 
@@ -147,6 +148,7 @@ class PreviouslyRead extends React.Component {
 
 
     componentDidMount() {
+         console.log("MOUNTED");
          const booksAlreadyRead = this.orderBooks( this.props.booksAlreadyReadView, this.props.booksAlreadyRead );
          this.setState({
               displayedBooks: booksAlreadyRead
