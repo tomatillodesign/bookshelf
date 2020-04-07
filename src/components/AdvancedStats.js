@@ -84,53 +84,63 @@ export default function AdvancedStats(props) {
        const booksWithDate = books.filter(function(book) {
                                                          return book.bookshelfTimestamp > 0;
                                                        });
-       // re-order the array of books by timestamp
-       booksWithDate.sort((a, b) => (a.bookshelfTimestamp < b.bookshelfTimestamp) ? 1 : -1)
-       console.log(booksWithDate);
 
-       let yearlyChart = [];
-       let prevDateRaw = new Date( booksWithDate[0].bookshelfTimestamp );
-       //console.log(booksWithDate[0].bookshelfTimestamp);
-       let prevDateYear = prevDateRaw.getFullYear();
-       let currentYearBooks = [];
+               console.log(booksWithDate);
+               console.log(booksWithDate.length);
 
-       for( let j = 0; j < booksWithDate.length; j++ ) {
+               let yearlyChart = [];
 
-            let bookDate = new Date(booksWithDate[j].bookshelfTimestamp);
-            let currentBookYear = bookDate.getFullYear();
-            console.log("currentBookYear: " + currentBookYear);
+       if( booksWithDate.length > 0 ) {
 
-            //currentYearBooks.push(booksWithDate[j]);
-
-            if( j === 0 || currentBookYear !== prevDateYear ) { // USE MAP in line 119 to assign unique keys
-
-                 // create new array, filtered just for this year
-                 currentYearBooks = books.filter(function(book) { return getYear(book) === currentBookYear; });
-                 console.log(currentBookYear);
-                 console.log(prevDateYear);
-                 console.log(j);
-
-                 yearlyChart.push(
-                      <div className="yearly-chart-area">
-                         <h3 className="yearly-summary">{currentBookYear}</h3>
-                         <div className="number-of-books">Books read: {currentYearBooks.length}</div>
-                         <div className="pages">Approx. pages: {getTotalPages(currentYearBooks)}</div>
-                         <div className="average-rating">Average rating: {getAverageRating(currentYearBooks)}</div>
-                      </div>
-                    );
+            // re-order the array of books by timestamp
+            booksWithDate.sort((a, b) => (a.bookshelfTimestamp < b.bookshelfTimestamp) ? 1 : -1)
+            console.log(booksWithDate);
 
 
-               prevDateYear = currentBookYear;
+            let prevDateRaw = new Date( booksWithDate[0].bookshelfTimestamp );
+            //console.log(booksWithDate[0].bookshelfTimestamp);
+            let prevDateYear = prevDateRaw.getFullYear();
+            let currentYearBooks = [];
 
-            }
+            for( let j = 0; j < booksWithDate.length; j++ ) {
 
-            if( currentBookYear !== prevDateYear ) {
-                 currentYearBooks = [];
-            }
+                 let bookDate = new Date(booksWithDate[j].bookshelfTimestamp);
+                 let currentBookYear = bookDate.getFullYear();
+                 console.log("currentBookYear: " + currentBookYear);
 
-            console.log(yearlyChart);
+                 //currentYearBooks.push(booksWithDate[j]);
 
-       }
+                 if( j === 0 || currentBookYear !== prevDateYear ) { // USE MAP in line 119 to assign unique keys
+
+                      // create new array, filtered just for this year
+                      currentYearBooks = books.filter(function(book) { return getYear(book) === currentBookYear; });
+                      console.log(currentBookYear);
+                      console.log(prevDateYear);
+                      console.log(j);
+
+                      yearlyChart.push(
+                           <div className="yearly-chart-area">
+                              <h3 className="yearly-summary">{currentBookYear}</h3>
+                              <div className="number-of-books">Books read: {currentYearBooks.length}</div>
+                              <div className="pages">Approx. pages: {getTotalPages(currentYearBooks)}</div>
+                              <div className="average-rating">Average rating: {getAverageRating(currentYearBooks)}</div>
+                           </div>
+                         );
+
+
+                    prevDateYear = currentBookYear;
+
+                 }
+
+                 if( currentBookYear !== prevDateYear ) {
+                      currentYearBooks = [];
+                 }
+
+                    console.log(yearlyChart);
+
+               }
+
+          }
 
        // now end with all the books that don't have a year assigned
        // first check if there are any books with a date === 0
