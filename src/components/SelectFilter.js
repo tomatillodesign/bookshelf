@@ -23,6 +23,18 @@ class SelectFilter extends React.Component {
      }
 
 
+     selectAuthor = (selectedOption) => {
+          if(selectedOption) {
+               console.log(selectedOption);
+               this.props.setAuthorFilter(selectedOption.value);
+               this.setState({ selectRating: selectedOption.value });
+          } else {
+               this.props.clearAuthorFilter();
+          }
+
+     }
+
+
      selectGenre = (selectedOption) => {
           if(selectedOption) {
                console.log(selectedOption);
@@ -122,6 +134,62 @@ class SelectFilter extends React.Component {
 
 
           }
+
+
+
+          // AUTHOR selections //////////////
+          if( this.props.type === 'author' ) {
+
+               const books = this.props.books;
+               const rawAuthors = books.map((book, index) => ( book.authors )).flat();
+               rawAuthors.splice(0, rawAuthors.length, ...(new Set(rawAuthors)));
+               console.log(rawAuthors);
+
+               // alpabetize by last name
+               rawAuthors.sort(function (a, b) {
+                   if (a.split(' ')[1] > b.split(' ')[1])
+                     return 1;
+                   if (a.split(' ')[1] < b.split(' ')[1])
+                     return -1;
+                   return 0;
+               });
+               console.log(rawAuthors);
+
+               let filterOptions = [];
+               for( let i = 0; i < rawAuthors.length; i++ ) {
+                    filterOptions.push({ value: rawAuthors[i], label: rawAuthors[i] });
+               }
+
+               placeholder = 'Author';
+               if( this.props.currentSelection === '' ) {
+
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         value={null}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectAuthor}
+                      />
+                    );
+
+               } else {
+
+                    return (
+                      <Select
+                         placeholder={placeholder}
+                         options={filterOptions}
+                         isClearable
+                         isSearchable
+                         onChange={this.selectAuthor}
+                      />
+                    );
+
+               }
+
+          }
+
 
 
           // GENRE selections //////////////

@@ -114,7 +114,7 @@ class BookCard extends React.Component {
 
           return(
 
-               <div className="book-card">
+               <div className="book-card" id={book.id}>
                     <BookModal
                          settingsFont={this.props.settingsFont}
                          settingsColor={this.props.settingsColor}

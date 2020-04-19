@@ -660,8 +660,10 @@ h3.yearly-summary {
 }
 
 .prev-views {
-     display: flex;
-     justify-content: center;
+     // display: flex;
+     // justify-content: center;
+     display: grid;
+     grid-row-gap: 12px;
 }
 
 .prev-views .view-type.filters-area {

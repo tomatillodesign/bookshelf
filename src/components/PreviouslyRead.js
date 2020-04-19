@@ -2,6 +2,7 @@ import React from 'react';
 import BookCard from './BookCard.js';
 import SelectAlreadyReadView from './SelectAlreadyReadView';
 import AdvancedStats from './AdvancedStats.js';
+import AuthorList from './AuthorList.js';
 import SelectFilter from './SelectFilter.js';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -16,6 +17,7 @@ class PreviouslyRead extends React.Component {
         super(props);
         this.state = {
              bookOrder: this.props.booksAlreadyReadView,
+             authorFilter: '',
              genreFilter: '',
              tagFilter: '',
              ratingFilter: 0,
@@ -91,6 +93,17 @@ class PreviouslyRead extends React.Component {
     }
 
 
+    setAuthorFilter = ( string ) => {
+         console.log("setAuthorFilter = " + string);
+         this.setState({ authorFilter: string });
+    }
+
+    clearAuthorFilter = () => {
+         console.log("clearAuthorFilter");
+         this.setState({ authorFilter: '' });
+    }
+
+
 
 
     setTagFilter = ( string ) => {
@@ -124,6 +137,7 @@ class PreviouslyRead extends React.Component {
          this.setState({
               tagFilter: '',
               genreFilter: '',
+              authorFilter: '',
               ratingFilter: 0,
               displayedBooks: filteredBooksInOrder
          });
@@ -168,8 +182,10 @@ class PreviouslyRead extends React.Component {
 
          /////////// Getting all of the button resets right and current displayedBooks ///////
          console.log('Rating filter: ' + this.state.ratingFilter);
+         console.log('Author filter: ' + this.state.authorFilter);
          console.log('Genre filter: ' + this.state.genreFilter);
          console.log('Tag filter: ' + this.state.tagFilter);
+
 
               // Let's do GENRE
               const genre = this.state.genreFilter;
@@ -183,6 +199,23 @@ class PreviouslyRead extends React.Component {
                    displayedBooks = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
 
               }
+
+
+
+              // Let's do AUTHOR
+              const author = this.state.authorFilter;
+              filteredBooks = null;
+              if( author !== '' ) {
+                   filteredBooks = displayedBooks.filter(function(book) {
+                     return book.authors.includes(author);
+                   });
+
+                   // run the re-ordering function to make sure everything is in the correct order
+                   displayedBooks = this.orderBooks( this.props.booksAlreadyReadView, filteredBooks );
+
+              }
+
+
 
                // Let's do TAGS
                const tag = this.state.tagFilter;
@@ -216,7 +249,7 @@ class PreviouslyRead extends React.Component {
 
 
          let clearButton = null;
-         if( this.state.genreFilter !== '' || this.state.tagFilter !== '' || this.state.ratingFilter !== 0 ) {
+         if( this.state.genreFilter !== '' || this.state.authorFilter !== '' || this.state.tagFilter !== '' || this.state.ratingFilter !== 0 ) {
               clearButton = (<div className="viewer-selector-area clear">
                    <button id="clear-all-filters" className="clear-all-filters" onClick={this.clearAllFilters}>Clear All Filters</button>
               </div>);
@@ -291,6 +324,15 @@ class PreviouslyRead extends React.Component {
                                    currentSelection={this.state.ratingFilter}
                                    setRatingFilter={this.setRatingFilter}
                                    clearRatingFilter={this.clearRatingFilter}
+                              />
+                         </div>
+                         <div className="viewer-selector-area filter">
+                              <SelectFilter
+                                   books={displayedBooks}
+                                   type={"author"}
+                                   currentSelection={this.state.authorFilter}
+                                   setAuthorFilter={this.setAuthorFilter}
+                                   clearAuthorFilter={this.clearAuthorFilter}
                               />
                          </div>
                          {this.props.useGenres &&
