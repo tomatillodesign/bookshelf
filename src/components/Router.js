@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 import Landing from './Landing.js';
 import Search from './Search.js';
+import Recommended from './Recommended.js';
 import Settings from './Settings.js';
 import NotFound from './NotFound.js';
 import SavedForLater from './SavedForLater.js';
@@ -55,7 +56,19 @@ class Router extends React.Component {
                />
                <Route exact path="/search" component={Search} />
                <Route exact path="/results"
-                                        render={(props) => <Results {...props} test={true}
+                                        render={(props) => <Results {...props}
+                                             addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                             addBookToRead={this.props.addBookToRead}
+                                             settingsFont={this.props.settingsFont}
+                                             settingsColor={this.props.settingsColor}
+                                             notification={this.props.notification}
+                                             notificationTimestamp={this.props.notificationTimestamp}
+                                        />}
+               />
+
+               <Route exact path="/recommended"
+                                        render={(props) => <Recommended {...props}
+                                             books={this.props.books}
                                              addBookAlreadyRead={this.props.addBookAlreadyRead}
                                              addBookToRead={this.props.addBookToRead}
                                              settingsFont={this.props.settingsFont}

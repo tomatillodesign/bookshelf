@@ -79,6 +79,11 @@ render() {
                    Find It
                  </button>
           </form>
+
+          <div className="recommended-section">
+               <button id="show-recommended"><a href="#/recommended">Get Ideas Based on Your Bookshelf</a></button>
+          </div>
+
          </div>
        );
 

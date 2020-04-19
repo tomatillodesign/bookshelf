@@ -104,6 +104,16 @@ class BookCard extends React.Component {
                                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
                               }
                          }
+
+
+                         if( book.volumeInfo.authors !== undefined ) {
+                              authors = book.volumeInfo.authors;
+                              if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
+                              if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
+                              if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+
+                         }
+
                     }
                }
 

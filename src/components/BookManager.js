@@ -819,6 +819,7 @@ class BookManager extends React.Component {
                settingsFont={settingsFont}
             />
             <Router
+                 books={this.state.books}
                  logOutUser={this.props.logOutUser}
                  loggedInID={this.props.loggedInID}
                  loggedInEmail={this.props.loggedInEmail}
