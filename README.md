@@ -11,7 +11,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - Personalized book shelves for each visitor
 - Basic suite of account tools (registration, lost password, etc.)
 - Clean, clear navigation using React Router
-- Filter and sort shelves view by different criteria
+- Filter and sort shelves view by different criteria (incl. ratings, author, genres, and tags)
 - User can select different themes (color + font choices)
 - Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
 - Mobile-friendly
