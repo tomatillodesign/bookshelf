@@ -18,6 +18,8 @@ class RecommendationsSection extends React.Component {
 
      }
 
+
+
      componentDidMount() {
 
                   const authorsRaw = this.props.authors;
@@ -52,8 +54,6 @@ class RecommendationsSection extends React.Component {
 
                       }
 
-
-
      }
 
 
@@ -79,15 +79,42 @@ render() {
 
          // WORK HERE TO REMOVE BOOK DUPLICATES esp by ID
          const currentShelfIDs = this.props.books.map(book => book.id);
-         const filteredBooksRemoveDups = filteredBooksByAuthor.filter(function(book) {
+         let filteredBooksRemoveDups = filteredBooksByAuthor.filter(function(book) {
                   return !currentShelfIDs.includes(book.id);
          });
 
-         console.log(results);
+         //filteredBooksRemoveDups = this.removeDuplicates( filteredBooksRemoveDups );
+         console.log( filteredBooksByAuthor );
+         console.log( filteredBooksRemoveDups );
+         console.log( results );
          console.log(filteredBooksByAuthor);
-         console.log(filteredBooksRemoveDups);
-         console.log(currentShelfIDs);
 
+         const uniqueBooks = Array.from(new Set(filteredBooksByAuthor.map(book => book.id)))
+           .map(id => {
+             return filteredBooksByAuthor.find(book => book.id === id)
+        });
+        console.log(uniqueBooks);
+
+        // now select 24 random books out of the list
+        let bookIndices = [];
+        console.log(uniqueBooks.length);
+        if( uniqueBooks.length > 24 ) {
+             while(bookIndices.length < 24) {
+                  let index = Math.floor(Math.random()*uniqueBooks.length);
+                  if(!bookIndices.includes(index)) { bookIndices.push(index); }
+             }
+        }
+        //  else if( uniqueBooks.length < 24 && uniqueBooks.length > 8 ) {
+        //      while(bookIndices.length < 8) {
+        //           let index = Math.floor(Math.random()*uniqueBooks.length);
+        //           if(!bookIndices.includes(index)) { bookIndices.push(index); }
+        //      }
+        // } else {
+        //      bookIndices = [0,1,2,3,4,5,6,7];
+        // }
+        console.log(bookIndices);
+        const finalBooksToPublish = bookIndices.map((arrayIndex, index) =>  uniqueBooks[arrayIndex] );
+        console.log(finalBooksToPublish);
 
 
        return (
@@ -99,7 +126,7 @@ render() {
           <h3>Results</h3>
 
           <div className="results-grid">
-               {filteredBooksRemoveDups.map((book, index) => (
+               {finalBooksToPublish.map((book, index) => (
                     <BookCard
                              key={book.id}
                              book={book}

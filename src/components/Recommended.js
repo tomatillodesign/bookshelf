@@ -83,7 +83,7 @@ class Recommended extends React.Component {
 
                // now select 6 random authors to be highlighted on the suggestion page
                let authorIndices = [];
-               for( let i = 0; i < 8; i++ ) {
+               for( let i = 0; i < 12; i++ ) {
                     authorIndices.push(Math.floor(Math.random()*authorListToPublish.length));
                }
                console.log(authorIndices);
