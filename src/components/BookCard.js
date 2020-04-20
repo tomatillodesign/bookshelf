@@ -8,6 +8,7 @@ import BookButtonToRead from './BookButtonToRead.js';
 import BookButtonAlreadyRead from './BookButtonAlreadyRead.js';
 import BookButtonRemove from './BookButtonRemove.js';
 import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
+import BookButtonBanFromSuggestions from './BookButtonBanFromSuggestions.js';
 import Stars from './Stars';
 
 class BookCard extends React.Component {
@@ -26,7 +27,17 @@ class BookCard extends React.Component {
 
      }
 
+//      clickRemoveBookSuggested( event ) {
+//           event.preventDefault();
+//           console.log(this.props.book);
+// //          this.props.removeBookFromSuggestions(this.props.book);
+//      }
+
+
+
      render() {
+
+          //console.log(this.props.book);
 
           // console.log(this.state.originalBookJSON);
           // console.log(this.state.connected);
@@ -104,6 +115,16 @@ class BookCard extends React.Component {
                                    coverImageURL = book.volumeInfo.imageLinks.thumbnail;
                               }
                          }
+
+
+                         if( book.volumeInfo.authors !== undefined ) {
+                              authors = book.volumeInfo.authors;
+                              if( authors.length === 1 ) { authorsToPublish = 'By ' + authors; }
+                              if( authors.length === 2 ) { authorsToPublish = 'By ' + authors.join(' & '); }
+                              if( authors.length > 2 ) { authorsToPublish = 'By ' + authors.join(', '); }
+
+                         }
+
                     }
                }
 
@@ -212,6 +233,13 @@ class BookCard extends React.Component {
                          }
                          { this.props.searchResult === true &&
                               <>
+
+                              {this.props.removeBookFromSuggestions &&
+                                   <BookButtonBanFromSuggestions
+                                        book={this.props.book}
+                                        removeBookFromSuggestions={this.props.removeBookFromSuggestions}
+                                   />
+                              }
                               <BookButtonToRead
                                    book={this.props.book}
                                    addBookToRead={this.props.addBookToRead}

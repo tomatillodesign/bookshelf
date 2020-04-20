@@ -271,6 +271,9 @@ class PreviouslyRead extends React.Component {
          return(
          <div className="previously-read-area single-page">
            <h1>Already Read</h1>
+           { //<AuthorList books={booksAlreadyRead} />
+           }
+
                <div className="switch-area">
                     <div className="single-switch stats">
                     <FormControlLabel

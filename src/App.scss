@@ -728,6 +728,30 @@ h3.yearly-summary {
 }
 
 
+.recommended-section {
+     margin-top: 60px;
+}
+
+#show-recommended {
+     font-size: 12px;
+}
+
+#show-recommended a {
+     color: #fff;
+     text-decoration: none;
+}
+
+.recommendations-page-area button.read-action.remove-book {
+    margin-right: 8px;
+    font-size: 22px;
+}
+
+#more-ideas-refresh {
+     margin-top: 30px;
+}
+
+
+
 @media only screen and (min-width: 960px) {
 
      .single-page {
