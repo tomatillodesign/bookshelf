@@ -76,8 +76,6 @@ class AuthorList extends React.Component {
 
                });
 
-               // now let's grab our 6 best authors
-               
 
 
           return(
