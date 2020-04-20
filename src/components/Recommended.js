@@ -82,17 +82,17 @@ class Recommended extends React.Component {
                console.log(authorListToPublish);
 
                // now select 6 random authors to be highlighted on the suggestion page
-               let authorIndices = [];
-               for( let i = 0; i < 12; i++ ) {
-                    authorIndices.push(Math.floor(Math.random()*authorListToPublish.length));
-               }
-               console.log(authorIndices);
-               console.log(authorListToPublish[2]);
-               const recAuthorsRaw = authorIndices.map((arrayIndex, index) =>  authorListToPublish[arrayIndex] );
-               console.log(recAuthorsRaw);
+               // let authorIndices = [];
+               // for( let i = 0; i < 24; i++ ) {
+               //      authorIndices.push(Math.floor(Math.random()*authorListToPublish.length));
+               // }
+               // console.log(authorIndices);
+               // console.log(authorListToPublish[2]);
+               // const recAuthorsRaw = authorIndices.map((arrayIndex, index) =>  authorListToPublish[arrayIndex] );
+               // console.log(recAuthorsRaw);
 
                this.setState({
-                    authors: recAuthorsRaw,
+                    authors: authorListToPublish,
                     calculating: false
                });
 
@@ -107,13 +107,15 @@ render() {
        return (
          <div className="search-page-area single-page">
            <h1>Ideas for You</h1>
-           <p>Recommendations based on your bookshelf</p>
-           <p>Searching: {JSON.stringify( this.state.searching )}</p>
 
            { this.state.calculating === false &&
                 <RecommendationsSection
                     authors={this.state.authors}
                     books={books}
+                    removedFromSuggestions={this.props.removedFromSuggestions}
+                    removeBookFromSuggestions={this.props.removeBookFromSuggestions}
+                    addBookAlreadyRead={this.props.addBookAlreadyRead}
+                    addBookToRead={this.props.addBookToRead}
                 />
            }
 

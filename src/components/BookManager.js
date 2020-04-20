@@ -36,6 +36,7 @@ class BookManager extends React.Component {
                          useGenres: false,
                          useTags: false,
                          customFields: [],
+                         removedFromSuggestions: [],
                     },
              notification: null,
              notificationTimestamp: null,
@@ -158,7 +159,10 @@ class BookManager extends React.Component {
             console.log("FETCH COVER IMAGE");
             console.log(bookObj);
             const selfLink = bookObj.selfLink;
-            let coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+            let coverImageURL = null;
+            if( bookObj.volumeInfo.imageLinks !== undefined ) {
+                 coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+               }
 
             // Get the details straight from Google, including larger image sizes
                  fetch(selfLink)
@@ -167,13 +171,16 @@ class BookManager extends React.Component {
 
                    console.log('fetchCoverImage CONNECTED');
                    console.log(originalBookJSON);
-                   console.log(originalBookJSON.volumeInfo.imageLinks);
 
-                   if( originalBookJSON.volumeInfo.imageLinks.thumbnail !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.thumbnail + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
-                   if( originalBookJSON.volumeInfo.imageLinks.small !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.small + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
-                   if( originalBookJSON.volumeInfo.imageLinks.medium !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.medium + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
-                   if( originalBookJSON.volumeInfo.imageLinks.large !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.large + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
-                   if( originalBookJSON.volumeInfo.imageLinks.extraLarge !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.extraLarge + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+
+                   if( originalBookJSON.volumeInfo.imageLinks !== undefined ) {
+                        console.log(originalBookJSON.volumeInfo.imageLinks);
+                        if( originalBookJSON.volumeInfo.imageLinks.thumbnail !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.thumbnail + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                        if( originalBookJSON.volumeInfo.imageLinks.small !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.small + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                        if( originalBookJSON.volumeInfo.imageLinks.medium !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.medium + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                        if( originalBookJSON.volumeInfo.imageLinks.large !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.large + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                        if( originalBookJSON.volumeInfo.imageLinks.extraLarge !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.extraLarge + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
+                   }
 
                    console.log(selfLink);
                    console.log("FINAL IMAGE: " + coverImageURL);
@@ -793,6 +800,23 @@ class BookManager extends React.Component {
      }
 
 
+
+
+     removeBookFromSuggestions = ( book ) => {
+          console.log("removeBookFromSuggestions: " + book.id);
+          let previousRemoved = [];
+          if( this.state.settings.removedFromSuggestions !== undefined ) {
+               previousRemoved = [...this.state.settings.removedFromSuggestions];
+         }
+          let updatedRemoved = [...previousRemoved, book.id];
+          this.setState({ settings: {
+                     removedFromSuggestions: updatedRemoved
+               }
+          });
+     }
+
+
+
   render() {
 
        const books = this.state.books;
@@ -865,6 +889,8 @@ class BookManager extends React.Component {
                  setBookTags={this.setBookTags}
                  setBookTimestamp={this.setBookTimestamp}
                  resetNotification={this.resetNotification}
+                 removedFromSuggestions={this.state.settings.removedFromSuggestions}
+                 removeBookFromSuggestions={this.removeBookFromSuggestions}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

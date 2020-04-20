@@ -75,6 +75,8 @@ class Router extends React.Component {
                                              settingsColor={this.props.settingsColor}
                                              notification={this.props.notification}
                                              notificationTimestamp={this.props.notificationTimestamp}
+                                             removedFromSuggestions={this.props.removedFromSuggestions}
+                                             removeBookFromSuggestions={this.props.removeBookFromSuggestions}
                                         />}
                />
 

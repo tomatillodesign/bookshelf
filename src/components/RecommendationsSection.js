@@ -16,6 +16,8 @@ class RecommendationsSection extends React.Component {
           searching: true,
        };
 
+       this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+
      }
 
 
@@ -41,7 +43,7 @@ class RecommendationsSection extends React.Component {
                             API.getNewBooks(author)
                                .then(res => {
 
-                                 console.log(res.data.items);
+                                 //console.log(res.data.items);
 
                                  this.setState({
                                       results: [...this.state.results, ...res.data.items ],
@@ -57,19 +59,24 @@ class RecommendationsSection extends React.Component {
      }
 
 
+     forceUpdateHandler(){
+         this.forceUpdate();
+       };
 
 
 render() {
 
          console.log(this.props.authors);
+         console.log(this.props.removedFromSuggestions);
          const results = this.state.results;
          const authors = this.state.authors;
+         const banned = this.props.removedFromSuggestions;
 
          // filter out any books that Google found that don't match the recommended authors
          const filteredBooksByAuthor = results.filter(function(book) {
-              console.log(book);
+              //console.log(book);
               if( book.volumeInfo.authors !== undefined ) {
-                   console.log(book.volumeInfo.authors.indexOf());
+                   //console.log(book.volumeInfo.authors.indexOf());
                   return book.volumeInfo.authors.some( r => authors.indexOf(r) >= 0);
              } else {
                   return null;
@@ -83,17 +90,32 @@ render() {
                   return !currentShelfIDs.includes(book.id);
          });
 
+         console.log(filteredBooksRemoveDups);
+
+         // WORK HERE TO REMOVE removeBookFromSuggestions by ID
+         let removedBanned = filteredBooksRemoveDups.filter(function(book) {
+                  return !banned.includes(book.id);
+         });
+         console.log(removedBanned);
+
          //filteredBooksRemoveDups = this.removeDuplicates( filteredBooksRemoveDups );
          console.log( filteredBooksByAuthor );
          console.log( filteredBooksRemoveDups );
          console.log( results );
          console.log(filteredBooksByAuthor);
 
-         const uniqueBooks = Array.from(new Set(filteredBooksByAuthor.map(book => book.id)))
+        // const uniqueBooks = Array.from(new Set(filteredBooksByAuthor.map(book => book.id)))
+        //    .map(id => {
+        //      return filteredBooksByAuthor.find(book => book.id === id)
+        // });
+        // console.log(uniqueBooks);
+
+        const uniqueBooks = Array.from(new Set(removedBanned.map(book => book.id)))
            .map(id => {
-             return filteredBooksByAuthor.find(book => book.id === id)
+            return removedBanned.find(book => book.id === id)
         });
         console.log(uniqueBooks);
+
 
         // now select 24 random books out of the list
         let bookIndices = [];
@@ -104,40 +126,33 @@ render() {
                   if(!bookIndices.includes(index)) { bookIndices.push(index); }
              }
         }
-        //  else if( uniqueBooks.length < 24 && uniqueBooks.length > 8 ) {
-        //      while(bookIndices.length < 8) {
-        //           let index = Math.floor(Math.random()*uniqueBooks.length);
-        //           if(!bookIndices.includes(index)) { bookIndices.push(index); }
-        //      }
-        // } else {
-        //      bookIndices = [0,1,2,3,4,5,6,7];
-        // }
+
         console.log(bookIndices);
         const finalBooksToPublish = bookIndices.map((arrayIndex, index) =>  uniqueBooks[arrayIndex] );
         console.log(finalBooksToPublish);
 
+        console.log("removedFromSuggestions" + this.props.removedFromSuggestions);
 
        return (
-         <div className="search-page-area single-page">
-           <h1>Ideas for You</h1>
-           <p>Recommendations based on your bookshelf</p>
-           <p>Searching: {JSON.stringify( this.state.searching )}</p>
-
-          <h3>Results</h3>
-
-          <div className="results-grid">
-               {finalBooksToPublish.map((book, index) => (
-                    <BookCard
-                             key={book.id}
-                             book={book}
-                             searchResult={true}
-                             addBookAlreadyRead={this.props.addBookAlreadyRead}
-                             addBookToRead={this.props.addBookToRead}
-                             settingsFont={this.props.settingsFont}
-                             settingsColor={this.props.settingsColor}
-                        />
-              ))}
-         </div>
+         <div className="recommendations-page-area single-page">
+                <p>More books by authors that you've liked:</p>
+               <div className="results-grid">
+                    {finalBooksToPublish.map((book, index) => (
+                         <BookCard
+                                  key={book.id}
+                                  book={book}
+                                  searchResult={true}
+                                  addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                  addBookToRead={this.props.addBookToRead}
+                                  settingsFont={this.props.settingsFont}
+                                  settingsColor={this.props.settingsColor}
+                                  removeBookFromSuggestions={this.props.removeBookFromSuggestions}
+                             />
+                   ))}
+              </div>
+              { this.state.results &&
+                   <button id="more-ideas-refresh" onClick= {this.forceUpdateHandler}>Get More Ideas</button>
+              }
          </div>
        );
 
