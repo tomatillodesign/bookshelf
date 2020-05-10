@@ -14,6 +14,7 @@ This project was created by Chris Liu-Beers of [Tomatillo Design](http://www.tom
 - Filter and sort shelves view by different criteria (incl. ratings, author, genres, and tags)
 - User can select different themes (color + font choices)
 - Calculate advanced stats, eg # of books read this year, # of pages, average book rating, etc.
+- Get suggestions for new books by authors you've enjoyed
 - Mobile-friendly
 - Upload your own book covers if necessary
 

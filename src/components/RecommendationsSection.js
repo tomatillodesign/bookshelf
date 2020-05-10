@@ -98,6 +98,26 @@ render() {
          });
          console.log(removedBanned);
 
+
+         // WORK HERE TO REMOVE all books that are not in English
+         // bookObj.volumeInfo.language !== 'en'
+         let removedForeign = removedBanned.filter(function(book) {
+              let bookLanguage = '';
+              if (book.hasOwnProperty('volumeInfo')) {
+                  if (book.volumeInfo.hasOwnProperty('language')) {
+                        // do something
+                        console.log("Test Remove Languages");
+                        console.log( book.volumeInfo.language );
+                        bookLanguage = book.volumeInfo.language;
+                    }
+               }
+
+                return bookLanguage === 'en';
+         });
+         console.log("removedForeign");
+         console.log(removedForeign);
+
+
          //filteredBooksRemoveDups = this.removeDuplicates( filteredBooksRemoveDups );
          console.log( filteredBooksByAuthor );
          console.log( filteredBooksRemoveDups );
@@ -110,9 +130,9 @@ render() {
         // });
         // console.log(uniqueBooks);
 
-        const uniqueBooks = Array.from(new Set(removedBanned.map(book => book.id)))
+        const uniqueBooks = Array.from(new Set(removedForeign.map(book => book.id)))
            .map(id => {
-            return removedBanned.find(book => book.id === id)
+            return removedForeign.find(book => book.id === id)
         });
         console.log(uniqueBooks);
 
