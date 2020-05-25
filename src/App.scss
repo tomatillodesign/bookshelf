@@ -750,7 +750,40 @@ h3.yearly-summary {
      margin-top: 30px;
 }
 
+.edit-book.clb-updated .book-date-area {
+     display: flex;
+     align-items: baseline;
+     margin-bottom: 8px;
+}
 
+.edit-book.clb-updated .book-date-area .edit-icon {
+     margin-left: 4px;
+}
+
+.edit-book.clb-updated .remove {
+     margin-left: 20px;
+}
+
+.edit-book.clb-updated button.update-this-book {
+     width: 100%;
+     text-align: center;
+     margin-top: 40px;
+}
+
+.new-book-form .modal-footer .book-meta.button-area {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-without-saving-area button {
+     font-size: 14px;
+     background: #eee;
+     color: #333;
+}
+
+.close-without-saving-area button:hover {
+     background: #ccc;
+}
 
 @media only screen and (min-width: 960px) {
 

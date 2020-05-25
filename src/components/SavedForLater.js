@@ -116,6 +116,15 @@ class SavedForLater extends React.Component {
                               useGenres={this.props.useGenres}
                               updateCoverImg={this.props.updateCoverImg}
                               createNotification={this.createNotification}
+                              genres={this.props.genres}
+                              resetGenreToZero={this.props.resetGenreToZero}
+                              addNewGenre={this.props.addNewGenre}
+                              useTags={this.props.useTags}
+                              addNewTag={this.props.addNewTag}
+                              setBookTags={this.props.setBookTags}
+                              tags={this.props.tags}
+                              resetAllTags={this.props.resetAllTags}
+                              newImprovedEditBook={this.props.newImprovedEditBook}
                          />
               ))}
          </div>

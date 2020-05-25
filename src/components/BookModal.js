@@ -10,11 +10,13 @@ import BookButtonMoveToAlreadyRead from './BookButtonMoveToAlreadyRead';
 import ReplaceCover from './ReplaceCover';
 import Stars from './Stars';
 import BookEditor from './BookEditor.js';
+import NewBookForm from './NewBookForm.js';
 
 import SelectRating from './SelectRating';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faMinusCircle } from '@fortawesome/pro-light-svg-icons';
+import { faBook } from '@fortawesome/pro-duotone-svg-icons';
 
 export default function BookModal(props) {
 
@@ -33,6 +35,7 @@ export default function BookModal(props) {
 
      const bookCoverModal = props.bookCoverModal;
      const bookTitleModal = props.bookTitleModal;
+     const newBookForm = props.newBookForm;
 
      let coverImageURL = null;
      let title = null;
@@ -425,6 +428,57 @@ export default function BookModal(props) {
                     />
                      </>
                 }
+                </div>
+                </Modal.Footer>
+              </Modal>
+            </>
+          );
+
+     } else if ( newBookForm ) {
+
+          let additionalModalClasses = " new-book-form";
+
+          return (
+            <>
+              <button onClick={handleShow}
+               className="read-action already-read"
+               title="Add to your Already Read shelf">
+                    <FontAwesomeIcon icon={faBook} />
+               </button>
+
+              <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor + additionalModalClasses}>
+                <Modal.Header closeButton>
+                  <Modal.Title className="single-book-title">{title}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                <div className="small-thumbnail-area">
+                     <img src={coverImageURL} />
+                          {props.searchResult !== true &&
+                               <ReplaceCover
+                                    bookObj={book}
+                                    updateCoverImg={props.updateCoverImg}
+                               />
+                          }
+                     </div>
+                    {subtitle}
+                    {authorsToPublish}
+                     <NewBookForm
+                         book={book}
+                         useGenres={props.useGenres}
+                         useTags={props.useTags}
+                         genres={props.genres}
+                         resetGenreToZero={props.resetGenreToZero}
+                         addNewGenre={props.addNewGenre}
+                         addNewTag={props.addNewTag}
+                         setBookTags={props.setBookTags}
+                         tags={props.tags}
+                         resetAllTags={props.resetAllTags}
+                         newImprovedEditBook={props.newImprovedEditBook}
+                     />
+                </Modal.Body>
+                <Modal.Footer>
+                <div className="book-meta button-area close-without-saving-area">
+                    <button onClick={handleClose}>Close without Saving</button>
                 </div>
                 </Modal.Footer>
               </Modal>

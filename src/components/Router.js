@@ -98,6 +98,15 @@ class Router extends React.Component {
                               updateCoverImg={this.props.updateCoverImg}
                               bookSize={this.props.bookSize}
                               useGenres={this.props.useGenres}
+                              genres={this.props.genres}
+                              resetGenreToZero={this.props.resetGenreToZero}
+                              addNewGenre={this.props.addNewGenre}
+                              useTags={this.props.useTags}
+                              addNewTag={this.props.addNewTag}
+                              setBookTags={this.props.setBookTags}
+                              tags={this.props.tags}
+                              resetAllTags={this.props.resetAllTags}
+                              newImprovedEditBook={this.props.newImprovedEditBook}
                          />}
                />
 

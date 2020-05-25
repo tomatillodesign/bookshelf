@@ -18,7 +18,6 @@ const handleDateChange = date => {
      console.log(date.currentTarget.value);
      setSelectedDate(date.currentTarget.value);
      props.getCompletedDate(date.currentTarget.value);
-
 };
 
 

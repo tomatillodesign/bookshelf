@@ -336,6 +336,27 @@ class BookManager extends React.Component {
 
 
 
+          newImprovedEditBook = (bookObj) => {
+
+            bookObj.alreadyRead = true;
+            console.log("NEW & IMPROVED --> Editing this book: " + JSON.stringify(bookObj));
+
+            let bookID = bookObj.id;
+            let clbCopyBookState = [...this.state.books];
+            let getBookObjInState = clbCopyBookState.filter(obj => {
+              return obj.id === bookID
+            });
+            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+            let ids = [...this.state.books];     // create the copy of state array
+            ids[index] = bookObj;                  //new value
+            console.log(ids[index]);
+
+            this.setState({ books: ids });            //update the value
+
+          }
+
+
+
           updateCoverImg = ( bookCoverURL, bookObj ) => {
                console.log(bookObj);
                console.log(bookCoverURL);
@@ -891,6 +912,7 @@ class BookManager extends React.Component {
                  resetNotification={this.resetNotification}
                  removedFromSuggestions={this.state.settings.removedFromSuggestions}
                  removeBookFromSuggestions={this.removeBookFromSuggestions}
+                 newImprovedEditBook={this.newImprovedEditBook}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>
