@@ -45,6 +45,11 @@ function RecentlyAddedToRead(props) {
                                       settingsFont={props.settingsFont}
                                       settingsColor={props.settingsColor}
                                       updateCoverImg={props.updateCoverImg}
+                                      useGenres={props.useGenres}
+                                      useTags={props.useTags}
+                                      genres={props.genres}
+                                      tags={props.tags}
+                                      newImprovedEditBook={props.newImprovedEditBook}
                               />
                       ))}
                       </div>

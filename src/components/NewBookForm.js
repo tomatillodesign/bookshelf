@@ -54,6 +54,8 @@ class NewBookForm extends React.Component {
 
           book.bookshelfRating = this.bookshelfRating;
           book.bookshelfTimestamp = this.bookshelfTimestamp;
+          if( this.bookshelfRating !== undefined) { book.bookshelfRating = this.bookshelfRating; } else { book.bookshelfRating = 0; }
+          if( this.bookshelfTimestamp !== undefined) { book.bookshelfTimestamp = this.bookshelfTimestamp; } else { book.bookshelfTimestamp = 0; }
           if( this.bookshelfGenre !== undefined) { book.genre = this.bookshelfGenre; } else { book.genre = ''; }
           if( this.bookshelfTags !== undefined) { book.tags = this.bookshelfTags; } else { book.tags = ''; }
 
@@ -129,7 +131,7 @@ render() {
      console.log(this.props.genres);
      const defaultRating = this.bookshelfRating;
      const bookshelfTimestamp = this.bookshelfTimestamp;
-     const description = this.props.book.description;
+     let description = this.props.book.description;
 
      ////////////// Genre //////////////////////////////////////////
 
@@ -190,6 +192,13 @@ render() {
     /////////////////////////////////////////
 
 
+    console.log(this.props.book);
+
+    if( this.props.searchResult ) {
+         console.log("searchResult");
+         description = this.props.book.volumeInfo.description;
+         console.log(description);
+    }
 
        return (
             <>

@@ -168,6 +168,7 @@ class BookCard extends React.Component {
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
                          createNotification={this.props.createNotification}
+                         newImprovedEditBook={this.props.newImprovedEditBook}
                     />
                     <BookModal
                          settingsFont={this.props.settingsFont}
@@ -204,6 +205,7 @@ class BookCard extends React.Component {
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
                          createNotification={this.props.createNotification}
+                         newImprovedEditBook={this.props.newImprovedEditBook}
                     />
                     <div className="book-meta-area">
                          <div className="book-meta author">{authorsToPublish}</div>
@@ -274,9 +276,43 @@ class BookCard extends React.Component {
                                    book={this.props.book}
                                    addBookToRead={this.props.addBookToRead}
                               />
-                              <BookButtonAlreadyRead
-                                   book={this.props.book}
+                              <BookModal
+                                   settingsFont={this.props.settingsFont}
+                                   settingsColor={this.props.settingsColor}
+                                   bookTitleModal={false}
+                                   book={book}
+                                   alreadyRead={this.props.alreadyRead}
+                                   savedForLater={this.props.savedForLater}
+                                   coverImageURL={coverImageURL}
+                                   addBookToRead={this.props.addBookToRead}
                                    addBookAlreadyRead={this.props.addBookAlreadyRead}
+                                   editBook={this.props.editBook}
+                                   bookshelfRating={bookshelfRating}
+                                   bookshelfNote={bookshelfNote}
+                                   bookshelfTimestamp={bookshelfTimestamp}
+                                   removeBookFromAlreadyRead={this.props.removeBookFromAlreadyRead}
+                                   removeBookFromToRead={this.props.removeBookFromToRead}
+                                   searchResult={this.props.searchResult}
+                                   moveBooktoAlreadyRead={this.props.moveBooktoAlreadyRead}
+                                   updateCoverImg={this.props.updateCoverImg}
+                                   useGenres={this.props.useGenres}
+                                   useTags={this.props.useTags}
+                                   setBookRating={this.props.setBookRating}
+                                   resetRatingToZero={this.props.resetRatingToZero}
+                                   resetTimestampToZero={this.props.resetTimestampToZero}
+                                   setBookGenre={this.props.setBookGenre}
+                                   genres={this.props.genres}
+                                   resetGenreToZero={this.props.resetGenreToZero}
+                                   addNewGenre={this.props.addNewGenre}
+                                   addNewTag={this.props.addNewTag}
+                                   setBookTags={this.props.setBookTags}
+                                   tags={this.props.tags}
+                                   resetAllTags={this.props.resetAllTags}
+                                   setBookTimestamp={this.props.setBookTimestamp}
+                                   description={description}
+                                   createNotification={this.props.createNotification}
+                                   newBookForm={true}
+                                   newImprovedEditBook={this.props.newImprovedEditBook}
                               />
                               </>
                          }

@@ -52,6 +52,9 @@ class Router extends React.Component {
                               resetRatingToZero={this.props.resetRatingToZero}
                               resetTimestampToZero={this.props.resetTimestampToZero}
                               setBookTimestamp={this.props.setBookTimestamp}
+                              genres={this.props.genres}
+                              tags={this.props.tags}
+                              newImprovedEditBook={this.props.newImprovedEditBook}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -63,6 +66,12 @@ class Router extends React.Component {
                                              settingsColor={this.props.settingsColor}
                                              notification={this.props.notification}
                                              notificationTimestamp={this.props.notificationTimestamp}
+                                             updateCoverImg={this.props.updateCoverImg}
+                                             useGenres={this.props.useGenres}
+                                             useTags={this.props.useTags}
+                                             genres={this.props.genres}
+                                             tags={this.props.tags}
+                                             newImprovedEditBook={this.props.newImprovedEditBook}
                                         />}
                />
 
