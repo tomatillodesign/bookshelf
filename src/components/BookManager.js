@@ -158,10 +158,16 @@ class BookManager extends React.Component {
        fetchCoverImage = (bookObj) => {
             console.log("FETCH COVER IMAGE");
             console.log(bookObj);
-            const selfLink = bookObj.selfLink;
+            let selfLink = bookObj.selfLink;
+            if( selfLink === undefined ) {
+                 selfLink = bookObj.googleLink;
+            }
+            console.log(selfLink);
             let coverImageURL = null;
-            if( bookObj.volumeInfo.imageLinks !== undefined ) {
-                 coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+            if( bookObj.volumeInfo !== undefined ) {
+                 if( bookObj.volumeInfo.imageLinks !== undefined ) {
+                      coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+                    }
                }
 
             // Get the details straight from Google, including larger image sizes
@@ -360,7 +366,46 @@ class BookManager extends React.Component {
                       this.setState({ books: ids });            //update the value
 
             } else if ( view === 'searchResults' ) {
+                 console.log(bookObj);
                  console.log("newImprovedEditBook via searchResults");
+
+                 // translate Google Data into my own schema
+                 const newBook = {};
+                 newBook.alreadyRead = true;
+                 newBook.authors = bookObj.volumeInfo.authors;
+                 newBook.bookshelfRating = bookObj.bookshelfRating;
+                 newBook.bookshelfTimestamp = bookObj.bookshelfTimestamp;
+                 newBook.coverImg = bookObj.volumeInfo.imageLinks.smallThumbnail;
+                 newBook.description = bookObj.volumeInfo.description;
+                 newBook.genre = bookObj.genre;
+                 newBook.googleLink = bookObj.selfLink;
+                 newBook.id = bookObj.id;
+                 newBook.pageCount = bookObj.volumeInfo.pageCount;
+                 newBook.publishedDate = bookObj.volumeInfo.publishedDate;
+                 newBook.publisher = bookObj.volumeInfo.publisher;
+                 newBook.tags = bookObj.tags;
+                 newBook.title = bookObj.volumeInfo.title;
+
+                 console.log(newBook);
+                 let bookID = newBook.id;
+                 let clbCopyBookState = [...this.state.books];
+                 let getBookObjInState = clbCopyBookState.filter(obj => {
+                  return obj.id === bookID
+                 });
+                 let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                 let ids = [...this.state.books];     // create the copy of state array
+                 ids[index] = newBook;                  //new value
+                 console.log(ids[index]);
+                             //update the value
+                 this.setState(prevState => ({
+                    books: ids,
+                    notification: 'You added ' + newBook.title + ' to your ALREADY READ shelf',
+                    notificationTimestamp: Date.now(),
+                   }));
+
+                   this.startNotificationTimer();
+                   this.fetchCoverImage(newBook);
+
             }
 
           }

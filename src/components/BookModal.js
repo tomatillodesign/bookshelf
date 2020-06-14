@@ -30,6 +30,8 @@ export default function BookModal(props) {
           showDescription = !showDescription;
      }
 
+
+
      const book = props.book;
      // console.log(book);
 
@@ -208,6 +210,11 @@ export default function BookModal(props) {
                }
           }
 
+          // let showNewBookFormClass = "hide-new-book-form";
+          // if( showBookForm === true ) {
+          //      showNewBookFormClass = "show-new-book-form";
+          // }
+
           return (
             <>
               <button onClick={handleShow} className="card-book-title">
@@ -296,14 +303,9 @@ export default function BookModal(props) {
                 }
                 { props.searchResult &&
                      <>
-                     <BookButtonToRead
-                          book={props.book}
-                          addBookToRead={props.addBookToRead}
-                     />
-                     <BookButtonAlreadyRead
-                         book={props.book}
-                         addBookAlreadyRead={props.addBookAlreadyRead}
-                    />
+                     <div className="book-meta button-area closearea">
+                         <button onClick={handleClose}>Close</button>
+                     </div>
                      </>
                 }
                 </div>
@@ -377,12 +379,19 @@ export default function BookModal(props) {
                     />
                }
 
+               {props.searchResult &&
+                    <>
+                    {descriptionToPublish}
+                    </>
+               }
+
                {props.savedForLater &&
                     <NewBookForm
                         book={book}
                         useGenres={props.useGenres}
                         useTags={props.useTags}
                         genres={props.genres}
+                        description={props.book.description}
                         resetGenreToZero={props.resetGenreToZero}
                         addNewGenre={props.addNewGenre}
                         addNewTag={props.addNewTag}
@@ -459,54 +468,9 @@ export default function BookModal(props) {
                 }
                 { props.searchResult &&
                      <>
-                     <BookButtonToRead
-                          book={props.book}
-                          addBookToRead={props.addBookToRead}
-                     />
-                     <button onClick={handleShow}
-                      className="read-action already-read"
-                      title="Add to your Already Read shelf">
-                           <FontAwesomeIcon icon={faBook} />
-                      </button>
-
-                     <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor + additionalModalClasses}>
-                       <Modal.Header closeButton>
-                         <Modal.Title className="single-book-title">{title}</Modal.Title>
-                       </Modal.Header>
-                       <Modal.Body>
-                       <div className="small-thumbnail-area">
-                            <img src={coverImageURL} />
-                                 {props.searchResult !== true &&
-                                      <ReplaceCover
-                                           bookObj={book}
-                                           updateCoverImg={props.updateCoverImg}
-                                      />
-                                 }
-                            </div>
-                           {subtitle}
-                           {authorsToPublish}
-                            <NewBookForm
-                                book={book}
-                                useGenres={props.useGenres}
-                                useTags={props.useTags}
-                                genres={props.genres}
-                                resetGenreToZero={props.resetGenreToZero}
-                                addNewGenre={props.addNewGenre}
-                                addNewTag={props.addNewTag}
-                                setBookTags={props.setBookTags}
-                                tags={props.tags}
-                                resetAllTags={props.resetAllTags}
-                                searchResult={props.searchResult}
-                                newImprovedEditBook={props.newImprovedEditBook}
-                                currentView={'searchResults'}
-                            />
-                       </Modal.Body>
-                       <Modal.Footer>
-                       <div className="book-meta button-area close-without-saving-area">
-                           <button onClick={handleClose}>Close without Saving</button>
-                       </div>
-                       </Modal.Footer>
-                     </Modal>
+                     <div className="book-meta button-area closearea">
+                         <button onClick={handleClose}>Close</button>
+                     </div>
                      </>
                 }
 
@@ -569,6 +533,8 @@ export default function BookModal(props) {
                          resetAllTags={props.resetAllTags}
                          newImprovedEditBook={props.newImprovedEditBook}
                          currentView={currentView}
+                         description={props.book.description}
+                         closeModal={handleClose}
                      />
                 </Modal.Body>
                 <Modal.Footer>

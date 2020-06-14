@@ -71,7 +71,10 @@ class Router extends React.Component {
                                              useTags={this.props.useTags}
                                              genres={this.props.genres}
                                              tags={this.props.tags}
+                                             addNewTag={this.props.addNewTag}
+                                             setBookTags={this.props.setBookTags}
                                              newImprovedEditBook={this.props.newImprovedEditBook}
+                                             addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                                         />}
                />
 

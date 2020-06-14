@@ -67,9 +67,26 @@ class NewBookForm extends React.Component {
           let currentView = this.props.currentView;
           console.log( this.props.currentView );
           // if( this.props.savedForLater === true ) { currentView = 'to read'; }
-          // else if( this.props.searchResult === true ) { currentView = 'results'; }
+
+          if( this.props.currentView === 'searchResults' ) {
+
+               if( this.state.tags ) {
+
+                    let tagsObj = this.state.tags;
+
+                    let tagsArray = [];
+                    if( tagsObj.length > 0 && tagsObj !== null ) {
+                         tagsArray = tagsObj.map(x => x.value);
+                    }
+                    book.tags = tagsArray;
+                    console.log(book.tags);
+
+               }
+               
+          }
 
           this.props.newImprovedEditBook(book, currentView);
+          this.props.closeModal();
 
      }
 
@@ -158,7 +175,8 @@ class NewBookForm extends React.Component {
 
           console.log(tagsArray);
           this.props.addNewTag(tagsArray);
-          this.props.setBookTags(tagsArray, this.props.book);
+          //this.props.setBookTags(tagsArray, this.props.book);
+
      }
 
 
@@ -254,8 +272,8 @@ render() {
 
     console.log(this.props.book);
 
-    if( this.props.searchResult ) {
-         console.log("searchResult");
+    if( this.props.currentView === 'searchResults' ) {
+         console.log("searchResults");
          description = this.props.book.volumeInfo.description;
          console.log(description);
     }
