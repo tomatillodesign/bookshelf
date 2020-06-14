@@ -3,7 +3,7 @@ import Select from 'react-select';
 import SelectRating from './SelectRating';
 import ReadDate from './ReadDate';
 import SelectGenre from './SelectGenre';
-import SelectTags from './SelectTags';
+import SelectTagsUpdated from './SelectTags';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/Button';
 
@@ -177,7 +177,7 @@ render() {
 
   if( this.state.currentlyEditingTags === true) {
        tagArea = <div className="tag-area">
-                           <SelectTags
+                           <SelectTagsUpdated
                                 allTags={this.props.tags}
                                 setTags={this.setTags}
                                 defaultTags={this.state.tags}
