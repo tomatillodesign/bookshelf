@@ -23,9 +23,7 @@ class SelectTags extends React.Component {
      addTagToState = (selectedOption) => {
           console.log(selectedOption);
           this.setState({ tags: selectedOption, madeChange: true });
-
      }
-
 
      handleTagsSubmit = (event) => {
           event.preventDefault();

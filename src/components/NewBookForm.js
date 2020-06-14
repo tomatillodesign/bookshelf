@@ -1,5 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
+import Creatable, { makeCreatableSelect } from 'react-select/creatable';
+import CreatableSelect from 'react-select/creatable';
 import SelectRating from './SelectRating';
 import ReadDate from './ReadDate';
 import SelectGenre from './SelectGenre';
@@ -29,6 +31,7 @@ class NewBookForm extends React.Component {
                dateRemoved: false,
                showDatePicker: true,
                viewDescription: false,
+               madeTagChange: false,
           }
      }
 
@@ -132,6 +135,33 @@ class NewBookForm extends React.Component {
      }
 
 
+     handleCreateLabel = (inputValue: any, actionMeta: any) => {
+          console.log("handleCreateLabel");
+          return 'Create new tag: "' + inputValue + '"';
+     }
+
+     addTagToState = (selectedOption) => {
+          console.log(selectedOption);
+          this.setState({ tags: selectedOption, madeChange: true });
+     }
+
+     handleTagsSubmit = (event) => {
+          event.preventDefault();
+          console.log("HANDLE SUBMIT TAGS");
+          console.log(this.state.tags);
+
+          const tagsObj = this.state.tags;
+          let tagsArray = [];
+          if( tagsObj.length > 0 && tagsObj !== null ) {
+               tagsArray = tagsObj.map(x => x.value);
+          }
+
+          console.log(tagsArray);
+          this.props.addNewTag(tagsArray);
+          this.props.setBookTags(tagsArray, this.props.book);
+     }
+
+
 render() {
 
      console.log("NEW BOOK FORM, Current book: " + JSON.stringify(this.props.book));
@@ -166,7 +196,25 @@ render() {
 
    ////////////// Tags //////////////////////////////////////////
 
-   let currentTags = null;
+   //let currentTags = null;
+
+   let allTags = this.props.tags;
+   let currentTags = this.state.tags;
+   let defaultTagsRaw = this.props.defaultTags;
+   console.log(allTags);
+   let tagTypesToSelect = [];
+
+   if( allTags !== undefined ) {
+
+             // allTags.forEach(value =>
+             //      tagTypesToSelect.push({ value: value, label: value })
+             // );
+
+        allTags.map((value, key) =>
+             tagTypesToSelect.push({ value: value, label: value })
+        );
+   }
+
    if( this.state.tags !== undefined && this.state.tags !== '' ) {
         currentTags = this.state.tags.map((tag) =>
           <span className="single-tag" key={shortid.generate()}>{tag}</span>
@@ -185,14 +233,18 @@ render() {
 
   if( this.state.currentlyEditingTags === true) {
        tagArea = <div className="tag-area">
-                           <SelectTagsUpdated
-                                allTags={this.props.tags}
-                                setTags={this.setTags}
-                                defaultTags={this.state.tags}
-                                setBookTags={this.props.setBookTags}
-                                book={this.props.book}
-                                addNewTag={this.props.addNewTag}
+                           <CreatableSelect
+                              isMulti
+                              placeholder='Select Tags'
+                              options={tagTypesToSelect}
+                              isClearable
+                              isSearchable
+                              formatCreateLabel={this.handleCreateLabel}
+                              onChange={this.addTagToState}
                            />
+                           {this.state.madeChange === true &&
+                                <button className="add-tags" onClick={this.handleTagsSubmit}>Update Tags</button>
+                           }
                       </div>;
   }
 
