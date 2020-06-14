@@ -7,6 +7,7 @@ import SelectThemeFont from './SelectThemeFont.js';
 import SelectBookSize from './SelectBookSize.js';
 import SelectUseGenres from './SelectUseGenres.js';
 import SelectUseTags from './SelectUseTags.js';
+import SelectDateDefault from './SelectDateDefault.js';
 import base from '../base';
 import { firebaseApp } from '../base';
 
@@ -62,7 +63,7 @@ class Settings extends React.Component {
 
      render() {
 
-          console.log(this.props.settingsFont);
+          console.log(this.props.defaultDate);
 
 
        return (
@@ -106,6 +107,14 @@ class Settings extends React.Component {
                      <SelectUseTags
                           changeSettingsUseTags={this.props.changeSettingsUseTags}
                           useTags={this.props.useTags}
+                     />
+                </div>
+
+                <div className="select-color-area">
+                    <h4>Date Default</h4>
+                     <SelectDateDefault
+                          changeDefaultDate={this.props.changeDefaultDate}
+                          defaultDateSetting={this.props.defaultDate}
                      />
                 </div>
            </div>

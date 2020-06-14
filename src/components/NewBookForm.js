@@ -36,10 +36,22 @@ class NewBookForm extends React.Component {
      }
 
 
+     componentDidMount() {
+
+          ////////////// Date //////////////////////////////////////////
+          const defaultDate = this.props.defaultDate;
+          if( defaultDate === 'No Date Set' ) {
+               this.setState({ showDatePicker: false });
+          }
+
+     }
+
+
      book = this.props.book;
      id = this.book.id;
      bookshelfRating = this.book.bookshelfRating;
      //bookshelfTimestamp = this.book.bookshelfTimestamp;
+     defaultDate = this.props.defaultDate;
      bookshelfTimestamp = parseInt((new Date().getTime()).toFixed(0));
      bookshelfGenre = this.book.genre;
      bookshelfTags = this.book.tags;
@@ -82,7 +94,7 @@ class NewBookForm extends React.Component {
                     console.log(book.tags);
 
                }
-               
+
           }
 
           this.props.newImprovedEditBook(book, currentView);
@@ -188,6 +200,7 @@ render() {
      const defaultRating = this.bookshelfRating;
      const bookshelfTimestamp = this.bookshelfTimestamp;
      let description = this.props.book.description;
+
 
      ////////////// Genre //////////////////////////////////////////
 

@@ -59,6 +59,7 @@ export default function BookModal(props) {
      let genre = null;
      let showDescriptionIndicator = "+";
      let descriptionToPublish = null;
+     let defaultDate = props.defaultDate;
 
      //console.log(props.searchResult);
      if( props.searchResult !== undefined ) {
@@ -90,8 +91,11 @@ export default function BookModal(props) {
           pageCount = book.pageCount;
           bookshelfRating = book.bookshelfRating;
           bookshelfTimestamp = book.bookshelfTimestamp;
-          dateCompletedRaw = new Date(bookshelfTimestamp);
-          dateCompleted = dateCompletedRaw.toLocaleString("en-US", {month: "long", day: "numeric", year: "numeric"});
+          dateCompletedRaw = 0;
+          if( defaultDate === 'Today' ) {
+               dateCompletedRaw = new Date(bookshelfTimestamp);
+               dateCompleted = dateCompletedRaw.toLocaleString("en-US", {month: "long", day: "numeric", year: "numeric"});
+          }
 
           genre = book.genre;
           if( genre === undefined || genre === null ) { genre = 'Not Assigned'; }
@@ -259,6 +263,7 @@ export default function BookModal(props) {
                          tags={props.tags}
                          resetAllTags={props.resetAllTags}
                          setBookTimestamp={props.setBookTimestamp}
+                         defaultDate={props.defaultDate}
                      />
                     }
 
@@ -376,6 +381,7 @@ export default function BookModal(props) {
                         tags={props.tags}
                         resetAllTags={props.resetAllTags}
                         setBookTimestamp={props.setBookTimestamp}
+                        defaultDate={props.defaultDate}
                     />
                }
 
@@ -402,6 +408,7 @@ export default function BookModal(props) {
                         alreadyRead={props.alreadyRead}
                         currentView={'savedForLater'}
                         searchResult={props.searchResult}
+                        defaultDate={props.defaultDate}
                     />
                }
 
@@ -456,6 +463,7 @@ export default function BookModal(props) {
                                 resetAllTags={props.resetAllTags}
                                 newImprovedEditBook={props.newImprovedEditBook}
                                 currentView={'savedForLater'}
+                                defaultDate={props.defaultDate}
                             />
                        </Modal.Body>
                        <Modal.Footer>
@@ -535,6 +543,7 @@ export default function BookModal(props) {
                          currentView={currentView}
                          description={props.book.description}
                          closeModal={handleClose}
+                         defaultDate={props.defaultDate}
                      />
                 </Modal.Body>
                 <Modal.Footer>

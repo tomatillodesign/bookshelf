@@ -31,6 +31,7 @@ function RecentlyAddedToRead(props) {
             return (
                 <div className="recently-added-to-read-area">
                     <h2 className="section-title">Up Next</h2>
+                         <div className="landing-explainer">Recently added to your <strong>To Read</strong> shelf</div>
                          <div className="results-grid four-col">
                         {orderedBooksToPublish.map((book, index) => (
                              <BookCard
@@ -49,6 +50,7 @@ function RecentlyAddedToRead(props) {
                                       useTags={props.useTags}
                                       genres={props.genres}
                                       tags={props.tags}
+                                      defaultDate={props.defaultDate}
                                       newImprovedEditBook={props.newImprovedEditBook}
                               />
                       ))}

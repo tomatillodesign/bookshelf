@@ -68,6 +68,7 @@ class Results extends React.Component {
                          tags={this.props.tags}
                          addNewTag={this.props.addNewTag}
                          setBookTags={this.props.setBookTags}
+                         defaultDate={this.props.defaultDate}
                          newImprovedEditBook={this.props.newImprovedEditBook}
                          addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                     />

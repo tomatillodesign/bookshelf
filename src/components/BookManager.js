@@ -35,6 +35,7 @@ class BookManager extends React.Component {
                          tags: [],
                          useGenres: false,
                          useTags: false,
+                         defaultDate: 'Today',
                          customFields: [],
                          removedFromSuggestions: [],
                     },
@@ -178,7 +179,6 @@ class BookManager extends React.Component {
                    console.log('fetchCoverImage CONNECTED');
                    console.log(originalBookJSON);
 
-
                    if( originalBookJSON.volumeInfo.imageLinks !== undefined ) {
                         console.log(originalBookJSON.volumeInfo.imageLinks);
                         if( originalBookJSON.volumeInfo.imageLinks.thumbnail !== undefined ) { coverImageURL = originalBookJSON.volumeInfo.imageLinks.thumbnail + '&key=AIzaSyDq8sjhqCfhczp_tMSh1pv_WzDQo0eirNU' }
@@ -225,6 +225,7 @@ class BookManager extends React.Component {
           const newBook = {};
 
           this.fetchCoverImage(bookObj);
+          console.log("addBookToRead");
 
           let subtitle = bookObj.volumeInfo.subtitle;
           if( subtitle === undefined ) { subtitle = null; }
@@ -842,6 +843,23 @@ class BookManager extends React.Component {
      }
 
 
+     changeDefaultDate = (selectedOption) => {
+
+          console.log("changeDefaultDate: " + selectedOption.value);
+
+        let newDefaultDate = 'Today';
+        if(selectedOption) {
+             newDefaultDate = selectedOption.value;
+        }
+
+        this.setState({ settings: {
+                   defaultDate: newDefaultDate
+             }
+        });
+
+   }
+
+
      resetNotification = () => {
           this.setState({ notification: null, notificationTimestamp: null, });
      }
@@ -968,6 +986,8 @@ class BookManager extends React.Component {
                  removedFromSuggestions={this.state.settings.removedFromSuggestions}
                  removeBookFromSuggestions={this.removeBookFromSuggestions}
                  newImprovedEditBook={this.newImprovedEditBook}
+                 defaultDate={this.state.settings.defaultDate}
+                 changeDefaultDate={this.changeDefaultDate}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

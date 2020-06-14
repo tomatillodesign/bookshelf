@@ -25,6 +25,7 @@ function Landing(props) {
           useTags={props.useTags}
           genres={props.genres}
           tags={props.tags}
+          defaultDate={props.defaultDate}
           newImprovedEditBook={props.newImprovedEditBook}
       />
       <RecentlyAddedAlreadyRead

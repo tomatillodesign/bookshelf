@@ -167,6 +167,7 @@ class BookCard extends React.Component {
                          resetAllTags={this.props.resetAllTags}
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
+                         defaultDate={this.props.defaultDate}
                          createNotification={this.props.createNotification}
                          newImprovedEditBook={this.props.newImprovedEditBook}
                     />
@@ -204,6 +205,7 @@ class BookCard extends React.Component {
                          resetAllTags={this.props.resetAllTags}
                          setBookTimestamp={this.props.setBookTimestamp}
                          description={description}
+                         defaultDate={this.props.defaultDate}
                          createNotification={this.props.createNotification}
                          newImprovedEditBook={this.props.newImprovedEditBook}
                     />
@@ -258,6 +260,7 @@ class BookCard extends React.Component {
                                    setBookTimestamp={this.props.setBookTimestamp}
                                    description={description}
                                    createNotification={this.props.createNotification}
+                                   defaultDate={this.props.defaultDate}
                                    newBookForm={true}
                                    newImprovedEditBook={this.props.newImprovedEditBook}
                               />
@@ -312,6 +315,7 @@ class BookCard extends React.Component {
                                    description={description}
                                    createNotification={this.props.createNotification}
                                    newBookForm={true}
+                                   defaultDate={this.props.defaultDate}
                                    newImprovedEditBook={this.props.newImprovedEditBook}
                               />
                               </>
