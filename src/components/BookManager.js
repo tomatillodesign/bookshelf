@@ -336,22 +336,32 @@ class BookManager extends React.Component {
 
 
 
-          newImprovedEditBook = (bookObj) => {
+          newImprovedEditBook = (bookObj, view) => {
 
-            bookObj.alreadyRead = true;
-            console.log("NEW & IMPROVED --> Editing this book: " + JSON.stringify(bookObj));
+               console.log("newImprovedEditBook 12pm");
+               console.log(view);
 
-            let bookID = bookObj.id;
-            let clbCopyBookState = [...this.state.books];
-            let getBookObjInState = clbCopyBookState.filter(obj => {
-              return obj.id === bookID
-            });
-            let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
-            let ids = [...this.state.books];     // create the copy of state array
-            ids[index] = bookObj;                  //new value
-            console.log(ids[index]);
+               if( view === 'savedForLater' ) {
 
-            this.setState({ books: ids });            //update the value
+                      console.log("newImprovedEditBook via TO READ");
+                      bookObj.alreadyRead = true;
+                      console.log("NEW & IMPROVED --> Editing this book: " + JSON.stringify(bookObj));
+
+                      let bookID = bookObj.id;
+                      let clbCopyBookState = [...this.state.books];
+                      let getBookObjInState = clbCopyBookState.filter(obj => {
+                        return obj.id === bookID
+                      });
+                      let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                      let ids = [...this.state.books];     // create the copy of state array
+                      ids[index] = bookObj;                  //new value
+                      console.log(ids[index]);
+
+                      this.setState({ books: ids });            //update the value
+
+            } else if ( view === 'searchResults' ) {
+                 console.log("newImprovedEditBook via searchResults");
+            }
 
           }
 

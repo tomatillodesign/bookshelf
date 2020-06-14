@@ -390,6 +390,9 @@ export default function BookModal(props) {
                         tags={props.tags}
                         resetAllTags={props.resetAllTags}
                         newImprovedEditBook={props.newImprovedEditBook}
+                        alreadyRead={props.alreadyRead}
+                        currentView={'savedForLater'}
+                        searchResult={props.searchResult}
                     />
                }
 
@@ -445,6 +448,7 @@ export default function BookModal(props) {
                                 tags={props.tags}
                                 resetAllTags={props.resetAllTags}
                                 newImprovedEditBook={props.newImprovedEditBook}
+                                currentView={'savedForLater'}
                             />
                        </Modal.Body>
                        <Modal.Footer>
@@ -496,6 +500,7 @@ export default function BookModal(props) {
                                 resetAllTags={props.resetAllTags}
                                 searchResult={props.searchResult}
                                 newImprovedEditBook={props.newImprovedEditBook}
+                                currentView={'searchResults'}
                             />
                        </Modal.Body>
                        <Modal.Footer>
@@ -515,7 +520,19 @@ export default function BookModal(props) {
 
      } else if ( newBookForm ) {
 
+          if( coverImageURL !== null ) {
+               //console.log("1-26 Update 1025am - COVER IMG URL: " + coverImageURL);
+               if( coverImageURL.startsWith("http://") ) {
+                    coverImageURL = coverImageURL.replace("http://", "https://");
+                    //console.log("Updated COVER IMG URL: " + coverImageURL);
+               }
+          }
+
           let additionalModalClasses = " new-book-form";
+          let currentView = null;
+               if( props.searchResult ) { currentView = 'searchResults'; }
+               else if( props.savedForLater ) { currentView = 'savedForLater'; }
+
 
           return (
             <>
@@ -553,7 +570,7 @@ export default function BookModal(props) {
                          tags={props.tags}
                          resetAllTags={props.resetAllTags}
                          newImprovedEditBook={props.newImprovedEditBook}
-                         searchResult={props.searchResult}
+                         currentView={currentView}
                      />
                 </Modal.Body>
                 <Modal.Footer>

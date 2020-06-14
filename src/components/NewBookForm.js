@@ -36,7 +36,8 @@ class NewBookForm extends React.Component {
      book = this.props.book;
      id = this.book.id;
      bookshelfRating = this.book.bookshelfRating;
-     bookshelfTimestamp = this.book.bookshelfTimestamp;
+     //bookshelfTimestamp = this.book.bookshelfTimestamp;
+     bookshelfTimestamp = parseInt((new Date().getTime()).toFixed(0));
      bookshelfGenre = this.book.genre;
      bookshelfTags = this.book.tags;
 
@@ -59,7 +60,13 @@ class NewBookForm extends React.Component {
           if( this.bookshelfGenre !== undefined) { book.genre = this.bookshelfGenre; } else { book.genre = ''; }
           if( this.bookshelfTags !== undefined) { book.tags = this.bookshelfTags; } else { book.tags = ''; }
 
-          this.props.newImprovedEditBook(book);
+          // send the correct view back to BookManager
+          let currentView = this.props.currentView;
+          console.log( this.props.currentView );
+          // if( this.props.savedForLater === true ) { currentView = 'to read'; }
+          // else if( this.props.searchResult === true ) { currentView = 'results'; }
+
+          this.props.newImprovedEditBook(book, currentView);
 
      }
 
@@ -127,8 +134,9 @@ class NewBookForm extends React.Component {
 
 render() {
 
-     console.log("Current book: " + JSON.stringify(this.props.book));
+     console.log("NEW BOOK FORM, Current book: " + JSON.stringify(this.props.book));
      console.log(this.props.genres);
+     console.log(this.props.currentView);
      const defaultRating = this.bookshelfRating;
      const bookshelfTimestamp = this.bookshelfTimestamp;
      let description = this.props.book.description;

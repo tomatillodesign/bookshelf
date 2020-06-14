@@ -94,7 +94,7 @@ class SelectTagsUpdated extends React.Component {
           } else {
 
                return (
-                    <form id="select-tags-form" onSubmit={this.handleTagsSubmit} >
+                    <div id="select-tags-form" onSubmit={this.handleTagsSubmit} >
                       <CreatableSelect
                          isMulti
                          placeholder='Select Tags'
@@ -105,7 +105,7 @@ class SelectTagsUpdated extends React.Component {
                          onChange={this.addTagToState}
                       />
                       <button className="add-tags">Update Tags</button>
-                    </form>
+                    </div>
                );
 
           }
