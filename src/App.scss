@@ -885,7 +885,7 @@ h3.yearly-summary {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: #111 !important;
 }
 
 .modal-backdrop.fade {
@@ -893,7 +893,11 @@ h3.yearly-summary {
 }
 
 .modal-backdrop.show {
-  opacity: 0.5;
+  // opacity: 0.5;
+}
+
+.modal-open .modal-backdrop.show {
+    opacity: 1 !important;
 }
 
 .modal-header {

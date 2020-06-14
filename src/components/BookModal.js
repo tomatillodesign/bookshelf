@@ -414,11 +414,9 @@ export default function BookModal(props) {
                           context={'removeBookFromToRead'}
                           removeBookFromToRead={props.removeBookFromToRead}
                      />
-                     <button onClick={handleShow}
-                      className="read-action already-read"
-                      title="Add to your Already Read shelf">
-                           <FontAwesomeIcon icon={faBook} />
-                      </button>
+                     <div className="book-meta button-area close-without-saving-area">
+                         <button onClick={handleClose}>Close without Saving</button>
+                     </div>
 
                      <Modal show={show} onHide={handleClose} className={"single-book-modal" + " font-" + props.settingsFont + " color-" + props.settingsColor + additionalModalClasses}>
                        <Modal.Header closeButton>
