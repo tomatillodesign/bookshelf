@@ -32,6 +32,7 @@ class NewBookForm extends React.Component {
                showDatePicker: true,
                viewDescription: false,
                madeTagChange: false,
+               bookshelfTimestamp: 0,
           }
      }
 
@@ -41,7 +42,14 @@ class NewBookForm extends React.Component {
           ////////////// Date //////////////////////////////////////////
           const defaultDate = this.props.defaultDate;
           if( defaultDate === 'No Date Set' ) {
-               this.setState({ showDatePicker: false });
+               this.setState({
+                    showDatePicker: false,
+                    bookshelfTimestamp: 0,
+                });
+          } else {
+               this.setState({
+                    bookshelfTimestamp: parseInt((new Date().getTime()).toFixed(0))
+               });
           }
 
      }
@@ -52,7 +60,7 @@ class NewBookForm extends React.Component {
      bookshelfRating = this.book.bookshelfRating;
      //bookshelfTimestamp = this.book.bookshelfTimestamp;
      defaultDate = this.props.defaultDate;
-     bookshelfTimestamp = parseInt((new Date().getTime()).toFixed(0));
+     //bookshelfTimestamp = this.state.bookshelfTimestamp;
      bookshelfGenre = this.book.genre;
      bookshelfTags = this.book.tags;
 
@@ -69,7 +77,7 @@ class NewBookForm extends React.Component {
           console.log("Tags: " + this.bookshelfTags);
 
           book.bookshelfRating = this.bookshelfRating;
-          book.bookshelfTimestamp = this.bookshelfTimestamp;
+          book.bookshelfTimestamp = this.state.bookshelfTimestamp;
           if( this.bookshelfRating !== undefined) { book.bookshelfRating = this.bookshelfRating; } else { book.bookshelfRating = 0; }
           if( this.bookshelfTimestamp !== undefined) { book.bookshelfTimestamp = this.bookshelfTimestamp; } else { book.bookshelfTimestamp = 0; }
           if( this.bookshelfGenre !== undefined) { book.genre = this.bookshelfGenre; } else { book.genre = ''; }

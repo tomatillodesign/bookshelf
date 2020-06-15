@@ -32,6 +32,18 @@ class BookCard extends React.Component {
 
 
 
+     slugify = (text) => {
+       return text
+         .toString()                     // Cast to string
+         .toLowerCase()                  // Convert the string to lowercase letters
+         .normalize('NFD')       // The normalize() method returns the Unicode Normalization Form of a given string.
+         .trim()                         // Remove whitespace from both sides of a string
+         .replace(/\s+/g, '-')           // Replace spaces with -
+         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+         .replace(/\-\-+/g, '-');        // Replace multiple - with single -
+     }
+
+
      render() {
 
           //console.log(this.props.book);
@@ -127,12 +139,13 @@ class BookCard extends React.Component {
 
 
 
+
                /////////////////////////////////////////////////////////////////////////////
 
 
           return(
 
-               <div className="book-card" id={book.id}>
+               <div className="book-card" id={book.id} data-rating={book.bookshelfRating} data-genre={this.slugify(book.genre)} >
                     <BookModal
                          settingsFont={this.props.settingsFont}
                          settingsColor={this.props.settingsColor}
