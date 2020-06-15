@@ -386,6 +386,7 @@ class BookManager extends React.Component {
                  newBook.publisher = bookObj.volumeInfo.publisher;
                  newBook.tags = bookObj.tags;
                  newBook.title = bookObj.volumeInfo.title;
+                 newBook.titleForSorting = this.createAlphabeticalSortingTitle(bookObj.volumeInfo.title);
 
                  console.log(newBook);
                  let bookID = newBook.id;
