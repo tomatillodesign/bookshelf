@@ -137,15 +137,17 @@ class BookCard extends React.Component {
                     }
                }
 
-
-
+               let dataGenre = null;
+               if( book.genre !== undefined && book.genre !== '' ) {
+                    dataGenre = this.slugify(book.genre);
+               }
 
                /////////////////////////////////////////////////////////////////////////////
 
 
           return(
 
-               <div className="book-card" id={book.id} data-rating={book.bookshelfRating} data-genre={this.slugify(book.genre)} >
+               <div className="book-card" id={book.id} data-rating={book.bookshelfRating} data-genre={dataGenre} >
                     <BookModal
                          settingsFont={this.props.settingsFont}
                          settingsColor={this.props.settingsColor}
