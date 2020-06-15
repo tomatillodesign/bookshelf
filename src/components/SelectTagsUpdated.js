@@ -5,7 +5,7 @@ import CreatableSelect from 'react-select/creatable';
 
 const shortid = require('shortid');
 
-class SelectTags extends React.Component {
+class SelectTagsUpdated extends React.Component {
 
      constructor(props) {
           super(props);
@@ -23,7 +23,9 @@ class SelectTags extends React.Component {
      addTagToState = (selectedOption) => {
           console.log(selectedOption);
           this.setState({ tags: selectedOption, madeChange: true });
+
      }
+
 
      handleTagsSubmit = (event) => {
           event.preventDefault();
@@ -43,6 +45,7 @@ class SelectTags extends React.Component {
 
      render() {
 
+          console.log("SelectTagsUpdated");
           const allTags = this.props.allTags;
           const currentTags = this.state.tags;
           const defaultTagsRaw = this.props.defaultTags;
@@ -71,7 +74,7 @@ class SelectTags extends React.Component {
                const defaultTagTypeSelect = defaultTagsRaw;
 
                return (
-                    <form id="select-tags-form" onSubmit={this.handleTagsSubmit} >
+                    <div id="select-tags-form" onSubmit={this.handleTagsSubmit} >
                       <CreatableSelect
                          isMulti
                          placeholder='Select Tags'
@@ -85,13 +88,13 @@ class SelectTags extends React.Component {
                       {this.state.madeChange === true &&
                            <button className="add-tags">Update Tags</button>
                       }
-                    </form>
+                    </div>
                );
 
           } else {
 
                return (
-                    <form id="select-tags-form" onSubmit={this.handleTagsSubmit} >
+                    <div id="select-tags-form" onSubmit={this.handleTagsSubmit} >
                       <CreatableSelect
                          isMulti
                          placeholder='Select Tags'
@@ -102,7 +105,7 @@ class SelectTags extends React.Component {
                          onChange={this.addTagToState}
                       />
                       <button className="add-tags">Update Tags</button>
-                    </form>
+                    </div>
                );
 
           }
@@ -111,4 +114,4 @@ class SelectTags extends React.Component {
 
 }
 
-export default SelectTags;
+export default SelectTagsUpdated;

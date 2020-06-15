@@ -21,6 +21,12 @@ function Landing(props) {
           settingsFont={props.settingsFont}
           settingsColor={props.settingsColor}
           updateCoverImg={props.updateCoverImg}
+          useGenres={props.useGenres}
+          useTags={props.useTags}
+          genres={props.genres}
+          tags={props.tags}
+          defaultDate={props.defaultDate}
+          newImprovedEditBook={props.newImprovedEditBook}
       />
       <RecentlyAddedAlreadyRead
           booksAlreadyRead={props.booksAlreadyRead}

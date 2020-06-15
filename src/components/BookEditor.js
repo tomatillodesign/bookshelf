@@ -219,6 +219,7 @@ class BookEditor extends React.Component {
 
           let currentTags = null;
           if( this.state.tags !== undefined && this.state.tags !== '' ) {
+               console.log(this.state.tags);
                currentTags = this.state.tags.map((tag) =>
                  <span className="single-tag" key={shortid.generate()}>{tag}</span>
                );

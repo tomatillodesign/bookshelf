@@ -31,6 +31,7 @@ function RecentlyAddedAlreadyRead(props) {
             return (
                 <div className="recently-added-already-read-area">
                 <h2 className="section-title">Just Finished</h2>
+                <div className="landing-explainer">Recently added to your <strong>Already Read</strong> shelf</div>
                          <div className="results-grid four-col">
                         {orderedBooksToPublish.map((book, index) => (
                              <BookCard

@@ -750,7 +750,47 @@ h3.yearly-summary {
      margin-top: 30px;
 }
 
+.edit-book.clb-updated .book-date-area {
+     display: flex;
+     align-items: baseline;
+     margin-bottom: 8px;
+}
 
+.edit-book.clb-updated .book-date-area .edit-icon {
+     margin-left: 4px;
+}
+
+.edit-book.clb-updated .remove {
+     margin-left: 20px;
+}
+
+.edit-book.clb-updated button.update-this-book {
+     width: 100%;
+     text-align: center;
+     margin-top: 40px;
+}
+
+.new-book-form .modal-footer .book-meta.button-area {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-without-saving-area button {
+     font-size: 14px;
+     background: #eee;
+     color: #333;
+}
+
+.close-without-saving-area button:hover {
+     background: #ccc;
+}
+
+.landing-explainer {
+     font-size: 16px;
+     font-style: italic;
+     letter-spacing: 1px;
+     margin-bottom: 40px;
+}
 
 @media only screen and (min-width: 960px) {
 
@@ -852,7 +892,7 @@ h3.yearly-summary {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: #111 !important;
 }
 
 .modal-backdrop.fade {
@@ -860,7 +900,11 @@ h3.yearly-summary {
 }
 
 .modal-backdrop.show {
-  opacity: 0.5;
+  // opacity: 0.5;
+}
+
+.modal-open .modal-backdrop.show {
+    opacity: 1 !important;
 }
 
 .modal-header {

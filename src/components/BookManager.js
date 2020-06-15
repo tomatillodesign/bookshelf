@@ -35,6 +35,7 @@ class BookManager extends React.Component {
                          tags: [],
                          useGenres: false,
                          useTags: false,
+                         defaultDate: 'Today',
                          customFields: [],
                          removedFromSuggestions: [],
                     },
@@ -158,10 +159,16 @@ class BookManager extends React.Component {
        fetchCoverImage = (bookObj) => {
             console.log("FETCH COVER IMAGE");
             console.log(bookObj);
-            const selfLink = bookObj.selfLink;
+            let selfLink = bookObj.selfLink;
+            if( selfLink === undefined ) {
+                 selfLink = bookObj.googleLink;
+            }
+            console.log(selfLink);
             let coverImageURL = null;
-            if( bookObj.volumeInfo.imageLinks !== undefined ) {
-                 coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+            if( bookObj.volumeInfo !== undefined ) {
+                 if( bookObj.volumeInfo.imageLinks !== undefined ) {
+                      coverImageURL = bookObj.volumeInfo.imageLinks.smallThumbnail;
+                    }
                }
 
             // Get the details straight from Google, including larger image sizes
@@ -171,7 +178,6 @@ class BookManager extends React.Component {
 
                    console.log('fetchCoverImage CONNECTED');
                    console.log(originalBookJSON);
-
 
                    if( originalBookJSON.volumeInfo.imageLinks !== undefined ) {
                         console.log(originalBookJSON.volumeInfo.imageLinks);
@@ -219,6 +225,7 @@ class BookManager extends React.Component {
           const newBook = {};
 
           this.fetchCoverImage(bookObj);
+          console.log("addBookToRead");
 
           let subtitle = bookObj.volumeInfo.subtitle;
           if( subtitle === undefined ) { subtitle = null; }
@@ -331,6 +338,76 @@ class BookManager extends React.Component {
                console.log(ids[index]);
 
                this.setState({ books: ids });            //update the value
+
+          }
+
+
+
+          newImprovedEditBook = (bookObj, view) => {
+
+               console.log("newImprovedEditBook 12pm");
+               console.log(view);
+
+               if( view === 'savedForLater' ) {
+
+                      console.log("newImprovedEditBook via TO READ");
+                      bookObj.alreadyRead = true;
+                      console.log("NEW & IMPROVED --> Editing this book: " + JSON.stringify(bookObj));
+
+                      let bookID = bookObj.id;
+                      let clbCopyBookState = [...this.state.books];
+                      let getBookObjInState = clbCopyBookState.filter(obj => {
+                        return obj.id === bookID
+                      });
+                      let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                      let ids = [...this.state.books];     // create the copy of state array
+                      ids[index] = bookObj;                  //new value
+                      console.log(ids[index]);
+
+                      this.setState({ books: ids });            //update the value
+
+            } else if ( view === 'searchResults' ) {
+                 console.log(bookObj);
+                 console.log("newImprovedEditBook via searchResults");
+
+                 // translate Google Data into my own schema
+                 const newBook = {};
+                 newBook.alreadyRead = true;
+                 newBook.authors = bookObj.volumeInfo.authors;
+                 newBook.bookshelfRating = bookObj.bookshelfRating;
+                 newBook.bookshelfTimestamp = bookObj.bookshelfTimestamp;
+                 newBook.coverImg = bookObj.volumeInfo.imageLinks.smallThumbnail;
+                 newBook.description = bookObj.volumeInfo.description;
+                 newBook.genre = bookObj.genre;
+                 newBook.googleLink = bookObj.selfLink;
+                 newBook.id = bookObj.id;
+                 newBook.pageCount = bookObj.volumeInfo.pageCount;
+                 newBook.publishedDate = bookObj.volumeInfo.publishedDate;
+                 newBook.publisher = bookObj.volumeInfo.publisher;
+                 newBook.tags = bookObj.tags;
+                 newBook.title = bookObj.volumeInfo.title;
+
+                 console.log(newBook);
+                 let bookID = newBook.id;
+                 let clbCopyBookState = [...this.state.books];
+                 let getBookObjInState = clbCopyBookState.filter(obj => {
+                  return obj.id === bookID
+                 });
+                 let index = clbCopyBookState.map(function(e) { return e.id; }).indexOf(bookID);
+                 let ids = [...this.state.books];     // create the copy of state array
+                 ids[index] = newBook;                  //new value
+                 console.log(ids[index]);
+                             //update the value
+                 this.setState(prevState => ({
+                    books: ids,
+                    notification: 'You added ' + newBook.title + ' to your ALREADY READ shelf',
+                    notificationTimestamp: Date.now(),
+                   }));
+
+                   this.startNotificationTimer();
+                   this.fetchCoverImage(newBook);
+
+            }
 
           }
 
@@ -766,6 +843,23 @@ class BookManager extends React.Component {
      }
 
 
+     changeDefaultDate = (selectedOption) => {
+
+          console.log("changeDefaultDate: " + selectedOption.value);
+
+        let newDefaultDate = 'Today';
+        if(selectedOption) {
+             newDefaultDate = selectedOption.value;
+        }
+
+        this.setState({ settings: {
+                   defaultDate: newDefaultDate
+             }
+        });
+
+   }
+
+
      resetNotification = () => {
           this.setState({ notification: null, notificationTimestamp: null, });
      }
@@ -891,6 +985,9 @@ class BookManager extends React.Component {
                  resetNotification={this.resetNotification}
                  removedFromSuggestions={this.state.settings.removedFromSuggestions}
                  removeBookFromSuggestions={this.removeBookFromSuggestions}
+                 newImprovedEditBook={this.newImprovedEditBook}
+                 defaultDate={this.state.settings.defaultDate}
+                 changeDefaultDate={this.changeDefaultDate}
             />
             <footer className={"clb-bookshelf-footer color-" + settingsColor + " font-" + settingsFont}>
               Bookshelf &middot; <a href="https://github.com/tomatillodesign/bookshelf" target="_blank">Version 1.0</a> &middot; By Chris Liu-Beers, <a href="http://tomatillodesign.com" target="_blank">Tomatillo Design</a>

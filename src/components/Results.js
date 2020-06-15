@@ -61,6 +61,16 @@ class Results extends React.Component {
                          addBookToRead={this.props.addBookToRead}
                          settingsFont={this.props.settingsFont}
                          settingsColor={this.props.settingsColor}
+                         updateCoverImg={this.props.updateCoverImg}
+                         useGenres={this.props.useGenres}
+                         useTags={this.props.useTags}
+                         genres={this.props.genres}
+                         tags={this.props.tags}
+                         addNewTag={this.props.addNewTag}
+                         setBookTags={this.props.setBookTags}
+                         defaultDate={this.props.defaultDate}
+                         newImprovedEditBook={this.props.newImprovedEditBook}
+                         addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                     />
           ))}
           </div>

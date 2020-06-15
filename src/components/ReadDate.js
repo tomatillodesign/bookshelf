@@ -18,12 +18,18 @@ const handleDateChange = date => {
      console.log(date.currentTarget.value);
      setSelectedDate(date.currentTarget.value);
      props.getCompletedDate(date.currentTarget.value);
-
 };
 
+let bookshelfTimestamp = 0;
+let formattedDate = 0;
+if( props.bookshelfTimestamp ) {
+     bookshelfTimestamp = new Date(props.bookshelfTimestamp);
+     formattedDate = bookshelfTimestamp.toISOString().slice(0,10);
+} else {
+     bookshelfTimestamp = new Date();
+     formattedDate = bookshelfTimestamp.toISOString().slice(0,10);
+}
 
-const bookshelfTimestamp = new Date(props.bookshelfTimestamp);
-const formattedDate = bookshelfTimestamp.toISOString().slice(0,10);
 console.log(formattedDate);
 
 return (

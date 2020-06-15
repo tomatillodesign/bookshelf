@@ -52,6 +52,10 @@ class Router extends React.Component {
                               resetRatingToZero={this.props.resetRatingToZero}
                               resetTimestampToZero={this.props.resetTimestampToZero}
                               setBookTimestamp={this.props.setBookTimestamp}
+                              genres={this.props.genres}
+                              tags={this.props.tags}
+                              defaultDate={this.props.defaultDate}
+                              newImprovedEditBook={this.props.newImprovedEditBook}
                          />}
                />
                <Route exact path="/search" component={Search} />
@@ -63,6 +67,16 @@ class Router extends React.Component {
                                              settingsColor={this.props.settingsColor}
                                              notification={this.props.notification}
                                              notificationTimestamp={this.props.notificationTimestamp}
+                                             updateCoverImg={this.props.updateCoverImg}
+                                             useGenres={this.props.useGenres}
+                                             useTags={this.props.useTags}
+                                             genres={this.props.genres}
+                                             tags={this.props.tags}
+                                             addNewTag={this.props.addNewTag}
+                                             setBookTags={this.props.setBookTags}
+                                             newImprovedEditBook={this.props.newImprovedEditBook}
+                                             defaultDate={this.props.defaultDate}
+                                             addNewImagesAlreadyRead={this.props.addNewImagesAlreadyRead}
                                         />}
                />
 
@@ -98,6 +112,16 @@ class Router extends React.Component {
                               updateCoverImg={this.props.updateCoverImg}
                               bookSize={this.props.bookSize}
                               useGenres={this.props.useGenres}
+                              genres={this.props.genres}
+                              resetGenreToZero={this.props.resetGenreToZero}
+                              addNewGenre={this.props.addNewGenre}
+                              useTags={this.props.useTags}
+                              addNewTag={this.props.addNewTag}
+                              setBookTags={this.props.setBookTags}
+                              tags={this.props.tags}
+                              resetAllTags={this.props.resetAllTags}
+                              defaultDate={this.props.defaultDate}
+                              newImprovedEditBook={this.props.newImprovedEditBook}
                          />}
                />
 
@@ -150,6 +174,8 @@ class Router extends React.Component {
                               changeSettingsUseTags={this.props.changeSettingsUseTags}
                               useGenres={this.props.useGenres}
                               useTags={this.props.useTags}
+                              defaultDate={this.props.defaultDate}
+                              changeDefaultDate={this.props.changeDefaultDate}
                          />}
                />
                <Route exact path="/register"
